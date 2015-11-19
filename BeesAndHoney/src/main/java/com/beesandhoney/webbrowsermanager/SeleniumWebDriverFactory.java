@@ -1,0 +1,29 @@
+package com.beesandhoney.webbrowsermanager;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+
+public final class SeleniumWebDriverFactory {
+    
+    private static WebDriver webDriver = null;
+    
+    public static WebDriver CreateWebDriver() {
+        if (null != webDriver) {
+            return webDriver;
+        }
+        
+        FirefoxProfile firefoxProfile = new FirefoxProfile();
+        
+        firefoxProfile.setPreference(WebBrowserUtils.USER_AGENT_PREFERENCE_STRING, 
+                WebBrowserUtils.WEB_BROWSER_USER_AGENT);
+        webDriver = new FirefoxDriver(firefoxProfile);
+
+        return webDriver;
+    }
+    
+    public static void DestroyWebDriver() {
+        webDriver.close();
+        webDriver = null;
+    }
+}
