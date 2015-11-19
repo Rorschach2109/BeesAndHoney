@@ -14,6 +14,10 @@ import org.openqa.selenium.WebDriver;
  * @author azazello
  */
 public interface WebBrowserInterface {
+    public WebDriver CreateWebDriver();
+    public void DestroyWebDriver();
+
+    public void LogInToAccount(WebDriver webDriver, String clientId, String password);
     public ArrayList<String> GetAccountsAmount(WebDriver webDriver);
     public Map<String, String> GetAccountInformation(WebDriver webDriver);
     public String GetAccountHistorySection(WebDriver webDriver);

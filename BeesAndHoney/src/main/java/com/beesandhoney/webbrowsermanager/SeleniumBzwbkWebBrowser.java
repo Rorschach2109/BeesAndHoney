@@ -15,7 +15,10 @@ import org.openqa.selenium.WebDriver;
  * @author azazello
  */
 public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
-    
+
+    public SeleniumBzwbkWebBrowser() {
+    }
+
     @Override
     public ArrayList<String> GetAccountsAmount(WebDriver webDriver) {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
@@ -40,6 +43,31 @@ public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
             return "";
         }
         
+        return "";
+    }
+
+    @Override
+    protected void ReturnToHomePage(WebDriver webDriver) {
+        
+    }
+    
+    @Override
+    protected void InsertClientId(WebDriver webDriver, String clientId) {
+        
+    }
+    
+    @Override
+    protected void InsertPassword(WebDriver webDriver, String password) {
+        
+    }
+    
+    @Override
+    protected void LogIn(WebDriver webDriver) {
+        
+    }
+    
+    @Override
+    protected String GetBankLoginPage() {
         return "";
     }
 }

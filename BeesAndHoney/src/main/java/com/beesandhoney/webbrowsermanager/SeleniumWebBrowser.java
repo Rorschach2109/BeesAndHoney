@@ -6,8 +6,6 @@
 package com.beesandhoney.webbrowsermanager;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 
 /**
  *
@@ -20,32 +18,44 @@ public abstract class SeleniumWebBrowser implements WebBrowserInterface {
         UNLOGGED
     }
     
-    protected static WebDriverStatus webDriverStatus = WebDriverStatus.UNLOGGED;
-    private static WebDriver webDriver = null;
+    protected SeleniumWebBrowser.WebDriverStatus webDriverStatus = 
+            SeleniumWebBrowser.WebDriverStatus.UNLOGGED;
     
-    public static WebDriver CreateWebDriver() {        
-        FirefoxProfile firefoxProfile = new FirefoxProfile();
-        
-        firefoxProfile.setPreference(WebBrowserUtils.USER_AGENT_PREFERENCE_STRING, 
-                WebBrowserUtils.WEB_BROWSER_USER_AGENT);
-        webDriver = new FirefoxDriver(firefoxProfile);
-
-        return webDriver;
+    @Override
+    public void LogInToAccount(WebDriver webDriver, String clientId, String password) {
+        EnterLoginPage(webDriver);
+        try {
+            InsertClientId(webDriver, clientId);
+            InsertPassword(webDriver, password);
+            LogIn(webDriver);
+            webDriverStatus = SeleniumWebBrowser.WebDriverStatus.LOGGED;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            SeleniumWebDriverFactory.DestroyWebDriver();
+        }
     }
     
-    public static void DestroyWebDriver() {
-        webDriver = null;
-        webDriverStatus = WebDriverStatus.UNLOGGED;
+    @Override
+    public WebDriver CreateWebDriver() {
+        return SeleniumWebDriverFactory.CreateWebDriver();
     }
     
-    protected static void EnterLoginPage(WebBrowserUtils.BankType bankType) {
-        if (null != webDriver) {
+    @Override
+    public void DestroyWebDriver() {
+        webDriverStatus = SeleniumWebBrowser.WebDriverStatus.UNLOGGED;
+    }
+    
+    protected void EnterLoginPage(WebDriver webDriver) {
+        if (null == webDriver) {
             return;
         }
         
-        String loginPageUrl = WebBrowserUtils.GetBankLoginPage(bankType);
+        String loginPageUrl = GetBankLoginPage();
         webDriver.get(loginPageUrl);
-        
-        webDriverStatus = WebDriverStatus.LOGGED;
     }
+    
+    protected abstract void ReturnToHomePage(WebDriver webDriver);
+    protected abstract void InsertClientId(WebDriver webDriver, String clientId);
+    protected abstract void InsertPassword(WebDriver webDriver, String password);
+    protected abstract void LogIn(WebDriver webDriver);
+    protected abstract String GetBankLoginPage();
 }
