@@ -8,7 +8,6 @@ package com.beesandhoney.webbrowsermanager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import org.openqa.selenium.WebDriver;
 
 /**
  *
@@ -20,7 +19,7 @@ public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
     }
 
     @Override
-    public ArrayList<String> GetAccountsAmount(WebDriver webDriver) {
+    public ArrayList<String> GetAccountsAmount() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return new ArrayList<>();
         }
@@ -29,7 +28,7 @@ public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    public Map<String, String> GetAccountInformation(WebDriver webDriver) {
+    public Map<String, String> GetAccountInformation() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return new HashMap<>();
         }
@@ -38,7 +37,7 @@ public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    public String GetAccountHistorySection(WebDriver webDriver) {
+    public String GetAccountHistorySection() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return "";
         }
@@ -47,23 +46,28 @@ public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
     }
 
     @Override
-    protected void ReturnToHomePage(WebDriver webDriver) {
+    protected void ReturnToHomePage() {
         
     }
     
     @Override
-    protected void InsertClientId(WebDriver webDriver, String clientId) {
+    protected void InsertClientId(String clientId) {
         
     }
     
     @Override
-    protected void InsertPassword(WebDriver webDriver, String password) {
+    protected void InsertPassword(String password) {
         
     }
     
     @Override
-    protected void LogIn(WebDriver webDriver) {
+    protected void LogIn() {
         
+    }
+    
+    @Override
+    protected void LogOut() {
+
     }
     
     @Override

@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -24,41 +23,41 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    public ArrayList<String> GetAccountsAmount(WebDriver webDriver) {
+    public ArrayList<String> GetAccountsAmount() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return new ArrayList<>();
         }
         
-        ReturnToHomePage(webDriver);
-        System.out.println(GetContentTableFieldText(webDriver));
+        ReturnToHomePage();
+        System.out.println(GetContentTableFieldText());
         
         return new ArrayList<>();
     }
     
     @Override
-    public Map<String, String> GetAccountInformation(WebDriver webDriver) {
+    public Map<String, String> GetAccountInformation() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return new HashMap<>();
         }
         
-        ReturnToHomePage(webDriver);
+        ReturnToHomePage();
         JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
         
         jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNTS_SECTION_COMMAND);
         jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNT_DETAILS_COMMAND);
         
-        System.out.println(GetContentTableFieldText(webDriver));
+        System.out.println(GetContentTableFieldText());
         
         return new HashMap<>();
     }
     
     @Override
-    public String GetAccountHistorySection(WebDriver webDriver) {
+    public String GetAccountHistorySection() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return "";
         }
         
-        ReturnToHomePage(webDriver);
+        ReturnToHomePage();
         
         JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
         jsExecutor.executeScript(IpkoAccountUtils.JS_HISTORY_COMMAND);
@@ -78,8 +77,8 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    protected void ReturnToHomePage(WebDriver webDriver) {
-        if (null == webDriver) {
+    protected void ReturnToHomePage() {
+        if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return;
         }
         
@@ -88,7 +87,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    protected void InsertClientId(WebDriver webDriver, String clientId) {
+    protected void InsertClientId(String clientId) {
         if (null == webDriver) {
             return;
         }
@@ -100,7 +99,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    protected void InsertPassword(WebDriver webDriver, String password) {
+    protected void InsertPassword(String password) {
         if (null == webDriver) {
             return;
         }
@@ -112,7 +111,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    protected void LogIn(WebDriver webDriver) {
+    protected void LogIn() {
         if (null == webDriver) {
             return;
         }
@@ -122,11 +121,25 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
+    protected void LogOut() {
+        if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
+            return;
+        }
+        
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
+        jsExecutor.executeScript(IpkoAccountUtils.JS_LOGOUT_COMMAND);
+    }
+    
+    @Override
     protected String GetBankLoginPage() {
         return IpkoAccountUtils.LOGIN_PAGE;
     }
     
-    private String GetContentTableFieldText(WebDriver webDriver) {
+    private String GetContentTableFieldText() {
+        if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
+            return "";
+        }
+        
         WebElement contentTable = webDriver.findElement(
                 By.name(IpkoAccountUtils.FIELD_CONTENT_TABLE_TAG)
         );

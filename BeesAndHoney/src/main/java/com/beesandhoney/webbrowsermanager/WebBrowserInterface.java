@@ -7,18 +7,19 @@ package com.beesandhoney.webbrowsermanager;
 
 import java.util.ArrayList;
 import java.util.Map;
-import org.openqa.selenium.WebDriver;
 
 /**
  *
  * @author azazello
  */
 public interface WebBrowserInterface {
-    public WebDriver CreateWebDriver();
+    public void CreateWebDriver();
     public void DestroyWebDriver();
 
-    public void LogInToAccount(WebDriver webDriver, String clientId, String password);
-    public ArrayList<String> GetAccountsAmount(WebDriver webDriver);
-    public Map<String, String> GetAccountInformation(WebDriver webDriver);
-    public String GetAccountHistorySection(WebDriver webDriver);
+    public void LogInToAccount(String clientId, String password);
+    public void LogOutFromAccount();
+    
+    public ArrayList<String> GetAccountsAmount();
+    public Map<String, String> GetAccountInformation();
+    public String GetAccountHistorySection();
 }

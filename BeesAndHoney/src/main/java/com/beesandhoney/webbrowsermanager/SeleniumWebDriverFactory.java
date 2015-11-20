@@ -8,7 +8,7 @@ public final class SeleniumWebDriverFactory {
     
     private static WebDriver webDriver = null;
     
-    public static WebDriver CreateWebDriver() {
+    public static WebDriver CreateSeleniumWebDriver() {
         if (null != webDriver) {
             return webDriver;
         }
@@ -22,7 +22,7 @@ public final class SeleniumWebDriverFactory {
         return webDriver;
     }
     
-    public static void DestroyWebDriver() {
+    public static void DestroySeleniumWebDriver() {
         webDriver.close();
         webDriver = null;
     }
