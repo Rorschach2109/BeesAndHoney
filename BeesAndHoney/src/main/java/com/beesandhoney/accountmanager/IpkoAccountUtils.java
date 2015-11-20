@@ -20,6 +20,7 @@ public class IpkoAccountUtils {
     public static final String JS_ACCOUNTS_SECTION_COMMAND;
     public static final String JS_ACCOUNT_DETAILS_COMMAND;
     public static final String JS_HISTORY_COMMAND;
+    public static final String JS_LOGOUT_COMMAND;
     
     static
     {
@@ -56,6 +57,11 @@ public class IpkoAccountUtils {
                 + ".getElementById('leftmenu')"
                 + ".childNodes[3]"
                 + ".childNodes[2]"
+                + ".click();";
+        JS_LOGOUT_COMMAND = "document"
+                + ".getElementById('inteligomenu')"
+                + ".children[1]"
+                + ".children[1]"
                 + ".click();";
     }
     
