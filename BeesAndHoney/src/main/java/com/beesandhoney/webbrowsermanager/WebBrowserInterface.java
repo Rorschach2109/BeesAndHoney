@@ -16,7 +16,7 @@ public interface WebBrowserInterface {
     public void CreateWebDriver();
     public void DestroyWebDriver();
 
-    public void LogInToAccount(String clientId, String password);
+    public void LogIntoAccount(String clientId, String password);
     public void LogOutFromAccount();
     
     public ArrayList<String> GetAccountsAmount();

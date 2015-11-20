@@ -27,7 +27,7 @@ public abstract class SeleniumWebBrowser implements WebBrowserInterface {
     }
     
     @Override
-    public void LogInToAccount(String clientId, String password) {
+    public void LogIntoAccount(String clientId, String password) {
         EnterLoginPage();
         try {
             InsertClientId(clientId);
