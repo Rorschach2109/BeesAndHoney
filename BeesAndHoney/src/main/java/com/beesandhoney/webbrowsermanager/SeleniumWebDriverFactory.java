@@ -16,7 +16,7 @@ public final class SeleniumWebDriverFactory {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         
         firefoxProfile.setPreference(WebBrowserUtils.USER_AGENT_PREFERENCE_STRING, 
-                WebBrowserUtils.WEB_BROWSER_USER_AGENT);
+                WebBrowserUtils.WEB_BROWSER_USER_AGENT_STRING);
         webDriver = new FirefoxDriver(firefoxProfile);
 
         return webDriver;

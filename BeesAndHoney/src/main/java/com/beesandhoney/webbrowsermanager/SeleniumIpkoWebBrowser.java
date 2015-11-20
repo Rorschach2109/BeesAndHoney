@@ -29,6 +29,10 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
         }
         
         ReturnToHomePage();
+
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
+        jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNTS_SECTION_COMMAND);
+        
         System.out.println(GetContentTableFieldText());
         
         return new ArrayList<>();
@@ -71,7 +75,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
                 By.name(IpkoAccountUtils.FIELD_CONTENT_TABLE_TAG)
         ).get(1);
         
-        System.out.println(contentTable.getText());
+        System.out.println(contentTable.getAttribute(WebBrowserUtils.INNER_HTML_STRING));
 
         return "";
     }
@@ -143,6 +147,6 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
         WebElement contentTable = webDriver.findElement(
                 By.name(IpkoAccountUtils.FIELD_CONTENT_TABLE_TAG)
         );
-        return contentTable.getText();
+        return contentTable.getAttribute(WebBrowserUtils.INNER_HTML_STRING);
     }
 }
