@@ -6,6 +6,7 @@
 package com.beesandhoney.webbrowsermanager;
 
 import com.beesandhoney.accountmanager.IpkoAccountUtils;
+import com.beesandhoney.htmlparser.HtmlParserInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,8 @@ import org.openqa.selenium.WebElement;
  */
 public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
 
-    public SeleniumIpkoWebBrowser() {
+    public SeleniumIpkoWebBrowser(HtmlParserInterface htmlParser) {
+        super(htmlParser);
     }
     
     @Override
@@ -33,7 +35,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
         JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
         jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNTS_SECTION_COMMAND);
         
-        System.out.println(GetContentTableFieldText());
+        htmlParser.GetAccountAmounts(GetContentTableFieldHtml());
         
         return new ArrayList<>();
     }
@@ -50,7 +52,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
         jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNTS_SECTION_COMMAND);
         jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNT_DETAILS_COMMAND);
         
-        System.out.println(GetContentTableFieldText());
+        System.out.println(GetContentTableFieldHtml());
         
         return new HashMap<>();
     }
@@ -139,7 +141,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
         return IpkoAccountUtils.LOGIN_PAGE;
     }
     
-    private String GetContentTableFieldText() {
+    private String GetContentTableFieldHtml() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return "";
         }

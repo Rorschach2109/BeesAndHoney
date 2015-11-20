@@ -5,6 +5,7 @@
  */
 package com.beesandhoney.webbrowsermanager;
 
+import com.beesandhoney.htmlparser.HtmlParserInterface;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -21,9 +22,15 @@ public abstract class SeleniumWebBrowser implements WebBrowserInterface {
     protected SeleniumWebBrowser.WebDriverStatus webDriverStatus = 
             SeleniumWebBrowser.WebDriverStatus.UNLOGGED;
     protected WebDriver webDriver;
+    protected HtmlParserInterface htmlParser;
     
     {
         webDriver = null;
+        htmlParser = null;
+    }
+
+    public SeleniumWebBrowser(HtmlParserInterface htmlParser) {
+        this.htmlParser = htmlParser;
     }
     
     @Override

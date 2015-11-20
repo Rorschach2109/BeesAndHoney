@@ -5,6 +5,7 @@
  */
 package com.beesandhoney.webbrowsermanager;
 
+import com.beesandhoney.htmlparser.HtmlParserInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,8 @@ import java.util.Map;
  */
 public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
 
-    public SeleniumBzwbkWebBrowser() {
+    public SeleniumBzwbkWebBrowser(HtmlParserInterface htmlParser) {
+        super(htmlParser);
     }
 
     @Override
