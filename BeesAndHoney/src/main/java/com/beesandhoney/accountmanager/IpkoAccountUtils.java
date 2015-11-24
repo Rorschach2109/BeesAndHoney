@@ -15,6 +15,9 @@ public final class IpkoAccountUtils {
     public static final String FIELD_HISTORY_END_DATE_TAG;
     public static final String FIELD_HISTORY_FILTER_BUTTON_TAG;
     
+    public static final String FIELD_ACCOUNT_NUMBER_TAG;
+    public static final String FIELD_ACCOUNT_STATE_TAG;
+    
     public static final String JS_HOME_PAGE_COMMAND;
     public static final String JS_LOGIN_COMMAND;
     public static final String JS_ACCOUNTS_SECTION_COMMAND;
@@ -32,6 +35,9 @@ public final class IpkoAccountUtils {
         FIELD_HISTORY_FROM_DATE_TAG = "beg_date";
         FIELD_HISTORY_END_DATE_TAG = "end_date";
         FIELD_HISTORY_FILTER_BUTTON_TAG = "btn_filter";
+        
+        FIELD_ACCOUNT_NUMBER_TAG = "tableSubsection";
+        FIELD_ACCOUNT_STATE_TAG = "tableSubsectionSummaryTd";
         
         JS_HOME_PAGE_COMMAND = "document"
                 + ".getElementById('mainmenu')"

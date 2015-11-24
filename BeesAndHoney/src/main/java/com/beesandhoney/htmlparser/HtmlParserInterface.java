@@ -10,7 +10,7 @@ package com.beesandhoney.htmlparser;
  * @author azazello
  */
 public interface HtmlParserInterface {
-    public void GetAccountAmounts(String accountAmountsSection);
+    public void GetAccountState(String accountAmountsSection);
     public void GetAccountInformation(String accountInformationSection);
     public void GetAccountHistory(String accountHistoryInformation);
 }

@@ -34,8 +34,9 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
 
         JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
         jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNTS_SECTION_COMMAND);
+        htmlParser.GetAccountState(webDriver.getPageSource());
         
-        htmlParser.GetAccountAmounts(GetContentTableFieldHtml());
+//        htmlParser.GetAccountAmounts(GetContentTableFieldHtml());
         
         return new ArrayList<>();
     }
