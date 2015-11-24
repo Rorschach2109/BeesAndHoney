@@ -5,7 +5,7 @@
  */
 package com.beesandhoney.accountmanager;
 
-public class IpkoAccountUtils {
+public final class IpkoAccountUtils {
     public static final String LOGIN_PAGE;
     
     public static final String FIELD_CLIENT_ID_TAG;

@@ -15,7 +15,7 @@ import org.jsoup.select.Elements;
  *
  * @author azazello
  */
-public class JsoupHtmlParser implements HtmlParserInterface {
+public final class JsoupHtmlParser implements HtmlParserInterface {
     
     @Override
     public void GetAccountAmounts(String accountAmountsSection) {

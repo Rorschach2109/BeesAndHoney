@@ -34,7 +34,7 @@ public abstract class SeleniumWebBrowser implements WebBrowserInterface {
     }
     
     @Override
-    public void LogIntoAccount(String clientId, String password) {
+    public final void LogIntoAccount(String clientId, String password) {
         EnterLoginPage();
         try {
             InsertClientId(clientId);
@@ -47,7 +47,7 @@ public abstract class SeleniumWebBrowser implements WebBrowserInterface {
     }
     
     @Override
-    public void LogOutFromAccount() {
+    public final void LogOutFromAccount() {
         try {
             LogOut();
             webDriverStatus = SeleniumWebBrowser.WebDriverStatus.UNLOGGED;
@@ -57,18 +57,18 @@ public abstract class SeleniumWebBrowser implements WebBrowserInterface {
     }
     
     @Override
-    public void CreateWebDriver() {
+    public final void CreateWebDriver() {
         webDriver = SeleniumWebDriverFactory.CreateSeleniumWebDriver();
     }
     
     @Override
-    public void DestroyWebDriver() {
+    public final void DestroyWebDriver() {
         SeleniumWebDriverFactory.DestroySeleniumWebDriver();
         webDriverStatus = SeleniumWebBrowser.WebDriverStatus.UNLOGGED;
         webDriver = null;
     }
     
-    protected void EnterLoginPage() {
+    protected final void EnterLoginPage() {
         if (null == webDriver) {
             return;
         }

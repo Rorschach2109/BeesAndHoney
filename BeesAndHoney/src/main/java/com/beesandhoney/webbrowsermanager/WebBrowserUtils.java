@@ -9,7 +9,7 @@ package com.beesandhoney.webbrowsermanager;
  *
  * @author azazello
  */
-public class WebBrowserUtils {
+public final class WebBrowserUtils {
     
     public static String USER_AGENT_PREFERENCE_STRING;
     public static String WEB_BROWSER_USER_AGENT_STRING;
