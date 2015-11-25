@@ -25,6 +25,8 @@ public final class IpkoAccountUtils {
     public static final String JS_HISTORY_COMMAND;
     public static final String JS_LOGOUT_COMMAND;
     
+    public static final String PATTERN_ACCOUNT_NUMBER;
+    
     static
     {
         LOGIN_PAGE = "https://www.ipko.pl";
@@ -69,6 +71,8 @@ public final class IpkoAccountUtils {
                 + ".children[1]"
                 + ".children[1]"
                 + ".click();";
+        
+        PATTERN_ACCOUNT_NUMBER = "Umowa do rachunku (.*)";
     }
     
     private IpkoAccountUtils() {
