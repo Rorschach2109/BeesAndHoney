@@ -5,6 +5,7 @@
  */
 package com.beesandhoney.webbrowsermanager;
 
+import com.beesandhoney.datamanager.AccountState;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public interface WebBrowserInterface {
     public void LogIntoAccount(String clientId, String password);
     public void LogOutFromAccount();
     
-    public ArrayList<String> GetAccountsAmount();
+    public ArrayList<AccountState> GetAccountsAmount();
     public Map<String, String> GetAccountInformation();
     public String GetAccountHistorySection();
 }

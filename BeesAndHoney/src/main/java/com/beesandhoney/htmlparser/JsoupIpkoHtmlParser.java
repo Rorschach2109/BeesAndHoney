@@ -6,9 +6,11 @@
 package com.beesandhoney.htmlparser;
 
 import com.beesandhoney.accountmanager.IpkoAccountUtils;
+import com.beesandhoney.datamanager.AccountState;
+import com.beesandhoney.datamanager.DataManagerFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,10 +20,10 @@ import org.jsoup.select.Elements;
  *
  * @author azazello
  */
-public final class JsoupIpkoHtmlParser implements HtmlParserInterface {
+public final class JsoupIpkoHtmlParser extends HtmlParserInterface {
     
     @Override
-    public void GetAccountState(String accountAmountsSection) {
+    public ArrayList<AccountState> GetAccountState(String accountAmountsSection) {
         Document doc = Jsoup.parse(accountAmountsSection);
         Elements accountNumberList = doc.getElementsByClass(
                 IpkoAccountUtils.FIELD_ACCOUNT_NUMBER_TAG
@@ -30,29 +32,13 @@ public final class JsoupIpkoHtmlParser implements HtmlParserInterface {
                 IpkoAccountUtils.FIELD_ACCOUNT_STATE_TAG
         );
         
-        Pattern accountNumberPattern = Pattern.compile("Umowa do rachunku (.*)");
+        HashMap<String, ArrayList<String>> accountsStateMap = 
+                GetAccountsStateMap(accountNumberList, accountsInformationList);
         
-        for (int accountNumberListIndex = 0; 
-                accountNumberListIndex < accountNumberList.size(); 
-                ++accountNumberListIndex) {
-            
-            Matcher m = accountNumberPattern.matcher(
-                    accountNumberList.get(accountNumberListIndex).text()
-            );
-            
-            if (m.find()) {
-                System.out.println(m.group(1));
-            }
-            int startIndex = accountNumberListIndex * 3;
-            List<Element> list = accountsInformationList.subList(
-                    startIndex, startIndex + 3);
-            list.stream().forEach((e) -> {
-                System.out.println(e.text());
-            });
-        }
-
+        ArrayList<AccountState> accountStateList = 
+                DataManagerFactory.CreateAccountStateList(accountsStateMap);
         
-//        System.out.println(accountAmountsSection);
+        return accountStateList;
     }
     
     @Override
@@ -63,5 +49,36 @@ public final class JsoupIpkoHtmlParser implements HtmlParserInterface {
     @Override
     public void GetAccountHistory(String accountHistoryInformation) {
         
+    }
+    
+    private HashMap<String, ArrayList<String>> GetAccountsStateMap(
+            Elements accountNumberList, Elements accountsInformationList) {
+        
+        HashMap<String, ArrayList<String>> accountsStateMap = new HashMap<>();
+        
+        for (int accountNumberListIndex = 0; 
+                accountNumberListIndex < accountNumberList.size(); 
+                ++accountNumberListIndex) {
+            
+            String accountNumber = GetValueFromPattern(
+                    IpkoAccountUtils.PATTERN_ACCOUNT_NUMBER,
+                    accountNumberList.get(accountNumberListIndex).text()
+            );
+            
+            if (!accountNumber.isEmpty()) {
+                int startIndex = accountNumberListIndex * 3;
+                List<Element> accountStateElementList = accountsInformationList.subList(
+                        startIndex, startIndex + 3);
+                
+                ArrayList<String> accountStateStringList = new ArrayList<>();
+                accountStateElementList.forEach((accountStateElement) -> {
+                    accountStateStringList.add(accountStateElement.text());
+                });
+                
+                accountsStateMap.put(accountNumber, accountStateStringList);
+            }
+        }
+        
+        return accountsStateMap;
     }
 }

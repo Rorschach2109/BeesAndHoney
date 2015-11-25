@@ -6,6 +6,7 @@
 package com.beesandhoney.webbrowsermanager;
 
 import com.beesandhoney.accountmanager.IpkoAccountUtils;
+import com.beesandhoney.datamanager.AccountState;
 import com.beesandhoney.htmlparser.HtmlParserInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
     }
     
     @Override
-    public ArrayList<String> GetAccountsAmount() {
+    public ArrayList<AccountState> GetAccountsAmount() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return new ArrayList<>();
         }
@@ -34,11 +35,8 @@ public final class SeleniumIpkoWebBrowser extends SeleniumWebBrowser {
 
         JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
         jsExecutor.executeScript(IpkoAccountUtils.JS_ACCOUNTS_SECTION_COMMAND);
-        htmlParser.GetAccountState(webDriver.getPageSource());
         
-//        htmlParser.GetAccountAmounts(GetContentTableFieldHtml());
-        
-        return new ArrayList<>();
+        return htmlParser.GetAccountState(webDriver.getPageSource());
     }
     
     @Override

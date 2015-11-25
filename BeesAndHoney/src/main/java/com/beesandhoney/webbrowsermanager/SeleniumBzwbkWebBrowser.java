@@ -5,6 +5,7 @@
  */
 package com.beesandhoney.webbrowsermanager;
 
+import com.beesandhoney.datamanager.AccountState;
 import com.beesandhoney.htmlparser.HtmlParserInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ public final class SeleniumBzwbkWebBrowser extends SeleniumWebBrowser {
     }
 
     @Override
-    public ArrayList<String> GetAccountsAmount() {
+    public ArrayList<AccountState> GetAccountsAmount() {
         if (null == webDriver || WebDriverStatus.UNLOGGED == webDriverStatus) {
             return new ArrayList<>();
         }
