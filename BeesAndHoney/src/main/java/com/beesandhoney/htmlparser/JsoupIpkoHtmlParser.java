@@ -23,8 +23,8 @@ import org.jsoup.select.Elements;
 public final class JsoupIpkoHtmlParser extends HtmlParserInterface {
     
     @Override
-    public ArrayList<AccountState> GetAccountState(String accountAmountsSection) {
-        Document doc = Jsoup.parse(accountAmountsSection);
+    public ArrayList<AccountState> GetAccountState(String accountAmountsPage) {
+        Document doc = Jsoup.parse(accountAmountsPage);
         Elements accountNumberList = doc.getElementsByClass(
                 IpkoAccountUtils.FIELD_ACCOUNT_NUMBER_TAG
         );
@@ -42,8 +42,14 @@ public final class JsoupIpkoHtmlParser extends HtmlParserInterface {
     }
     
     @Override
-    public void GetAccountInformation(String accountInformationSection) {
+    public void GetAccountInformation(String accountInformationPage) {
+        Document doc = Jsoup.parse(accountInformationPage);
+        Element contentTable = doc.getElementById("content");
         
+        HashMap<String, String> accountInformationMap = 
+                GetAccountInformationMap(contentTable.text());
+        
+        DataManagerFactory.CreateAccountInformation(accountInformationMap);
     }
     
     @Override
@@ -60,10 +66,10 @@ public final class JsoupIpkoHtmlParser extends HtmlParserInterface {
                 accountNumberListIndex < accountNumberList.size(); 
                 ++accountNumberListIndex) {
             
-            String accountNumber = GetValueFromPattern(
+            String accountNumber = GetValuesListFromPattern(
                     IpkoAccountUtils.PATTERN_ACCOUNT_NUMBER,
                     accountNumberList.get(accountNumberListIndex).text()
-            );
+            ).get(0);
             
             if (!accountNumber.isEmpty()) {
                 int startIndex = accountNumberListIndex * 3;
@@ -80,5 +86,23 @@ public final class JsoupIpkoHtmlParser extends HtmlParserInterface {
         }
         
         return accountsStateMap;
+    }
+    
+    private HashMap<String, String> GetAccountInformationMap(String content) {
+        ArrayList<String> accountInformationList = GetValuesListFromPattern(
+                IpkoAccountUtils.PATTERN_ACCOUNT_INFORMATION, content
+        );
+        
+        HashMap<String, String> accountInformationMap = new HashMap<>();
+        int nameEndIndex = accountInformationList.get(0).lastIndexOf(" ");
+
+        accountInformationMap.put("AccountOwnerName", accountInformationList.get(0).substring(0, nameEndIndex));
+        accountInformationMap.put("AccountOwnerSurname", accountInformationList.get(0).substring(nameEndIndex + 1));
+        accountInformationMap.put("AccountAddressOwner", accountInformationList.get(1));
+        accountInformationMap.put("AccountAddress", accountInformationList.get(2));
+        
+        System.out.println(accountInformationMap);
+        
+        return accountInformationMap;
     }
 }

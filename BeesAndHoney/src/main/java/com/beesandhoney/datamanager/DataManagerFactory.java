@@ -5,7 +5,6 @@
  */
 package com.beesandhoney.datamanager;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -34,5 +33,10 @@ public final class DataManagerFactory {
         });
         
         return accountStateList;
+    }
+    
+    public static AccountInformation CreateAccountInformation(
+            HashMap<String, String> accountInformationMap) {
+        return new AccountInformation();
     }
 }

@@ -19,16 +19,21 @@ public abstract class HtmlParserInterface {
     public abstract void GetAccountInformation(String accountInformationSection);
     public abstract void GetAccountHistory(String accountHistoryInformation);
     
-    protected final String GetValueFromPattern(String pattern, String text) {
+    protected final ArrayList<String> GetValuesListFromPattern(String pattern, 
+            String text) {
         Pattern accountNumberPattern = Pattern.compile(pattern);
 
         Matcher matcher = accountNumberPattern.matcher(text);
         
-        String accountNumber = "";
+        ArrayList<String> returnValue = new ArrayList<>();
         if (matcher.find()) {
-            accountNumber = matcher.group(1);
+            for (int matcherGroupIndex = 1; 
+                    matcherGroupIndex <= matcher.groupCount(); 
+                    ++matcherGroupIndex) {
+                returnValue.add(matcher.group(matcherGroupIndex));
+            }
         }
         
-        return accountNumber;
+        return returnValue;
     }
 }

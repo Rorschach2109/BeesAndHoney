@@ -26,6 +26,7 @@ public final class IpkoAccountUtils {
     public static final String JS_LOGOUT_COMMAND;
     
     public static final String PATTERN_ACCOUNT_NUMBER;
+    public static final String PATTERN_ACCOUNT_INFORMATION;
     
     static
     {
@@ -73,6 +74,8 @@ public final class IpkoAccountUtils {
                 + ".click();";
         
         PATTERN_ACCOUNT_NUMBER = "Umowa do rachunku (.*)";
+        PATTERN_ACCOUNT_INFORMATION = ".* Nazwa klienta  (.*) Typ.* "
+                + "Nazwa  (.*) Adres  (.*) Wyciągi";
     }
     
     private IpkoAccountUtils() {
