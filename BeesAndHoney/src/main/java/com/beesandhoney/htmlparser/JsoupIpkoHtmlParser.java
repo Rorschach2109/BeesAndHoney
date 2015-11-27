@@ -45,7 +45,6 @@ public final class JsoupIpkoHtmlParser extends HtmlParserInterface {
     public void GetAccountInformation(String accountInformationPage) {
         Document doc = Jsoup.parse(accountInformationPage);
         Element contentTable = doc.getElementById("content");
-        
         HashMap<String, String> accountInformationMap = 
                 GetAccountInformationMap(contentTable.text());
         
@@ -94,12 +93,15 @@ public final class JsoupIpkoHtmlParser extends HtmlParserInterface {
         );
         
         HashMap<String, String> accountInformationMap = new HashMap<>();
-        int nameEndIndex = accountInformationList.get(0).lastIndexOf(" ");
-
-        accountInformationMap.put("AccountOwnerName", accountInformationList.get(0).substring(0, nameEndIndex));
-        accountInformationMap.put("AccountOwnerSurname", accountInformationList.get(0).substring(nameEndIndex + 1));
-        accountInformationMap.put("AccountAddressOwner", accountInformationList.get(1));
-        accountInformationMap.put("AccountAddress", accountInformationList.get(2));
+        
+        accountInformationMap.put("AccountNumber", accountInformationList.get(0));
+        accountInformationMap.put("AccountName", accountInformationList.get(1));
+        
+        int nameEndIndex = accountInformationList.get(2).lastIndexOf(" ");
+        accountInformationMap.put("AccountOwnerName", accountInformationList.get(2).substring(0, nameEndIndex));
+        accountInformationMap.put("AccountOwnerSurname", accountInformationList.get(2).substring(nameEndIndex + 1));
+        accountInformationMap.put("AccountAddressOwner", accountInformationList.get(3));
+        accountInformationMap.put("AccountAddress", accountInformationList.get(4));
         
         System.out.println(accountInformationMap);
         

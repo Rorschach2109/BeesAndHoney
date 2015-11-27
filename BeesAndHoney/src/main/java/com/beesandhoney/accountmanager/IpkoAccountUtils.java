@@ -74,8 +74,10 @@ public final class IpkoAccountUtils {
                 + ".click();";
         
         PATTERN_ACCOUNT_NUMBER = "Umowa do rachunku (.*)";
-        PATTERN_ACCOUNT_INFORMATION = ".* Nazwa klienta  (.*) Typ.* "
-                + "Nazwa  (.*) Adres  (.*) Wyciągi";
+        PATTERN_ACCOUNT_INFORMATION = "Wybrany rachunek   (.*) Nazwa: (.*) "
+                + "Środki dostępne:.*Limit dzienny:.*Środki dostępne:.*Nazwa "
+                + "klienta  (.*) Typ relacji  Właściciel Dane adresowe Nazwa  "
+                + "(.*) Adres  (.*) Wyciągi";
     }
     
     private IpkoAccountUtils() {
