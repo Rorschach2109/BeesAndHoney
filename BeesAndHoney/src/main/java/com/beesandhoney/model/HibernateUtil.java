@@ -7,8 +7,8 @@ package com.beesandhoney.model;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
 public class HibernateUtil {
 
@@ -17,8 +17,8 @@ public class HibernateUtil {
     static {
         try {
             Configuration configuration = new Configuration().configure();
-            ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
-                configuration.getProperties()).buildServiceRegistry();
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+                configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
