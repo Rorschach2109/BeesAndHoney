@@ -8,67 +8,41 @@ package com.beesandhoney.controller;
 import com.beesandhoney.utils.validator.AbstractTextValidator;
 import com.beesandhoney.utils.validator.LoginValidator;
 import com.beesandhoney.utils.validator.PasswordValidator;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import com.beesandhoney.view.BeesAndHoney;
+import com.beesandhoney.view.LoginView;
 
-public final class LoginController {
+public final class LoginController implements IController {
     
-    @FXML
-    private TextField loginField;
-    @FXML
-    private PasswordField passwordField;
-    @FXML
-    private Button enterButton;
-    
-    private final int PASSWORD_MIN_LENGTH;
-    
-    public LoginController() {
-        this.PASSWORD_MIN_LENGTH = 8;
-    }
-    
-    @FXML
-    private void handlePasswordKeyReleased() {
-        System.out.println("com.beesandhoney.controller.LoginController.handlePasswordKeyReleased()");;
-    }
-    
-    @FXML
-    private void handleEnterButtonReleased(KeyEvent keyEvent) {
-        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            logIn();
-        }
-    }
-    
-    @FXML void handleEnterButtonClicked() {
-        logIn();
-    }
-    
-    private void logIn() {
-        System.out.println("com.beesandhoney.controller.LoginController.logIn()");
+    private LoginView loginView;
+    private BeesAndHoney application;
         
-        if (false == validateInputText(new LoginValidator(), loginField.getText())) {
-            System.out.println("Incorret login");
+    public LoginController(LoginView loginView) {
+        this.loginView = loginView;
+    }
+    
+    public void logIn(String login, String password) {
+        this.loginView.cleanErrorLabels();
+        
+        if (false == validateInputText(new LoginValidator(), login)) {
+            this.loginView.handleIncorrectLogin();
             return;
         }
         
-        if (false == validateInputText(new PasswordValidator(), passwordField.getText())) {
-            System.out.println("Incorret password");
+        if (false == validateInputText(new PasswordValidator(), password)) {
+            this.loginView.handleIncorrectPassword();
             return;
         }
         
-        System.out.println("Everything OK");
+        this.application.handleSuccessfulLogin();
+    }
+    
+    @Override
+    public void setApplication(BeesAndHoney application) {
+        this.application = application;
     }
     
     private boolean validateInputText(AbstractTextValidator inputTextValidator, 
             String inputText) {
         return inputTextValidator.validateText(inputText);
-    }
-    
-    @FXML
-    private void initialize() {
-        System.out.println("[AK] initialize");
     }
 }
