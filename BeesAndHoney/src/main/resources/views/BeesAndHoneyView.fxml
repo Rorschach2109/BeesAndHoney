@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="8.0" layoutY="5.0" text="Current User:" />
+            <Label fx:id="currentUserLabel" layoutX="106.0" layoutY="5.0" />
+            <Label layoutX="264.0" layoutY="5.0" text="Last access date:" />
+            <Label fx:id="lastAccessDateLabel" layoutX="385.0" layoutY="5.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <TabPane prefHeight="369.0" prefWidth="582.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Banking Book">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="336.0" prefWidth="544.0" />
+            </content>
+          </Tab>
+          <Tab text="Configure">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
