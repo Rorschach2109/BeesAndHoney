@@ -5,15 +5,12 @@
  */
 package com.beesandhoney.model;
 
-import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
 public class BankAccountLogin implements java.io.Serializable {
@@ -22,9 +19,6 @@ public class BankAccountLogin implements java.io.Serializable {
     private int clientId;
     private String loginPassword;
     private String bankAccountLoginAlias;
-    
-    @Temporal(TemporalType.DATE)
-    private Date accessDate;
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Bank bank;
@@ -35,7 +29,6 @@ public class BankAccountLogin implements java.io.Serializable {
     public BankAccountLogin() {
         this.clientId = 0;
         this.loginPassword = "";
-        this.accessDate = null;
         this.bank = null;
         this.bankAccounts = null;
     }
@@ -67,14 +60,6 @@ public class BankAccountLogin implements java.io.Serializable {
     
     public void setBankAccountLoginAlias(String bankAccountLoginAlias) {
         this.bankAccountLoginAlias = bankAccountLoginAlias;
-    }
-    
-    public Date getAccessDate() {
-        return accessDate;
-    }
-    
-    public void setAccessDate(Date accessDate) {
-        this.accessDate = accessDate;
     }
     
     public Bank getBank() {
