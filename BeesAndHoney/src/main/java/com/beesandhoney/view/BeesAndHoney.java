@@ -14,14 +14,18 @@ import javafx.stage.Stage;
 
 public class BeesAndHoney extends Application {
     
-    private Stage primaryStage;
+    private Stage currentStage;
     
     private IView currentView;
+
+    private String userLogin;
 
     private final String BAH_VIEW_RESOURCE_PATH;
     private final String LOGIN_VIEW_RESOURCE_PATH;
     
     {
+        userLogin = "";
+        
         BAH_VIEW_RESOURCE_PATH = "views/BeesAndHoneyView.fxml";
         LOGIN_VIEW_RESOURCE_PATH = "views/LoginView.fxml";
     }
@@ -32,55 +36,65 @@ public class BeesAndHoney extends Application {
         
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-
-        configureStage();
+        this.currentStage = primaryStage;
         startBeesAndHoney();
     }
     
     public void startBeesAndHoney() {
-        try {
-            Pane loginLayout = loadLayout(LOGIN_VIEW_RESOURCE_PATH);
-            Scene scene = new Scene(loginLayout);
-            this.primaryStage.setScene(scene);
-            this.primaryStage.setResizable(false);
-            this.primaryStage.show();
-            
-        } catch (IOException e) {
-        }
+        changeStage(LOGIN_VIEW_RESOURCE_PATH);
     }
     
-    public void handleSuccessfulLogin() {
-        Stage newStage = new Stage();
+    public Scene getCurrentScene() {
+        return this.currentStage.getScene();
+    }
+    
+    public void handleSuccessfulLogin(String userLogin) {
         System.out.println("com.beesandhoney.view.BeesAndHoney.handleSuccessfulLogin()");
-        try {
-            Pane bahLayout = loadLayout(BAH_VIEW_RESOURCE_PATH);
-//            changeScene(new Scene(bahLayout));
-            this.primaryStage.close();
-            newStage.setScene(new Scene(bahLayout));
-            newStage.show();
-            
-            
-        } catch (IOException e) {
-//            e.printStackTrace();
-            
+        this.userLogin = userLogin;
+        changeStage(BAH_VIEW_RESOURCE_PATH);
+    }
+    
+    public String getUserLogin() {
+        return this.userLogin;
+    }
+    
+    private void changeStage(String viewResourcePath) {
+        System.out.println("com.beesandhoney.view.BeesAndHoney.changeStage(): " + viewResourcePath);
+        Scene stageScene = loadScene(viewResourcePath);
+        if (null == stageScene) {
+            System.out.println("no scene");
+            return;
         }
+        
+        Stage newStage = new Stage();
+        newStage.setScene(stageScene);
+        configureStage(newStage);
+        
+        this.currentStage.close();
+        this.currentStage = newStage;
+        this.currentStage.show();
     }
     
-    private void changeStage(Scene newScene) {
-//        this.primaryStage.close();
-        this.primaryStage.setScene(newScene);
-        this.primaryStage.show();
+    private void configureStage(Stage stage) {
+        stage.setTitle("BeesAndHoney");
+        stage.setResizable(false);
     }
     
-    private void configureStage() {
-        this.primaryStage.setTitle("BeesAndHoney");
+    private Scene loadScene(String sceneResourcePath) {
+        Pane pane = null;
+        
+        try {
+            pane = loadLayout(sceneResourcePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+        return new Scene(pane);
     }
     
     private Pane loadLayout(String viewResourcePath) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        System.out.println("[AK] " + getClass().getClassLoader()
-            .getResource(viewResourcePath));
         fxmlLoader.setLocation(getClass().getClassLoader()
             .getResource(viewResourcePath));
         
