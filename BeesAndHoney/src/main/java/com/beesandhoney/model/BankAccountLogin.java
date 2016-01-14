@@ -21,6 +21,7 @@ public class BankAccountLogin implements java.io.Serializable {
     @Id
     private int clientId;
     private String loginPassword;
+    private String bankAccountLoginAlias;
     
     @Temporal(TemporalType.DATE)
     private Date accessDate;
@@ -58,6 +59,14 @@ public class BankAccountLogin implements java.io.Serializable {
     
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword;
+    }
+    
+    public String getBankAccountLoginAlias() {
+        return bankAccountLoginAlias;
+    }
+    
+    public void setBankAccountLoginAlias(String bankAccountLoginAlias) {
+        this.bankAccountLoginAlias = bankAccountLoginAlias;
     }
     
     public Date getAccessDate() {
