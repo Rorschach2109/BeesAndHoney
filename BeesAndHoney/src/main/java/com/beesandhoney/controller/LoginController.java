@@ -23,26 +23,26 @@ public final class LoginController implements IController {
     public void logIn(String login, String password) {
         this.loginView.cleanErrorLabels();
         
-        if (false == validateInputText(new LoginValidator(), login)) {
-            this.loginView.handleIncorrectLogin();
-            return;
-        }
+//        if (false == validateInputText(new LoginValidator(), login)) {
+//            this.loginView.handleIncorrectLogin();
+//            return;
+//        }
+//        
+//        if (false == validateInputText(new PasswordValidator(), password)) {
+//            this.loginView.handleIncorrectPassword();
+//            return;
+//        }
         
-        if (false == validateInputText(new PasswordValidator(), password)) {
-            this.loginView.handleIncorrectPassword();
-            return;
-        }
-        
-        this.application.handleSuccessfulLogin();
-    }
-    
-    @Override
-    public void setApplication(BeesAndHoney application) {
-        this.application = application;
+        this.application.handleSuccessfulLogin(login);
     }
     
     private boolean validateInputText(AbstractTextValidator inputTextValidator, 
             String inputText) {
         return inputTextValidator.validateText(inputText);
+    }
+    
+    @Override
+    public void setApplication(BeesAndHoney application) {
+        this.application = application;
     }
 }
