@@ -17,6 +17,7 @@ public class Bank implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int bankId;
     private String bankName;
+    private String bankUrl;
     
     public int getBankId() {
         return bankId;
@@ -32,5 +33,13 @@ public class Bank implements java.io.Serializable {
     
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+    
+    public String getBankUrl() {
+        return bankUrl;
+    }
+    
+    public void setBankUrl(String bankUrl) {
+        this.bankUrl = bankUrl;
     }
 }
