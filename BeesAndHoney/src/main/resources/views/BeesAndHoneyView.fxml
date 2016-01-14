@@ -4,25 +4,52 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.collections.*?>
+<?import com.beesandhoney.model.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
    <bottom>
       <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="8.0" layoutY="5.0" text="Current User:" />
             <Label fx:id="currentUserLabel" layoutX="106.0" layoutY="5.0" />
-            <Label layoutX="264.0" layoutY="5.0" text="Last access date:" />
-            <Label fx:id="lastAccessDateLabel" layoutX="385.0" layoutY="5.0" />
+            <Label layoutX="196.0" layoutY="5.0" text="Last access date:" />
+            <Label fx:id="lastAccessDateLabel" layoutX="317.0" layoutY="5.0" />
          </children>
       </AnchorPane>
    </bottom>
    <center>
       <TabPane prefHeight="369.0" prefWidth="582.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-          <Tab text="Banking Book">
+          <Tab fx:id="bankingBookTab" text="Banking Book">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="336.0" prefWidth="544.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="336.0" prefWidth="544.0">
+                     <children>
+                        <TableView fx:id="bankingBookTable" prefHeight="343.0" prefWidth="423.0">
+                          <columns>
+                            <TableColumn maxWidth="141.0" minWidth="141.0" prefWidth="141.0" text="Alias">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="alias" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="141.0" minWidth="141.0" prefWidth="141.0" text="Balance">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="balance" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="141.0" minWidth="141.0" prefWidth="141.0" text="Available Funds">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="availableFunds" />
+                                </cellValueFactory>
+                            </TableColumn>
+                          </columns>
+                        </TableView>
+                        <Button fx:id="detailsButton" layoutX="467.0" layoutY="188.0" maxWidth="127.0" minWidth="127.0" mnemonicParsing="false" onMouseClicked="#handleDetailsButtonClicked" prefWidth="127.0" text="Details" />
+                        <Button fx:id="refreshButton" layoutX="467.0" layoutY="225.0" maxWidth="127.0" minWidth="127.0" mnemonicParsing="false" onMouseClicked="#handleRefreshButtonClicked" prefWidth="127.0" text="Refresh" />
+                        <Button fx:id="deleteButton" layoutX="467.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#handleDeleteButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Delete" />
+                        <Button fx:id="addButton" layoutX="467.0" layoutY="272.0" mnemonicParsing="false" onMouseClicked="#handleAddButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Add" />
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Configure">
