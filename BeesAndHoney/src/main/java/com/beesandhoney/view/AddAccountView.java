@@ -7,26 +7,33 @@ package com.beesandhoney.view;
 
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.utils.ObservableInterface;
-import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.ArrayList;
+import javafx.fxml.FXML;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
-public class DecisionView implements IView, ObservableInterface {
+public class AddAccountView implements IView, ObservableInterface{
     
     boolean decisionResult;
     ArrayList<ObserverInterface> observers;
     
-    public DecisionView() {
-        this.observers = new ArrayList<>();
+    @FXML
+    TextField accountloginAliasField;
+    @FXML
+    TextField bankNameField;
+    @FXML
+    TextField clientIdField;
+    @FXML
+    PasswordField passwordField;
+    
+    public AddAccountView() {
         this.decisionResult = false;
+        this.observers = new ArrayList<>();
     }
-    
-    public boolean getDecisionResult() {
-        return this.decisionResult;
-    }
-    
+
     @Override
     public void cleanUp() {
     }
@@ -35,29 +42,29 @@ public class DecisionView implements IView, ObservableInterface {
     public IController getController() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
     @Override
     public void registerObserver(ObserverInterface observer) {
         this.observers.add(observer);
     }
-    
+
     @Override
     public void deleteObserver(ObserverInterface observer) {
         this.observers.remove(observer);
     }
-    
+
     @Override
     public void notifyObservers() {
         for (ObserverInterface observer : this.observers) {
             observer.update();
         }
-    }    
+    }
     
     private void setDecisionResult(boolean decisionResult) {
         this.decisionResult = decisionResult;
         notifyObservers();
     }
-    
+        
     @FXML
     private void handleCancelButtonReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -71,14 +78,14 @@ public class DecisionView implements IView, ObservableInterface {
     }
     
     @FXML
-    private void handleAgreeButtonReleased(KeyEvent keyEvent) {
+    private void handleSaveButtonReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             setDecisionResult(true);
         }
     }
     
     @FXML
-    private void handleAgreeButtonClicked() {
+    private void handleSaveButtonClicked() {
         setDecisionResult(true);
     }
 }
