@@ -20,7 +20,7 @@
       </AnchorPane>
    </bottom>
    <center>
-      <TabPane prefHeight="369.0" prefWidth="582.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="419.0" prefWidth="690.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="bankingBookTab" text="Banking Book">
             <content>
@@ -33,12 +33,12 @@
                                     <PropertyValueFactory property="alias" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn maxWidth="141.0" minWidth="141.0" prefWidth="141.0" text="Balance">
+                            <TableColumn maxWidth="141.0" minWidth="84.0" prefWidth="93.0" text="Bank Name">
                                 <cellValueFactory>
-                                    <PropertyValueFactory property="balance" />
+                                    <PropertyValueFactory property="bankName" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn maxWidth="141.0" minWidth="141.0" prefWidth="141.0" text="Available Funds">
+                            <TableColumn maxWidth="198.0" minWidth="141.0" prefWidth="189.0" text="Available Funds">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="availableFunds" />
                                 </cellValueFactory>

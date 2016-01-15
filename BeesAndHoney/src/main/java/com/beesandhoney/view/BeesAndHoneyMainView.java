@@ -83,7 +83,9 @@ public class BeesAndHoneyMainView implements IView {
         System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.handleAddButtonClicked()");
         this.mainController.handleAddBankingBookItem();
 //        ObservableList<BankingBookModel> data = this.bankingBookTable.getItems();
-//        data.add(new BankingBookModel("a", "b", "c"));
+//        data.add(new BankingBookModel("a", "b", "c", 1));
+//        data.add(new BankingBookModel("a", "b", "c", 2));
+//        data.add(new BankingBookModel("a", "b", "c", 3));
     }
     
     @FXML
