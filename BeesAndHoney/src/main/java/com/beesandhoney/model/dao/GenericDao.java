@@ -13,5 +13,6 @@ public interface GenericDao <T, PK extends java.io.Serializable> {
     public void update(T transientObject);
     public void delete(T persistentObject);
     
+    public void createOrUpdate(T instance);
     public List<T> readAll();
 }

@@ -39,6 +39,11 @@ public class GenericDaoHibernateImpl <T, PK extends java.io.Serializable>
     }
     
     @Override
+    public void createOrUpdate(T instance) {
+        HibernateSessionUtil.getSession().saveOrUpdate(instance);
+    }
+    
+    @Override
     public List<T> readAll() {
         Session currentSession = HibernateSessionUtil.getSession();
         return (List<T>) currentSession.createCriteria(type).list();
