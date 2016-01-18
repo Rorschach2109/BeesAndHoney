@@ -16,7 +16,7 @@ public final class ModelFactory {
         return new Bank(bankName, bankUrl);
     }
     
-    public static BankAccount createBankAccoutModel(int accountNumber,
+    public static BankAccount createBankAccountModel(int accountNumber,
             String accountName, double availableSources, 
             double accoutnBalance) {
         
@@ -25,7 +25,7 @@ public final class ModelFactory {
         );
     }
     
-    public static BankAccountLogin createBankAccountLogin(int clientId,
+    public static BankAccountLogin createBankAccountLogin(String clientId,
             String loginPassword, String bankAccountLoginAlias) {
         
         return new BankAccountLogin(

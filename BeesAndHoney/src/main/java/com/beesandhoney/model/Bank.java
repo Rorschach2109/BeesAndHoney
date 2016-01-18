@@ -6,16 +6,12 @@
 package com.beesandhoney.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Bank implements java.io.Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bankId;
     private String bankName;
     private String bankUrl;
     
@@ -26,14 +22,6 @@ public class Bank implements java.io.Serializable {
     public Bank(String bankName, String bankUrl) {
         this.bankName = bankName;
         this.bankUrl = bankUrl;
-    }
-    
-    public int getBankId() {
-        return bankId;
-    }
-    
-    public void setBankId(int bankId) {
-        this.bankId = bankId;
     }
     
     public String getBankName() {

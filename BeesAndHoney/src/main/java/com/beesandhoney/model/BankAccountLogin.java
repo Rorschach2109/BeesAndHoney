@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 public class BankAccountLogin implements java.io.Serializable {
     
     @Id
-    private int clientId;
+    private String clientId;
     private String loginPassword;
     private String bankAccountLoginAlias;
     
@@ -27,10 +27,10 @@ public class BankAccountLogin implements java.io.Serializable {
     private Set<BankAccount> bankAccounts;
     
     public BankAccountLogin() {
-        this(-1, "", "");
+        this("", "", "");
     }
     
-    public BankAccountLogin(int clientId, String loginPassword,
+    public BankAccountLogin(String clientId, String loginPassword,
             String bankAccountLoginAlias) {
         this.clientId = clientId;
         this.loginPassword = loginPassword;
@@ -39,11 +39,11 @@ public class BankAccountLogin implements java.io.Serializable {
         this.bankAccounts = null;
     }
     
-    public int getClientId() {
+    public String getClientId() {
         return clientId;
     }
     
-    public void setClientId(int clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
     
