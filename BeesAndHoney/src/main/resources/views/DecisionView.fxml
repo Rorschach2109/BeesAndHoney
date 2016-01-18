@@ -5,15 +5,14 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.DecisionView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="121.0" prefWidth="278.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.DecisionView">
    <children>
       <Label layoutX="13.0" layoutY="20.0" prefHeight="59.0" prefWidth="253.0" text="Do you want to remove selected item?" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="cancelButton" layoutX="109.0" layoutY="97.0" mnemonicParsing="false" onKeyReleased="#handleCancelButtonReleased" onMouseClicked="#handleCancelButtonPressed" text="Cancel" />
-      <Button fx:id="agreeButton" layoutX="186.0" layoutY="97.0" mnemonicParsing="false" onKeyReleased="#handleAgreeButtonReleased" onMouseClicked="#handleAgreeButtonClicked" text="Agree" />
+      <Button fx:id="cancelButton" layoutX="129.0" layoutY="84.0" mnemonicParsing="false" onKeyReleased="#handleCancelButtonReleased" onMouseClicked="#handleCancelButtonPressed" text="Cancel" />
+      <Button fx:id="agreeButton" layoutX="209.0" layoutY="84.0" mnemonicParsing="false" onKeyReleased="#handleAgreeButtonReleased" onMouseClicked="#handleAgreeButtonClicked" text="Agree" />
    </children>
 </AnchorPane>
