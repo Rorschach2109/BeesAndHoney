@@ -6,7 +6,6 @@
 package com.beesandhoney.view;
 
 import com.beesandhoney.controller.IController;
-import com.beesandhoney.utils.ObservableInterface;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class AddAccountView implements IView, ObservableInterface{
+public class AddAccountView implements IObservableView {
     
     boolean decisionResult;
     ArrayList<ObserverInterface> observers;

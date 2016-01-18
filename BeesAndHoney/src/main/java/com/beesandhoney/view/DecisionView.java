@@ -6,14 +6,13 @@
 package com.beesandhoney.view;
 
 import com.beesandhoney.controller.IController;
-import com.beesandhoney.utils.ObservableInterface;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.ArrayList;
 
-public class DecisionView implements IView, ObservableInterface {
+public class DecisionView implements IObservableView {
     
     boolean decisionResult;
     ArrayList<ObserverInterface> observers;
