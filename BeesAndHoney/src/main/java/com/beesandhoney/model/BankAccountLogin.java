@@ -27,15 +27,16 @@ public class BankAccountLogin implements java.io.Serializable {
     private Set<BankAccount> bankAccounts;
     
     public BankAccountLogin() {
-        this.clientId = 0;
-        this.loginPassword = "";
-        this.bank = null;
-        this.bankAccounts = null;
+        this(-1, "", "");
     }
     
-    public BankAccountLogin(int clientId, String loginPassword) {
+    public BankAccountLogin(int clientId, String loginPassword,
+            String bankAccountLoginAlias) {
         this.clientId = clientId;
         this.loginPassword = loginPassword;
+        this.bankAccountLoginAlias = bankAccountLoginAlias;
+        this.bank = null;
+        this.bankAccounts = null;
     }
     
     public int getClientId() {

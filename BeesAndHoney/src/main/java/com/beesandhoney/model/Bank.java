@@ -19,6 +19,15 @@ public class Bank implements java.io.Serializable {
     private String bankName;
     private String bankUrl;
     
+    public Bank() {
+        this("", "");
+    }
+    
+    public Bank(String bankName, String bankUrl) {
+        this.bankName = bankName;
+        this.bankUrl = bankUrl;
+    }
+    
     public int getBankId() {
         return bankId;
     }

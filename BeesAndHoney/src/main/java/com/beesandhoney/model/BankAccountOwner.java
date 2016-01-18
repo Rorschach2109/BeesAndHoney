@@ -22,14 +22,14 @@ public class BankAccountOwner implements java.io.Serializable {
     private Set<BankAccount> bankAccounts;
 
     public BankAccountOwner() {
-        this.bankAccountOwnerKey = null;
-        this.ownerAddress = "";
+        this(new BankAccountOwnerKey(), "");
     }
 
     public BankAccountOwner(BankAccountOwnerKey bankAccountOwnerKey, 
             String ownerAddress) {
         this.bankAccountOwnerKey = bankAccountOwnerKey;
         this.ownerAddress = ownerAddress;
+        this.bankAccounts = null;
     }
 
     public BankAccountOwnerKey getBankAccountOwnerKey() {

@@ -22,8 +22,12 @@ public class BeesAndHoneyUser implements java.io.Serializable {
     private Date accessDate;
     
     public BeesAndHoneyUser() {
-        this.userName = "";
-        this.userNamePassword = "";
+        this("", "");
+    }
+    
+    public BeesAndHoneyUser(String userName, String userNamePassword) {
+        this.userName = userName;
+        this.userNamePassword = userNamePassword;
         this.accessDate = null;
     }
     

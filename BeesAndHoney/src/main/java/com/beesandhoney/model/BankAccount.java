@@ -26,20 +26,17 @@ public class BankAccount implements java.io.Serializable {
     BankAccountOwner bankAccountOwner;
     
     public BankAccount() {
-        this.accountNumber = 0;
-        this.accountName = "";
-        this.availableSources = 0.0;
-        this.accountBalance = 0.0;
-        this.bankAccountLogin = null;
-        this.bankAccountOwner = null;
+        this(-1, "", 0.0, 0.0);
     }
     
-    public BankAccount(int accountNumber, String accountName,
+    public BankAccount(int accountNumber, String accountName, 
             double availableSources, double accoutnBalance) {
         this.accountNumber = accountNumber;
         this.accountName = accountName;
         this.availableSources = availableSources;
         this.accountBalance = accoutnBalance;
+        this.bankAccountLogin = null;
+        this.bankAccountOwner = null;
     }
 
     public int getAccountNumber() {
