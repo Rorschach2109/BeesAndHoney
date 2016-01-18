@@ -5,6 +5,10 @@
  */
 package com.beesandhoney.view;
 
+import com.beesandhoney.model.Bank;
+import com.beesandhoney.model.dao.BankDao;
+import com.beesandhoney.utils.constants.BankConstants;
+import com.beesandhoney.utils.hibernate.HibernateSessionUtil;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -49,9 +53,18 @@ public class BeesAndHoney extends Application {
     }
     
     public void handleSuccessfulLogin(String userLogin) {
-        System.out.println("com.beesandhoney.view.BeesAndHoney.handleSuccessfulLogin()");
         this.userLogin = userLogin;
         changeStage(BAH_VIEW_RESOURCE_PATH);
+        
+        BankDao dao = new BankDao();
+        
+        HibernateSessionUtil.openSessionWithTransaction();
+        
+        for (Bank bank : BankConstants.bankModelList) {
+            dao.createOrUpdate(bank);
+        }
+        
+        HibernateSessionUtil.closeSessionWithTransaction();
     }
     
     public String getUserLogin() {
@@ -59,7 +72,6 @@ public class BeesAndHoney extends Application {
     }
     
     private void changeStage(String viewResourcePath) {
-        System.out.println("com.beesandhoney.view.BeesAndHoney.changeStage(): " + viewResourcePath);
         Scene stageScene = loadScene(viewResourcePath);
         if (null == stageScene) {
             System.out.println("no scene");

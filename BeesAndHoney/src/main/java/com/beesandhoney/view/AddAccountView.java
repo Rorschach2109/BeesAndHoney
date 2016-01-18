@@ -7,8 +7,10 @@ package com.beesandhoney.view;
 
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.utils.ObserverInterface;
+import com.beesandhoney.utils.constants.BankConstants;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -20,9 +22,9 @@ public class AddAccountView implements IObservableView {
     ArrayList<ObserverInterface> observers;
     
     @FXML
-    TextField accountloginAliasField;
+    TextField accountLoginAliasField;
     @FXML
-    TextField bankNameField;
+    ChoiceBox<String> bankNameChoiceBox;
     @FXML
     TextField clientIdField;
     @FXML
@@ -31,6 +33,22 @@ public class AddAccountView implements IObservableView {
     public AddAccountView() {
         this.decisionResult = false;
         this.observers = new ArrayList<>();
+    }
+    
+    public String getAccountAlias() {
+        return accountLoginAliasField.getText();
+    }
+    
+    public String getBankName() {
+        return bankNameChoiceBox.getValue();
+    }
+    
+    public String getClientId() {
+        return clientIdField.getText();
+    }
+    
+    public String getPassword() {
+        return passwordField.getText();
     }
 
     @Override
@@ -72,7 +90,7 @@ public class AddAccountView implements IObservableView {
     }
     
     @FXML
-    private void handleCancelButtonPressed() {
+    private void handleCancelButtonClicked() {
         setDecisionResult(false);
     }
     
@@ -86,5 +104,10 @@ public class AddAccountView implements IObservableView {
     @FXML
     private void handleSaveButtonClicked() {
         setDecisionResult(true);
+    }
+    
+    @FXML
+    private void initialize() {
+        this.bankNameChoiceBox.setItems(BankConstants.bankNameList);
     }
 }

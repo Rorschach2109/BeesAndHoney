@@ -5,14 +5,19 @@
  */
 package com.beesandhoney.statemachine;
 
+import com.beesandhoney.controller.BeesAndHoneyMainController;
+
 public class AddAccountStageState implements SecondStageStateInterface {
 
-    public AddAccountStageState() {
-        
+    private BeesAndHoneyMainController controller;
+    
+    public AddAccountStageState(BeesAndHoneyMainController controller) {
+        this.controller = controller;
     }
     
     @Override
     public void handleBeforeExit() {
+        this.controller.insertAccount();
     }
     
 }
