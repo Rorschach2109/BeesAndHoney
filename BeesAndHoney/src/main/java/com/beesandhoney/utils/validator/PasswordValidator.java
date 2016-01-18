@@ -7,9 +7,11 @@ package com.beesandhoney.utils.validator;
 
 public final class PasswordValidator extends AbstractTextValidator {
     
+    private final int PASSWORD_MIN_LENGTH = 8;
+    
     @Override
     public boolean validateText(String password) {
-        boolean checkerResult = validLength(password) &&
+        boolean checkerResult = validLength(password, PASSWORD_MIN_LENGTH) &&
                 validLetters(password) &&
                 containsCapitalLetter(password) &&
                 containsSmallLetter(password) && 

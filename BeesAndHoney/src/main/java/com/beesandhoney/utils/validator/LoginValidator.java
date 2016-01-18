@@ -7,8 +7,11 @@ package com.beesandhoney.utils.validator;
 
 public final class LoginValidator extends AbstractTextValidator {
     
+    private final int LOGIN_MIN_LENGTH = 1;
+    
     @Override
     public boolean validateText(String login) {
-        return validLetters(login);
+        return validLength(login, LOGIN_MIN_LENGTH) &&
+                validLetters(login);
     }
 }
