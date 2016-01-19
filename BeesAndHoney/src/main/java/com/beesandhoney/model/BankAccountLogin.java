@@ -16,9 +16,8 @@ import javax.persistence.OneToMany;
 public class BankAccountLogin implements java.io.Serializable {
     
     @Id
-    private String clientId;
+    private BankAccountLoginKey bankAccountLoginKey;
     private String loginPassword;
-    private String bankAccountLoginAlias;
     
     @ManyToOne(cascade = CascadeType.ALL)
     private Bank bank;
@@ -32,19 +31,19 @@ public class BankAccountLogin implements java.io.Serializable {
     
     public BankAccountLogin(String clientId, String loginPassword,
             String bankAccountLoginAlias) {
-        this.clientId = clientId;
+        this.bankAccountLoginKey = new BankAccountLoginKey(clientId, 
+                bankAccountLoginAlias);
         this.loginPassword = loginPassword;
-        this.bankAccountLoginAlias = bankAccountLoginAlias;
         this.bank = null;
         this.bankAccounts = null;
     }
     
-    public String getClientId() {
-        return clientId;
+    public BankAccountLoginKey getBankAccountLoginKey() {
+        return bankAccountLoginKey;
     }
     
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
+    public void setBankAccountLoginKey(BankAccountLoginKey bankAccountLoginKey) {
+        this.bankAccountLoginKey = bankAccountLoginKey;
     }
     
     public String getLoginPassword() {
@@ -53,14 +52,6 @@ public class BankAccountLogin implements java.io.Serializable {
     
     public void setLoginPassword(String loginPassword) {
         this.loginPassword = loginPassword;
-    }
-    
-    public String getBankAccountLoginAlias() {
-        return bankAccountLoginAlias;
-    }
-    
-    public void setBankAccountLoginAlias(String bankAccountLoginAlias) {
-        this.bankAccountLoginAlias = bankAccountLoginAlias;
     }
     
     public Bank getBank() {
