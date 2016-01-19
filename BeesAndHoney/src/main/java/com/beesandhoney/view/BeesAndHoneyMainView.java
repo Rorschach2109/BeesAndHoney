@@ -67,9 +67,9 @@ public class BeesAndHoneyMainView implements IView {
     }
     
     @FXML
-    private void handleDetailsButtonClicked() {
+    private void handleEditButtonClicked() {
         System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.handleDetailsButtonClicked()");
-        this.mainController.handleShowBankingBookItemDetails(getBankingBookTableSelectedIndex());
+        this.mainController.handleEditBankingBookItem(getBankingBookTableSelectedIndex());
     }
     
     @FXML
