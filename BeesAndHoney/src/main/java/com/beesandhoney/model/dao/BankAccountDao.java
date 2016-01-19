@@ -12,10 +12,25 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, Integer> {
+public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, Integer> {
     
-    public BankAccountDao() {
+    private static BankAccountDao instance;
+    
+    static
+    {
+        instance = null;
+    }
+    
+    private BankAccountDao() {
         super(BankAccount.class);
+    }
+    
+    public static BankAccountDao getInstance() {
+        if (null == instance) {
+            instance = new BankAccountDao();
+        }
+        
+        return instance;
     }
     
     public List<BankAccount> findByOwnerKey(String ownerName, String ownerSurname) {

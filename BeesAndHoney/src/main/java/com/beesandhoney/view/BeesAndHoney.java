@@ -7,6 +7,7 @@ package com.beesandhoney.view;
 
 import com.beesandhoney.model.Bank;
 import com.beesandhoney.model.dao.BankDao;
+import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.constants.BankConstants;
 import com.beesandhoney.utils.hibernate.HibernateSessionUtil;
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class BeesAndHoney extends Application {
         this.userLogin = userLogin;
         changeStage(BAH_VIEW_RESOURCE_PATH);
         
-        BankDao dao = new BankDao();
+        BankDao dao = DaoModelFactory.getBankDaoInstance();
         
         HibernateSessionUtil.openSessionWithTransaction();
         

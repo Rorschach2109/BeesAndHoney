@@ -5,16 +5,20 @@
  */
 package com.beesandhoney.model.dao;
 
+import com.beesandhoney.utils.ObservableInterface;
+import com.beesandhoney.utils.ObserverInterface;
 import com.beesandhoney.utils.hibernate.HibernateSessionUtil;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 
 public class GenericDaoHibernateImpl <T, PK extends java.io.Serializable> 
-        implements GenericDao<T, PK> {
+        implements GenericDao<T, PK>, ObservableInterface {
     
     protected final Class<T> type;
+    private ArrayList<ObserverInterface> observers;
     
-    public GenericDaoHibernateImpl(Class<T> type) {
+    protected GenericDaoHibernateImpl(Class<T> type) {
         this.type = type;
     }
 
@@ -47,5 +51,22 @@ public class GenericDaoHibernateImpl <T, PK extends java.io.Serializable>
     public List<T> readAll() {
         Session currentSession = HibernateSessionUtil.getSession();
         return (List<T>) currentSession.createCriteria(type).list();
+    }
+
+    @Override
+    public void registerObserver(ObserverInterface observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void deleteObserver(ObserverInterface observer) {
+        this.observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (ObserverInterface observer : this.observers) {
+            observer.update();
+        }
     }
 }

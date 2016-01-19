@@ -10,6 +10,7 @@ import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.ModelFactory;
 import com.beesandhoney.model.dao.BankAccountLoginDao;
 import com.beesandhoney.model.dao.BankDao;
+import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.statemachine.AddAccountStageState;
 import com.beesandhoney.statemachine.DecisionStageState;
 import com.beesandhoney.statemachine.DetailsStageState;
@@ -85,7 +86,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         AddAccountView addAccountView = (AddAccountView) this.observableView;
         BankAccountLogin bankAccountLogin = getBankAccountLogin(addAccountView);
         
-        BankAccountLoginDao dao = new BankAccountLoginDao();
+        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
         System.out.println(dao.create(bankAccountLogin));
         
         HibernateSessionUtil.closeSessionWithTransaction();
@@ -143,7 +144,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
                 addAccountView.getAccountAlias()
         );
         
-        BankDao bankDao = new BankDao();
+        BankDao bankDao = DaoModelFactory.getBankDaoInstance();
         Bank bank = bankDao.findByName(addAccountView.getBankName());
         
         bankAccountLogin.setBank(bank);

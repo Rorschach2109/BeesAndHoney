@@ -14,8 +14,23 @@ import org.hibernate.criterion.Restrictions;
 
 public class BankAccountLoginDao extends GenericDaoHibernateImpl<BankAccountLogin, Integer> {
     
-    public BankAccountLoginDao() {
+    private static BankAccountLoginDao instance;
+    
+    static
+    {
+        instance = null;
+    }
+    
+    private BankAccountLoginDao() {
         super(BankAccountLogin.class);
+    }
+    
+    public static BankAccountLoginDao getInstance() {
+        if (null == instance) {
+            instance = new BankAccountLoginDao();
+        }
+        
+        return instance;
     }
     
     public List<BankAccountLogin> findByBankName(String bankName) {
