@@ -12,10 +12,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-/**
- *
- * @author azazello
- */
 public class BankAccountLoginDao extends GenericDaoHibernateImpl<BankAccountLogin, Integer> {
     
     public BankAccountLoginDao() {

@@ -20,10 +20,10 @@ public class BankAccount implements java.io.Serializable {
     private double accountBalance;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    BankAccountLogin bankAccountLogin;
+    private BankAccountLogin bankAccountLogin;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    BankAccountOwner bankAccountOwner;
+    private BankAccountOwner bankAccountOwner;
     
     public BankAccount() {
         this(-1, "", 0.0, 0.0);

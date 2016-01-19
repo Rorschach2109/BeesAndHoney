@@ -20,16 +20,16 @@ public class BeesAndHoneyMainView implements IView {
     private final BeesAndHoneyMainController mainController;
     
     @FXML
-    BorderPane mainView;
+    private BorderPane mainView;
     
     @FXML
-    Label currentUserLabel;
+    private Label currentUserLabel;
     
     @FXML
-    Label lastAccessDateLabel;
+    private Label lastAccessDateLabel;
     
     @FXML
-    TableView<BankingBookModel> bankingBookTable;
+    private TableView<BankingBookModel> bankingBookTable;
     
     public BeesAndHoneyMainView() {
         System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.<init>()");

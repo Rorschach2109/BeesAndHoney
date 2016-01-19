@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class DecisionView implements IObservableView {
     
+    private ArrayList<ObserverInterface> observers;
     boolean decisionResult;
-    ArrayList<ObserverInterface> observers;
     
     public DecisionView() {
         this.observers = new ArrayList<>();

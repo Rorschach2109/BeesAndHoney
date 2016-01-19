@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class DetailsView implements IObservableView {
     
-    ArrayList<ObserverInterface> observers;
+    private ArrayList<ObserverInterface> observers;
     
     @FXML
     private AnchorPane detailsPane;
