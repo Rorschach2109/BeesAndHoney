@@ -56,9 +56,9 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         this.mainView.setCurrentUser(this.application.getUserLogin());
     }
     
-    public void handleShowBankingBookItemDetails(int selectedItemIndex) {
-        this.currentState = new DetailsStageState();
-        showSecondStage(DETAILS_VIEW_RESOURCE_PATH);
+    public void handleEditBankingBookItem(int selectedItemIndex) {
+//        this.currentState = new DetailsStageState();
+//        showSecondStage(DETAILS_VIEW_RESOURCE_PATH);
     }
     
     public void handleRefreshBankingBookTable() {
