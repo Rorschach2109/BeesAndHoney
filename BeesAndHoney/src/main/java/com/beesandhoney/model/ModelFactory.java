@@ -42,11 +42,9 @@ public final class ModelFactory {
     }
     
     public static BankingBookModel createBankingBookModel(String alias, 
-            String bankName, String availableFunds, int accountNumber) {
+            String bankName, int accountNumber) {
         
-        return new BankingBookModel(
-                alias, bankName, availableFunds, accountNumber
-        );
+        return new BankingBookModel(alias, bankName, accountNumber);
     }
     
     public static BeesAndHoneyUser createBeesAndHoneyUser(String userName, 
