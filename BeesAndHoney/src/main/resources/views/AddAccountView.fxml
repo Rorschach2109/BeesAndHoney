@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="209.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.AddAccountView">
    <children>
@@ -24,12 +24,17 @@
             <Label text="Client Id" GridPane.rowIndex="2" />
             <Label text="Password" GridPane.rowIndex="3" />
             <TextField fx:id="accountLoginAliasField" GridPane.columnIndex="1" />
-            <ChoiceBox fx:id="bankNameChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="bankNameChoiceBox" prefHeight="26.0" prefWidth="81.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="clientIdField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
       <Button layoutX="260.0" layoutY="169.0" mnemonicParsing="false" onKeyReleased="#handleCancelButtonReleased" onMouseClicked="#handleCancelButtonClicked" text="Cancel" />
       <Button layoutX="340.0" layoutY="169.0" mnemonicParsing="false" onKeyReleased="#handleSaveButtonReleased" onMouseClicked="#handleSaveButtonClicked" text="Save" />
+      <Label fx:id="errorLabel" layoutX="14.0" layoutY="164.0" prefHeight="26.0" prefWidth="101.0" text="Fill all fields!" textFill="#d31414" visible="false">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

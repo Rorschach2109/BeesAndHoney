@@ -5,12 +5,14 @@
  */
 package com.beesandhoney.view;
 
+import com.beesandhoney.controller.AddAccountController;
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.utils.ObserverInterface;
 import com.beesandhoney.utils.constants.BankConstants;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -18,39 +20,49 @@ import javafx.scene.input.KeyEvent;
 
 public class AddAccountView implements IObservableView {
     
-    boolean decisionResult;
-    ArrayList<ObserverInterface> observers;
+    private AddAccountController controller;
+    
+    private boolean decisionResult;
+    private ArrayList<ObserverInterface> observers;
     
     @FXML
-    TextField accountLoginAliasField;
+    private TextField accountLoginAliasField;
     @FXML
-    ChoiceBox<String> bankNameChoiceBox;
+    private ChoiceBox<String> bankNameChoiceBox;
     @FXML
-    TextField clientIdField;
+    private TextField clientIdField;
     @FXML
-    PasswordField passwordField;
+    private PasswordField passwordField;
+    @FXML
+    private Label errorLabel;
+    
     
     public AddAccountView() {
+        this.controller = new AddAccountController(this);
         this.decisionResult = false;
         this.observers = new ArrayList<>();
     }
     
+    public boolean getDecisionResult() {
+        return this.decisionResult;
+    }
+    
     public String getAccountAlias() {
-        return accountLoginAliasField.getText();
+        return this.accountLoginAliasField.getText();
     }
     
     public String getBankName() {
-        return bankNameChoiceBox.getValue();
+        return this.bankNameChoiceBox.getValue();
     }
     
     public String getClientId() {
-        return clientIdField.getText();
+        return this.clientIdField.getText();
     }
     
     public String getPassword() {
-        return passwordField.getText();
+        return this.passwordField.getText();
     }
-
+    
     @Override
     public void cleanUp() {
     }
@@ -77,11 +89,25 @@ public class AddAccountView implements IObservableView {
         }
     }
     
+    private void saveAccountLogin() {
+        if (true == this.controller.validateInput()) {
+            setDecisionResult(true);
+        } else {
+            setErrorLabelVisibility(true);
+        }
+    }
+    
     private void setDecisionResult(boolean decisionResult) {
+        setErrorLabelVisibility(false);
+        
         this.decisionResult = decisionResult;
         notifyObservers();
     }
-        
+    
+    private void setErrorLabelVisibility(boolean visible) {
+        this.errorLabel.setVisible(visible);
+    }
+    
     @FXML
     private void handleCancelButtonReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -97,13 +123,13 @@ public class AddAccountView implements IObservableView {
     @FXML
     private void handleSaveButtonReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            setDecisionResult(true);
+            saveAccountLogin();
         }
     }
     
     @FXML
     private void handleSaveButtonClicked() {
-        setDecisionResult(true);
+        saveAccountLogin();
     }
     
     @FXML

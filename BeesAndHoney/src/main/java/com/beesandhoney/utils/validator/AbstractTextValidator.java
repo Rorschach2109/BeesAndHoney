@@ -18,7 +18,7 @@ public abstract class AbstractTextValidator {
     public abstract boolean validateText(String text);
     
     protected final boolean validLength(String text, int minimalLength) {
-        return minimalLength < text.length();
+        return minimalLength <= text.length();
     }
     
     protected final boolean validLetters(String text) {
