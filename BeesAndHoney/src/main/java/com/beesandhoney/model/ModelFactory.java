@@ -42,7 +42,7 @@ public final class ModelFactory {
     }
     
     public static BankingBookModel createBankingBookModel(String alias, 
-            String bankName, int accountNumber) {
+            String bankName, String accountNumber) {
         
         return new BankingBookModel(alias, bankName, accountNumber);
     }

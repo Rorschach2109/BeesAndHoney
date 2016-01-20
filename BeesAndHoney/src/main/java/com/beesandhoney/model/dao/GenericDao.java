@@ -7,12 +7,12 @@ package com.beesandhoney.model.dao;
 
 import java.util.List;
 
-public interface GenericDao <T, PK extends java.io.Serializable> {
-    public PK create(T newInstance);
-    public T read(PK primaryKey);
-    public void update(T transientObject);
-    public void delete(T persistentObject);
+public interface GenericDao <T, PK extends java.io.Serializable, S> {
+    public PK create(T newInstance, S session);
+    public T read(PK primaryKey, S session);
+    public void update(T transientObject, S session);
+    public void delete(T persistentObject, S session);
     
-    public void createOrUpdate(T instance);
-    public List<T> readAll();
+    public void createOrUpdate(T instance, S session);
+    public List<T> readAll(S session);
 }

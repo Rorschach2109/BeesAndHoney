@@ -6,7 +6,6 @@
 package com.beesandhoney.model.dao;
 
 import com.beesandhoney.model.BankAccountLogin;
-import com.beesandhoney.utils.hibernate.HibernateSessionUtil;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -33,9 +32,8 @@ public class BankAccountLoginDao extends GenericDaoHibernateImpl<BankAccountLogi
         return instance;
     }
     
-    public List<BankAccountLogin> findByBankName(String bankName) {
-        Session currentSession = HibernateSessionUtil.getSession();
-        Criteria criteria = currentSession.createCriteria(type)
+    public List<BankAccountLogin> findByBankName(String bankName, Session session) {
+        Criteria criteria = session.createCriteria(type)
                 .createCriteria("bank", "bank")
                     .add(Restrictions.eq("bank.bankName", bankName));
         return (List<BankAccountLogin>) criteria.list();

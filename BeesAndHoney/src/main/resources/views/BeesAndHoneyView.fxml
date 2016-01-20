@@ -26,14 +26,14 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="342.0" prefWidth="460.0">
                      <children>
-                        <TableView fx:id="bankingBookTable" prefHeight="343.0" prefWidth="337.0">
+                        <TableView fx:id="bankingBookTable" prefHeight="343.0" prefWidth="338.0">
                           <columns>
                             <TableColumn maxWidth="297.0" minWidth="141.0" prefWidth="227.0" text="Alias">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="alias" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn maxWidth="141.0" minWidth="7.0" prefWidth="109.0" text="Bank Name">
+                            <TableColumn maxWidth="141.0" minWidth="7.0" prefWidth="109.0" resizable="false" text="Bank Name">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="bankName" />
                                 </cellValueFactory>

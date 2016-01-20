@@ -13,44 +13,44 @@ import java.util.List;
 import org.hibernate.Session;
 
 public class GenericDaoHibernateImpl <T, PK extends java.io.Serializable> 
-        implements GenericDao<T, PK>, ObservableInterface {
+        implements GenericDao<T, PK, Session>, ObservableInterface {
     
     protected final Class<T> type;
     private ArrayList<ObserverInterface> observers;
     
     protected GenericDaoHibernateImpl(Class<T> type) {
         this.type = type;
+        this.observers = new ArrayList<>();
     }
 
     @Override
-    public PK create(T newInstance) {
-        return (PK) HibernateSessionUtil.getSession().save(newInstance);
+    public PK create(T newInstance, Session session) {
+        return (PK) session.save(newInstance);
     }
     
     @Override
-    public T read(PK primaryKey) {
-        return (T) HibernateSessionUtil.getSession().get(type, primaryKey);
+    public T read(PK primaryKey, Session session) {
+        return (T) session.get(type, primaryKey);
     }
     
     @Override
-    public void update(T transientObject) {
-        HibernateSessionUtil.getSession().update(transientObject);
+    public void update(T transientObject, Session session) {
+        session.update(transientObject);
     }
     
     @Override
-    public void delete(T persistentObject) {
-        HibernateSessionUtil.getSession().delete(persistentObject);
+    public void delete(T persistentObject, Session session) {
+        session.delete(persistentObject);
     }
     
     @Override
-    public void createOrUpdate(T instance) {
-        HibernateSessionUtil.getSession().saveOrUpdate(instance);
+    public void createOrUpdate(T instance, Session session) {
+        session.saveOrUpdate(instance);
     }
     
     @Override
-    public List<T> readAll() {
-        Session currentSession = HibernateSessionUtil.getSession();
-        return (List<T>) currentSession.createCriteria(type).list();
+    public List<T> readAll(Session session) {
+        return (List<T>) session.createCriteria(type).list();
     }
 
     @Override
@@ -68,5 +68,22 @@ public class GenericDaoHibernateImpl <T, PK extends java.io.Serializable>
         for (ObserverInterface observer : this.observers) {
             observer.update();
         }
+    }
+    
+    public Session openSession() {
+        return HibernateSessionUtil.openSession();
+    }
+    
+    public void closeSession(Session session) {
+        HibernateSessionUtil.closeSession(session);
+    }
+    
+    public Session openSessionWithTransaction() {
+        return HibernateSessionUtil.openSessionWithTransaction();
+    }
+    
+    public void closeSessionWithTransaction(Session session) {
+        HibernateSessionUtil.closeSessionWithTransaction(session);
+        notifyObservers();
     }
 }

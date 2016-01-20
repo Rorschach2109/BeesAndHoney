@@ -13,10 +13,8 @@ import com.beesandhoney.model.dao.BankDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.statemachine.AddAccountStageState;
 import com.beesandhoney.statemachine.DecisionStageState;
-import com.beesandhoney.statemachine.DetailsStageState;
 import com.beesandhoney.statemachine.SecondStageStateInterface;
 import com.beesandhoney.utils.ObserverInterface;
-import com.beesandhoney.utils.hibernate.HibernateSessionUtil;
 import com.beesandhoney.view.AddAccountView;
 import com.beesandhoney.view.BeesAndHoney;
 import com.beesandhoney.view.BeesAndHoneyMainView;
@@ -27,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 
 public class BeesAndHoneyMainController implements IController, ObserverInterface {
     
@@ -81,15 +80,15 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     }
     
     public void insertAccount() {
-        HibernateSessionUtil.openSessionWithTransaction();
-        
         AddAccountView addAccountView = (AddAccountView) this.observableView;
         BankAccountLogin bankAccountLogin = getBankAccountLogin(addAccountView);
         
         BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
-        System.out.println(dao.create(bankAccountLogin));
+        Session session = dao.openSessionWithTransaction();
         
-        HibernateSessionUtil.closeSessionWithTransaction();
+        dao.create(bankAccountLogin, session);
+        
+        dao.closeSessionWithTransaction(session);
     }
     
     public void deleteBankingBookItem(int selectedItemIndex) {
@@ -145,7 +144,10 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         );
         
         BankDao bankDao = DaoModelFactory.getBankDaoInstance();
-        Bank bank = bankDao.findByName(addAccountView.getBankName());
+        
+        Session session = bankDao.openSession();
+        Bank bank = bankDao.findByName(addAccountView.getBankName(), session);
+        bankDao.closeSession(session);
         
         bankAccountLogin.setBank(bank);
         

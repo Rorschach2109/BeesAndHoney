@@ -6,7 +6,6 @@
 package com.beesandhoney.model.dao;
 
 import com.beesandhoney.model.BankAccount;
-import com.beesandhoney.utils.hibernate.HibernateSessionUtil;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -33,10 +32,9 @@ public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, I
         return instance;
     }
     
-    public List<BankAccount> findByOwnerKey(String ownerName, String ownerSurname) {
-        Session currentSession = HibernateSessionUtil.getSession();
-        
-        Criteria criteria = currentSession.createCriteria(type)
+    public List<BankAccount> findByOwnerKey(String ownerName, 
+            String ownerSurname, Session session) {
+        Criteria criteria = session.createCriteria(type)
                 .createCriteria("bankAccountOwner", "owner")
                     .add(Restrictions.eq("owner.bankAccountOwnerKey.ownerName", ownerName))
                     .add(Restrictions.eq("owner.bankAccountOwnerKey.ownerSurname", ownerSurname));
@@ -44,10 +42,8 @@ public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, I
         return (List<BankAccount>) criteria.list();
     }
     
-    public List<BankAccount> findByBankName(String bankName) {
-        Session currentSession = HibernateSessionUtil.getSession();
-        
-        Criteria criteria = currentSession.createCriteria(type)
+    public List<BankAccount> findByBankName(String bankName, Session session) {
+        Criteria criteria = session.createCriteria(type)
                 .createCriteria("bankAccountLogin", "accountLogin")
                 .createCriteria("bank", "bank")
                 .add(Restrictions.eq("bank.bankName", bankName));

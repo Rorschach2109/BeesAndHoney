@@ -9,13 +9,13 @@ import com.beesandhoney.model.Bank;
 import com.beesandhoney.model.dao.BankDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.constants.BankConstants;
-import com.beesandhoney.utils.hibernate.HibernateSessionUtil;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 
 public class BeesAndHoney extends Application {
     
@@ -59,13 +59,13 @@ public class BeesAndHoney extends Application {
         
         BankDao dao = DaoModelFactory.getBankDaoInstance();
         
-        HibernateSessionUtil.openSessionWithTransaction();
+        Session session = dao.openSessionWithTransaction();
         
         for (Bank bank : BankConstants.bankModelList) {
-            dao.createOrUpdate(bank);
+            dao.createOrUpdate(bank, session);
         }
         
-        HibernateSessionUtil.closeSessionWithTransaction();
+        dao.closeSessionWithTransaction(session);
     }
     
     public String getUserLogin() {

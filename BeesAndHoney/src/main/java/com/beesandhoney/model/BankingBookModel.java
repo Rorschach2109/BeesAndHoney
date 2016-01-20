@@ -10,16 +10,16 @@ import javafx.beans.property.SimpleStringProperty;
 public class BankingBookModel {
     private SimpleStringProperty alias;
     private SimpleStringProperty bankName;
-    private int accountNumber;
+    private String accountLoginNumber;
 
     public BankingBookModel() {
-        this("", "", -1);
+        this("", "", "");
     }
     
-    public BankingBookModel(String alias, String bankName, int accountNumber) {
+    public BankingBookModel(String alias, String bankName, String accountNumber) {
         this.alias = new SimpleStringProperty(alias);
         this.bankName = new SimpleStringProperty(bankName);
-        this.accountNumber = accountNumber;
+        this.accountLoginNumber = accountNumber;
     }
     
     public String getAlias() {
@@ -30,20 +30,20 @@ public class BankingBookModel {
         this.alias.set(alias);
     }
 
-    public String getBalance() {
+    public String getBankName() {
         return bankName.get();
     }
 
-    public void setBalance(String balance) {
+    public void setBankName(String balance) {
         this.bankName.set(balance);
     }
 
-    public int getAccountNumber() {
-        return accountNumber;
+    public String getAccountLoginNumber() {
+        return accountLoginNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setAccountLoginNumber(String accountLoginNumber) {
+        this.accountLoginNumber = accountLoginNumber;
     }
     
 }

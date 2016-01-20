@@ -6,42 +6,30 @@
 package com.beesandhoney.utils.hibernate;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 
 public class HibernateSessionUtil {
     
-    private static Transaction transaction = null;
-    private static Session currentSession = null;
+    public static Session openSession() {
+        return HibernateUtil.getSessionFactory().openSession();
+    }
     
-    public static void openSession() {
-        if (null == currentSession) {
-            currentSession = HibernateUtil.getSessionFactory().openSession();
+    public static void closeSession(Session session) {
+        if (null != session) {
+            session.close();
         }
     }
     
-    public static void closeSession() {
-        if (null != currentSession) {
-            currentSession.close();
-        }
+    public static Session openSessionWithTransaction() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        return session;
     }
     
-    public static void openSessionWithTransaction() {
-        if (null == currentSession) {
-            currentSession = HibernateUtil.getSessionFactory().openSession();
-            transaction = currentSession.beginTransaction();
+    public static void closeSessionWithTransaction(Session session) {
+        if (null != session) {
+            session.getTransaction().commit();
+            session.close();
         }
-    }
-    
-    public static void closeSessionWithTransaction() {
-        if (null != currentSession) {
-            transaction.commit();
-            currentSession.close();
-            currentSession = null;
-        }
-    }
-    
-    public static Session getSession() {
-        return currentSession;
     }
 }
