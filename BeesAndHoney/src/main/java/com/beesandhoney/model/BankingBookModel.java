@@ -8,18 +8,26 @@ package com.beesandhoney.model;
 import javafx.beans.property.SimpleStringProperty;
 
 public class BankingBookModel {
+    private SimpleStringProperty clientId;
     private SimpleStringProperty alias;
     private SimpleStringProperty bankName;
-    private String accountLoginNumber;
 
     public BankingBookModel() {
         this("", "", "");
     }
     
     public BankingBookModel(String alias, String bankName, String accountNumber) {
+        this.clientId = new SimpleStringProperty(accountNumber);
         this.alias = new SimpleStringProperty(alias);
         this.bankName = new SimpleStringProperty(bankName);
-        this.accountLoginNumber = accountNumber;
+    }
+
+    public String getClientId() {
+        return clientId.get();
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId.set(clientId);
     }
     
     public String getAlias() {
@@ -36,14 +44,5 @@ public class BankingBookModel {
 
     public void setBankName(String balance) {
         this.bankName.set(balance);
-    }
-
-    public String getAccountLoginNumber() {
-        return accountLoginNumber;
-    }
-
-    public void setAccountLoginNumber(String accountLoginNumber) {
-        this.accountLoginNumber = accountLoginNumber;
-    }
-    
+    }    
 }

@@ -7,26 +7,26 @@ package com.beesandhoney.statemachine;
 
 import com.beesandhoney.controller.BeesAndHoneyMainController;
 import com.beesandhoney.model.BankingBookModel;
-import com.beesandhoney.view.DecisionView;
+import com.beesandhoney.view.AddAccountView;
 
-public class DecisionStageState implements SecondStageStateInterface {
+public class EditAccountStageState implements SecondStageStateInterface {
 
     private BeesAndHoneyMainController controller;
-    private BankingBookModel selectedItem;
+    private BankingBookModel bankingBookModel;
     
-    public DecisionStageState(BeesAndHoneyMainController controller, 
-            BankingBookModel selectedItem) {
+    public EditAccountStageState(BeesAndHoneyMainController controller, 
+            BankingBookModel bankingBookModel) {
         this.controller = controller;
-        this.selectedItem = selectedItem;
+        this.bankingBookModel = bankingBookModel;
     }
     
     @Override
     public void handleBeforeExit() {
-        DecisionView decisionView = (DecisionView) this.controller
+        AddAccountView editAccountView = (AddAccountView) this.controller
                 .getCurrentSecondStageView();
         
-        if (decisionView.getDecisionResult()) {
-            this.controller.deleteBankingBookItem(this.selectedItem);
+        if (true == editAccountView.getDecisionResult()) {
+            this.controller.editAccount(bankingBookModel);
         }
     }
     

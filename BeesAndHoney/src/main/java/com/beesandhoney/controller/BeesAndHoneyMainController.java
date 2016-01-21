@@ -7,12 +7,14 @@ package com.beesandhoney.controller;
 
 import com.beesandhoney.model.Bank;
 import com.beesandhoney.model.BankAccountLogin;
+import com.beesandhoney.model.BankingBookModel;
 import com.beesandhoney.model.ModelFactory;
 import com.beesandhoney.model.dao.BankAccountLoginDao;
 import com.beesandhoney.model.dao.BankDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.statemachine.AddAccountStageState;
 import com.beesandhoney.statemachine.DecisionStageState;
+import com.beesandhoney.statemachine.EditAccountStageState;
 import com.beesandhoney.statemachine.SecondStageStateInterface;
 import com.beesandhoney.utils.ObserverInterface;
 import com.beesandhoney.view.AddAccountView;
@@ -39,13 +41,11 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     private static final String ADD_ACCOUNT_VIEW_RESOURCE_PATH;
     private static final String DECISION_VIEW_RESOURCE_PATH;
-    private static final String DETAILS_VIEW_RESOURCE_PATH;
     
     static
     {
         ADD_ACCOUNT_VIEW_RESOURCE_PATH = "views/AddAccountView.fxml";
         DECISION_VIEW_RESOURCE_PATH = "views/DecisionView.fxml";
-        DETAILS_VIEW_RESOURCE_PATH = "views/DetailsView.fxml";
     }
     
     public BeesAndHoneyMainController(BeesAndHoneyMainView mainView) {
@@ -54,11 +54,15 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     public void initialize() {
         this.mainView.setCurrentUser(this.application.getUserLogin());
+        this.mainView.update();
     }
     
-    public void handleEditBankingBookItem(int selectedItemIndex) {
-//        this.currentState = new DetailsStageState();
-//        showSecondStage(DETAILS_VIEW_RESOURCE_PATH);
+    public void handleEditBankingBookItem(BankingBookModel selectedItem) {
+        this.currentState = new EditAccountStageState(this, selectedItem);
+        showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
+        
+        AddAccountView addAccountView = (AddAccountView) this.observableView;
+        addAccountView.fillBankingBookModel(selectedItem);
     }
     
     public void handleRefreshBankingBookTable() {
@@ -70,8 +74,8 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
     }
     
-    public void handleDeleteBankingBookItem(int selectedItemIndex) {
-        this.currentState = new DecisionStageState(this, selectedItemIndex);
+    public void handleDeleteBankingBookItem(BankingBookModel selectedItem) {
+        this.currentState = new DecisionStageState(this, selectedItem);
         showSecondStage(DECISION_VIEW_RESOURCE_PATH);
     }
     
@@ -91,8 +95,38 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         dao.closeSessionWithTransaction(session);
     }
     
-    public void deleteBankingBookItem(int selectedItemIndex) {
-        System.out.println("com.beesandhoney.controller.BeesAndHoneyMainController.deleteBankingBookItem(): " + selectedItemIndex);
+    public void editAccount(BankingBookModel bankingBookModel) {
+        AddAccountView addAccountView = (AddAccountView) this.observableView;
+        BankAccountLogin bankAccountLogin = getBankAccountLogin(addAccountView);
+        
+        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
+        Session session = dao.openSessionWithTransaction();
+        
+        BankAccountLogin oldBankAccountLogin = dao.findByClientIdAndAlias(
+                bankingBookModel.getClientId(),
+                bankingBookModel.getAlias(),
+                session
+        );
+        
+        dao.delete(oldBankAccountLogin, session);
+        dao.create(bankAccountLogin, session);
+        
+        dao.closeSessionWithTransaction(session);
+    }
+    
+    public void deleteBankingBookItem(BankingBookModel bankingBookModel) {
+        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
+        Session session = dao.openSessionWithTransaction();
+        
+        BankAccountLogin oldBankAccountLogin = dao.findByClientIdAndAlias(
+                bankingBookModel.getClientId(),
+                bankingBookModel.getAlias(),
+                session
+        );
+        
+        dao.delete(oldBankAccountLogin, session);
+        
+        dao.closeSessionWithTransaction(session);
     }
     
     @Override

@@ -7,6 +7,7 @@ package com.beesandhoney.view;
 
 import com.beesandhoney.controller.AddAccountController;
 import com.beesandhoney.controller.IController;
+import com.beesandhoney.model.BankingBookModel;
 import com.beesandhoney.utils.ObserverInterface;
 import com.beesandhoney.utils.constants.BankConstants;
 import java.util.ArrayList;
@@ -51,16 +52,34 @@ public class AddAccountView implements IObservableView {
         return this.accountLoginAliasField.getText();
     }
     
+    public void setAccountAlias(String accountAlias) {
+        this.accountLoginAliasField.setText(accountAlias);
+    }
+    
     public String getBankName() {
         return this.bankNameChoiceBox.getValue();
+    }
+    
+    public void setBankName(String bankName) {
+        this.bankNameChoiceBox.setValue(bankName);
     }
     
     public String getClientId() {
         return this.clientIdField.getText();
     }
     
+    public void setClientId(String clientId) {
+        this.clientIdField.setText(clientId);
+    }
+    
     public String getPassword() {
         return this.passwordField.getText();
+    }
+    
+    public void fillBankingBookModel(BankingBookModel bankingBookModel) {
+        setAccountAlias(bankingBookModel.getAlias());
+        setBankName(bankingBookModel.getBankName());
+        setClientId(bankingBookModel.getClientId());
     }
     
     @Override
@@ -69,7 +88,7 @@ public class AddAccountView implements IObservableView {
 
     @Override
     public IController getController() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.controller;
     }
 
     @Override

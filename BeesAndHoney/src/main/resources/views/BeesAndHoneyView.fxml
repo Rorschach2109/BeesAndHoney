@@ -8,7 +8,7 @@
 <?import javafx.collections.*?>
 <?import com.beesandhoney.model.*?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
    <bottom>
       <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
          <children>
@@ -20,29 +20,34 @@
       </AnchorPane>
    </bottom>
    <center>
-      <TabPane prefHeight="419.0" prefWidth="690.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane prefHeight="422.0" prefWidth="579.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="bankingBookTab" text="Banking Book">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="342.0" prefWidth="460.0">
                      <children>
-                        <TableView fx:id="bankingBookTable" prefHeight="343.0" prefWidth="338.0">
+                        <TableView fx:id="bankingBookTable" prefHeight="379.0" prefWidth="396.0">
                           <columns>
-                            <TableColumn maxWidth="297.0" minWidth="141.0" prefWidth="227.0" text="Alias">
+                            <TableColumn maxWidth="297.0" minWidth="141.0" prefWidth="172.0" text="Alias">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="alias" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn maxWidth="141.0" minWidth="7.0" prefWidth="109.0" resizable="false" text="Bank Name">
+                            <TableColumn maxWidth="164.0" minWidth="7.0" prefWidth="104.0" resizable="false" text="Bank Name">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="bankName" />
                                 </cellValueFactory>
                             </TableColumn>
+                            <TableColumn prefWidth="118.0" text="Client Id">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="clientId" />
+                                </cellValueFactory>
+                            </TableColumn>
                           </columns>
                         </TableView>
-                        <Button fx:id="editButton" layoutX="372.0" layoutY="225.0" maxWidth="127.0" minWidth="127.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonClicked" prefWidth="127.0" text="Edit" />
-                        <Button fx:id="deleteButton" layoutX="372.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#handleDeleteButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Delete" />
-                        <Button fx:id="addButton" layoutX="372.0" layoutY="272.0" mnemonicParsing="false" onMouseClicked="#handleAddButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Add" />
+                        <Button fx:id="editButton" layoutX="440.0" layoutY="255.0" maxWidth="127.0" minWidth="127.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonClicked" prefWidth="127.0" text="Edit" />
+                        <Button fx:id="deleteButton" layoutX="440.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#handleDeleteButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Delete" />
+                        <Button fx:id="addButton" layoutX="440.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#handleAddButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Add" />
                      </children></AnchorPane>
             </content>
           </Tab>

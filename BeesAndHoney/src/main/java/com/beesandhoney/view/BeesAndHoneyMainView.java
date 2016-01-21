@@ -80,15 +80,15 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         
         for (BankAccountLogin log : bankAccountLoginList) {
             bankingBookTableContent.add(ModelFactory.createBankingBookModel(
-                    log.getBankAccountLoginKey().getBankAccountLoginAlias(),
+                    log.getBankAccountLoginAlias(),
                     log.getBank().getBankName(),
-                    log.getBankAccountLoginKey().getClientId())
+                    log.getClientId())
             );
         }
     }
     
-    private int getBankingBookTableSelectedIndex() {
-        return this.bankingBookTable.getSelectionModel().getFocusedIndex();
+    private BankingBookModel getSelectedBankingBookModel() {
+        return this.bankingBookTable.getSelectionModel().getSelectedItem();
     }
     
     private List<BankAccountLogin> getBankAccountLoginList() {
@@ -104,30 +104,34 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @FXML
     private void handleEditButtonClicked() {
-        System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.handleDetailsButtonClicked()");
-        this.mainController.handleEditBankingBookItem(getBankingBookTableSelectedIndex());
+        BankingBookModel selectedBankingBookModel = getSelectedBankingBookModel();
+        
+        if (null != selectedBankingBookModel) {
+            this.mainController.handleEditBankingBookItem(
+                    selectedBankingBookModel
+            );
+        }
     }
     
     @FXML
     private void handleRefreshButtonClicked() {
-        System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.handleRefreshButtonClicked()");
         this.mainController.handleRefreshBankingBookTable();
     }
     
     @FXML
     private void handleAddButtonClicked() {
-        System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.handleAddButtonClicked()");
         this.mainController.handleAddBankingBookItem();
-//        ObservableList<BankingBookModel> data = this.bankingBookTable.getItems();
-//        data.add(new BankingBookModel("a", "b", "c", 1));
-//        data.add(new BankingBookModel("a", "b", "c", 2));
-//        data.add(new BankingBookModel("a", "b", "c", 3));
     }
     
     @FXML
     private void handleDeleteButtonClicked() {
-        System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.handleDeleteButtonClicked()");
-        this.mainController.handleDeleteBankingBookItem(getBankingBookTableSelectedIndex());
+        BankingBookModel selectedBankingBookModel = getSelectedBankingBookModel();
+        
+        if (null != selectedBankingBookModel) {
+            this.mainController.handleDeleteBankingBookItem(
+                    selectedBankingBookModel
+            );
+        }
     }
     
     @FXML
