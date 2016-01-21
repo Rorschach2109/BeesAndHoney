@@ -84,8 +84,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     }
     
     public void insertAccount() {
-        AddAccountView addAccountView = (AddAccountView) this.observableView;
-        BankAccountLogin bankAccountLogin = getBankAccountLogin(addAccountView);
+        BankAccountLogin bankAccountLogin = createBankAccountLoginFromAddAccountView();
         
         BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
         Session session = dao.openSessionWithTransaction();
@@ -96,17 +95,13 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     }
     
     public void editAccount(BankingBookModel bankingBookModel) {
-        AddAccountView addAccountView = (AddAccountView) this.observableView;
-        BankAccountLogin bankAccountLogin = getBankAccountLogin(addAccountView);
+        BankAccountLogin bankAccountLogin = createBankAccountLoginFromAddAccountView();
         
         BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
         Session session = dao.openSessionWithTransaction();
         
-        BankAccountLogin oldBankAccountLogin = dao.findByClientIdAndAlias(
-                bankingBookModel.getClientId(),
-                bankingBookModel.getAlias(),
-                session
-        );
+        BankAccountLogin oldBankAccountLogin = 
+                getBankAccountLogin(dao, session, bankingBookModel);
         
         dao.delete(oldBankAccountLogin, session);
         dao.create(bankAccountLogin, session);
@@ -118,11 +113,8 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
         Session session = dao.openSessionWithTransaction();
         
-        BankAccountLogin oldBankAccountLogin = dao.findByClientIdAndAlias(
-                bankingBookModel.getClientId(),
-                bankingBookModel.getAlias(),
-                session
-        );
+        BankAccountLogin oldBankAccountLogin = 
+                getBankAccountLogin(dao, session, bankingBookModel);
         
         dao.delete(oldBankAccountLogin, session);
         
@@ -169,7 +161,9 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         }
     }
     
-    private BankAccountLogin getBankAccountLogin(AddAccountView addAccountView) {
+    private BankAccountLogin createBankAccountLoginFromAddAccountView() {
+        
+        AddAccountView addAccountView = (AddAccountView) this.observableView;
         
         BankAccountLogin bankAccountLogin = ModelFactory.createBankAccountLogin(
                 addAccountView.getClientId(),
@@ -186,5 +180,11 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         bankAccountLogin.setBank(bank);
         
         return bankAccountLogin;
+    }
+    
+    private BankAccountLogin getBankAccountLogin(BankAccountLoginDao dao,
+            Session session, BankingBookModel bankingBookModel) {
+        return dao.findByClientIdAndAlias(bankingBookModel.getClientId(),
+                bankingBookModel.getAlias(), session);
     }
 }
