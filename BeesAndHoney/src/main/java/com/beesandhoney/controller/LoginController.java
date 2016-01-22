@@ -20,16 +20,28 @@ public final class LoginController implements IController {
         this.loginView = loginView;
     }
     
-    public void logIn(String login, String password) {
+    public void logIn(String login, String password, String securityPassword) {
         this.loginView.cleanErrorLabels();
-        
-//        if (false == validateInputText(new LoginValidator(), login)) {
+
+//        AbstractTextValidator textValidator = new LoginValidator();
+//        if (false == validateInputText(textValidator, login)) {
 //            this.loginView.handleIncorrectLogin();
 //            return;
 //        }
 //        
-//        if (false == validateInputText(new PasswordValidator(), password)) {
+//        textValidator = new PasswordValidator();
+//        if (false == validateInputText(textValidator, password)) {
 //            this.loginView.handleIncorrectPassword();
+//            return;
+//        }
+//
+//        if (false == validateInputText(textValidator, password)) {
+//            this.loginView.handleIncorrectSecurityPassword();
+//            return;
+//        }
+//
+//        if (0 == password.compareTo(securityPassword)) {
+//            this.loginView.handleSamePasswords();
 //            return;
 //        }
         

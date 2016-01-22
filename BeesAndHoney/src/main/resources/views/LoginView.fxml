@@ -6,27 +6,39 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="196.0" prefWidth="383.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.LoginView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.LoginView">
    <children>
-      <Label layoutX="37.0" layoutY="54.0" prefHeight="16.0" prefWidth="77.0" text="Login" />
-      <Label layoutX="37.0" layoutY="111.0" prefHeight="16.0" prefWidth="77.0" text="Password" />
-      <TextField fx:id="loginField" layoutX="117.0" layoutY="49.0" prefHeight="26.0" prefWidth="214.0" />
-      <PasswordField fx:id="passwordField" layoutX="117.0" layoutY="106.0" prefHeight="26.0" prefWidth="214.0" />
-      <Button fx:id="enterButton" layoutX="265.0" layoutY="156.0" mnemonicParsing="false" onKeyReleased="#handleEnterButtonReleased" onMouseClicked="#handleEnterButtonClicked" prefHeight="26.0" prefWidth="87.0" text="Enter" />
-      <Label fx:id="incorrectPasswordLabel" layoutX="117.0" layoutY="85.0" prefHeight="26.0" prefWidth="214.0" text="Constraints were not met." textFill="#d71010" visible="false" wrapText="true">
+      <Label layoutX="46.0" layoutY="35.0" prefHeight="16.0" prefWidth="42.0" text="Login" />
+      <Label layoutX="9.0" layoutY="82.0" prefHeight="35.0" prefWidth="115.0" text="Bees and Honey Password" textAlignment="CENTER" wrapText="true" />
+      <TextField fx:id="loginField" layoutX="122.0" layoutY="30.0" prefHeight="26.0" prefWidth="225.0" />
+      <PasswordField fx:id="passwordField" layoutX="122.0" layoutY="87.0" prefHeight="26.0" prefWidth="225.0" />
+      <Label fx:id="incorrectPasswordLabel" layoutX="133.0" layoutY="66.0" prefHeight="26.0" prefWidth="214.0" text="Constraints were not met." textFill="#d71010" visible="false" wrapText="true">
          <font>
             <Font name="System Bold" size="11.0" />
          </font>
       </Label>
-      <Label fx:id="incorrectLoginLabel" layoutX="117.0" layoutY="33.0" prefHeight="16.0" prefWidth="214.0" text="Constraints were not met." textFill="#d71010" visible="false" wrapText="true">
+      <Label fx:id="incorrectLoginLabel" layoutX="133.0" layoutY="14.0" prefHeight="16.0" prefWidth="214.0" text="Constraints were not met." textFill="#d71010" visible="false" wrapText="true">
          <font>
             <Font name="System Bold" size="11.0" />
          </font>
       </Label>
-      <Label fx:id="invalidPasswordLabel" layoutX="117.0" layoutY="90.0" prefHeight="16.0" prefWidth="214.0" text="Invalid Password." textFill="#d71010" visible="false" wrapText="true">
+      <Label fx:id="invalidPasswordLabel" layoutX="133.0" layoutY="71.0" prefHeight="16.0" prefWidth="214.0" text="Invalid Password." textFill="#d71010" visible="false" wrapText="true">
          <font>
             <Font name="System Bold" size="11.0" />
          </font>
       </Label>
+      <Label layoutX="18.0" layoutY="135.0" prefHeight="44.0" prefWidth="98.0" text="Security Password" textAlignment="CENTER" wrapText="true" />
+      <PasswordField fx:id="securityPasswordField" layoutX="122.0" layoutY="144.0" prefHeight="26.0" prefWidth="225.0" />
+      <Label fx:id="incorrectSecurityPasswordLabel" layoutX="133.0" layoutY="128.0" prefHeight="16.0" prefWidth="214.0" text="Constraints were not met." textFill="#d71010" visible="false">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Label>
+      <Label fx:id="samePasswordsLabel" layoutX="8.0" layoutY="180.0" prefHeight="44.0" prefWidth="240.0" text="Bees and Honey Password and Security Password cannot be the same." textAlignment="CENTER" textFill="#d71010" visible="false" wrapText="true">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Label>
+      <Button fx:id="enterButton" layoutX="256.0" layoutY="188.0" mnemonicParsing="false" onKeyReleased="#handleEnterButtonReleased" onMouseClicked="#handleEnterButtonClicked" prefHeight="26.0" prefWidth="87.0" text="Enter" />
    </children>
 </AnchorPane>
