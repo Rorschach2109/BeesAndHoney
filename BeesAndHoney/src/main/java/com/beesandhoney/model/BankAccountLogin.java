@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(
@@ -31,6 +32,7 @@ public class BankAccountLogin implements java.io.Serializable {
     
     private String clientId;
     private String bankAccountLoginAlias;
+    @Type(type = "encryptedPassword")
     private String loginPassword;
     
     @ManyToOne(cascade = CascadeType.PERSIST)
