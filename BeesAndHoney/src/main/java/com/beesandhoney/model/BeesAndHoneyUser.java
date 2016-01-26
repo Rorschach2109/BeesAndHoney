@@ -35,7 +35,7 @@ public class BeesAndHoneyUser implements java.io.Serializable {
     @Type(type = "encryptedPassword")
     private String userNamePassword;
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date accessDate;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "beesAndHoneyUser")
@@ -48,7 +48,7 @@ public class BeesAndHoneyUser implements java.io.Serializable {
     public BeesAndHoneyUser(String userName, String userNamePassword) {
         this.userName = userName;
         this.userNamePassword = userNamePassword;
-        this.accessDate = null;
+        this.accessDate = new Date();
         this.bankAccountLogins = new ArrayList<>();
     }
 

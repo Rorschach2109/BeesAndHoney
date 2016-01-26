@@ -15,6 +15,7 @@ import com.beesandhoney.utils.password.PasswordEncryptorWrapper;
 import com.beesandhoney.utils.validator.AbstractTextValidator;
 import com.beesandhoney.view.BeesAndHoney;
 import com.beesandhoney.view.LoginView;
+import java.util.Date;
 import org.hibernate.Session;
 import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 
@@ -48,12 +49,18 @@ public final class LoginController implements IController {
         if (null != user) {
             if (false == validatePassword(password, user)) {
                 return;
+            } else {
+                changeLastAccessDate(login);
             }
         } else {
-            insertUserInfo(login, password);
+            user = insertUserInfo(login, password);
         }
-        
-        this.application.handleSuccessfulLogin(login);
+        this.application.handleSuccessfulLogin(login, user.getAccessDate().toString());
+    }
+    
+    @Override
+    public void setApplication(BeesAndHoney application) {
+        this.application = application;
     }
     
     private void initializeEncryptor(String securityPassword) {
@@ -127,17 +134,24 @@ public final class LoginController implements IController {
         return true;
     }
     
-    private void insertUserInfo(String login, String password) {
+    private BeesAndHoneyUser insertUserInfo(String login, String password) {
         Session session = dao.openSessionWithTransaction();
         
-        dao.create(ModelFactory.createBeesAndHoneyUser(
-                login, password), session);
+        BeesAndHoneyUser currentUser = ModelFactory.createBeesAndHoneyUser(
+                login, password);
+        dao.create(currentUser, session);
         
         dao.closeSessionWithTransaction(session);
+        
+        return currentUser;
     }
     
-    @Override
-    public void setApplication(BeesAndHoney application) {
-        this.application = application;
+    private void changeLastAccessDate(String userName) {
+        Session session = dao.openSessionWithTransaction();
+        
+        BeesAndHoneyUser currentUser = dao.findByUserName(userName, session);
+        currentUser.setAccessDate(new Date());
+        
+        dao.closeSessionWithTransaction(session);
     }
 }

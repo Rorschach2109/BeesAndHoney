@@ -24,6 +24,7 @@ public class BeesAndHoney extends Application {
     private IView currentView;
 
     private String userLogin;
+    private String lastAccessDate;
 
     private final String BAH_VIEW_RESOURCE_PATH;
     private final String LOGIN_VIEW_RESOURCE_PATH;
@@ -53,8 +54,10 @@ public class BeesAndHoney extends Application {
         return this.currentStage.getScene();
     }
     
-    public void handleSuccessfulLogin(String userLogin) {
+    public void handleSuccessfulLogin(String userLogin, String lastAccessDate) {
         this.userLogin = userLogin;
+        this.lastAccessDate = lastAccessDate;
+        
         changeStage(BAH_VIEW_RESOURCE_PATH);
         
         insertBankInfo();
@@ -62,6 +65,10 @@ public class BeesAndHoney extends Application {
     
     public String getUserLogin() {
         return this.userLogin;
+    }
+    
+    public String getLastAccessDate() {
+        return this.lastAccessDate;
     }
     
     private void insertBankInfo() {

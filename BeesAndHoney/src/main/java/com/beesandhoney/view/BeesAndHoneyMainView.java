@@ -50,8 +50,8 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         this.currentUserLabel.setText(currentUserLogin);
     }
     
-    public void setLastAccessDate(Date lastAccessDate) {
-        this.lastAccessDateLabel.setText(lastAccessDate.toString());
+    public void setLastAccessDate(String lastAccessDate) {
+        this.lastAccessDateLabel.setText(lastAccessDate);
     }
     
     public ObservableList<BankingBookModel> getBankingBookTableItems() {

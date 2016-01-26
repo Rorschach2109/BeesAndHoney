@@ -56,6 +56,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     public void initialize() {
         this.mainView.setCurrentUser(this.application.getUserLogin());
+        this.mainView.setLastAccessDate(this.application.getLastAccessDate());
         this.mainView.update();
     }
     
