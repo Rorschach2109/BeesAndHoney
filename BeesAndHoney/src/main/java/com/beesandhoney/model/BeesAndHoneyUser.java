@@ -5,9 +5,12 @@
  */
 package com.beesandhoney.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,8 +39,8 @@ public class BeesAndHoneyUser implements java.io.Serializable {
     @Temporal(TemporalType.DATE)
     private Date accessDate;
     
-    @OneToMany
-    private Set<BankAccountLogin> bankAccountLogins;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "beesAndHoneyUser")
+    private List<BankAccountLogin> bankAccountLogins;
     
     public BeesAndHoneyUser() {
         this("", "");
@@ -47,7 +50,7 @@ public class BeesAndHoneyUser implements java.io.Serializable {
         this.userName = userName;
         this.userNamePassword = userNamePassword;
         this.accessDate = null;
-        this.bankAccountLogins = null;
+        this.bankAccountLogins = new ArrayList<>();
     }
 
     public int getUserId() {
@@ -82,11 +85,11 @@ public class BeesAndHoneyUser implements java.io.Serializable {
         this.accessDate = accessDate;
     }
 
-    public Set<BankAccountLogin> getBankAccountLogins() {
+    public List<BankAccountLogin> getBankAccountLogins() {
         return bankAccountLogins;
     }
 
-    public void setBankAccountLogins(Set<BankAccountLogin> bankAccountLogins) {
+    public void setBankAccountLogins(List<BankAccountLogin> bankAccountLogins) {
         this.bankAccountLogins = bankAccountLogins;
     }
 }

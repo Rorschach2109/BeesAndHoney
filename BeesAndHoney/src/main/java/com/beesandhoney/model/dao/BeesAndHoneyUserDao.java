@@ -5,7 +5,6 @@
  */
 package com.beesandhoney.model.dao;
 
-import com.beesandhoney.model.Bank;
 import com.beesandhoney.model.BeesAndHoneyUser;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

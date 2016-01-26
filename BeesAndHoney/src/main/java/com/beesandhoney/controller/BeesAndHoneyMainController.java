@@ -8,10 +8,14 @@ package com.beesandhoney.controller;
 import com.beesandhoney.model.Bank;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankingBookModel;
+import com.beesandhoney.model.BeesAndHoneyUser;
 import com.beesandhoney.model.ModelFactory;
 import com.beesandhoney.model.dao.BankAccountLoginDao;
 import com.beesandhoney.model.dao.BankDao;
+import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
+import com.beesandhoney.model.dao.GenericDao;
+import com.beesandhoney.model.dao.GenericDaoHibernateImpl;
 import com.beesandhoney.statemachine.AddAccountStageState;
 import com.beesandhoney.statemachine.DecisionStageState;
 import com.beesandhoney.statemachine.EditAccountStageState;
@@ -57,6 +61,10 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         this.mainView.update();
     }
     
+    public String getCurrentUserLogin() {
+        return this.application.getUserLogin();
+    }
+    
     public void handleEditBankingBookItem(BankingBookModel selectedItem) {
         this.currentState = new EditAccountStageState(this, selectedItem);
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
@@ -85,17 +93,21 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     public void insertAccount() {
         BankAccountLogin bankAccountLogin = createBankAccountLoginFromAddAccountView();
-        
-        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
+
+        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
         Session session = dao.openSessionWithTransaction();
+
+        BeesAndHoneyUser currentUser = dao.findByUserName(
+                getCurrentUserLogin(), session);        
+        currentUser.getBankAccountLogins().add(bankAccountLogin);
+        bankAccountLogin.setBeesAndHoneyUser(currentUser);
         
-        dao.create(bankAccountLogin, session);
-        
+        dao.update(currentUser, session);
         dao.closeSessionWithTransaction(session);
     }
     
     public void editAccount(BankingBookModel bankingBookModel) {
-        BankAccountLogin bankAccountLogin = createBankAccountLoginFromAddAccountView();
+        BankAccountLogin editedBankAccountLogin = createBankAccountLoginFromAddAccountView();
         
         BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
         Session session = dao.openSessionWithTransaction();
@@ -103,22 +115,24 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         BankAccountLogin oldBankAccountLogin = 
                 getBankAccountLogin(dao, session, bankingBookModel);
         
-        dao.delete(oldBankAccountLogin, session);
-        dao.create(bankAccountLogin, session);
+        editBankAccountLogin(oldBankAccountLogin, editedBankAccountLogin);
+        
+        dao.update(oldBankAccountLogin, session);
         
         dao.closeSessionWithTransaction(session);
     }
     
     public void deleteBankingBookItem(BankingBookModel bankingBookModel) {
-        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
-        Session session = dao.openSessionWithTransaction();
-        
+        Session session;
+
+        BankAccountLoginDao bankAccountDao = DaoModelFactory.getBankAccountLoginDaoInstance();
+        session = bankAccountDao.openSessionWithTransaction();
+
         BankAccountLogin oldBankAccountLogin = 
-                getBankAccountLogin(dao, session, bankingBookModel);
+                getBankAccountLogin(bankAccountDao, session, bankingBookModel);
         
-        dao.delete(oldBankAccountLogin, session);
-        
-        dao.closeSessionWithTransaction(session);
+        bankAccountDao.delete(oldBankAccountLogin, session);
+        bankAccountDao.closeSessionWithTransaction(session);
     }
     
     @Override
@@ -186,5 +200,27 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
             Session session, BankingBookModel bankingBookModel) {
         return dao.findByClientIdAndAlias(bankingBookModel.getClientId(),
                 bankingBookModel.getAlias(), session);
+    }
+    
+    private BeesAndHoneyUser getCurrentUser() {
+        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
+        Session session = dao.openSession();
+        
+        BeesAndHoneyUser currentUser = dao.findByUserName(
+                getCurrentUserLogin(), session);
+        
+        dao.closeSession(session);
+        
+        return currentUser;
+    }
+    
+    private void editBankAccountLogin(BankAccountLogin oldBankAccountLogin, 
+            BankAccountLogin editedBankAccountLogin) {
+        oldBankAccountLogin.setBankAccountLoginAlias(
+                editedBankAccountLogin.getBankAccountLoginAlias());
+        oldBankAccountLogin.setBank(editedBankAccountLogin.getBank());
+        oldBankAccountLogin.setClientId(editedBankAccountLogin.getClientId());
+        oldBankAccountLogin.setLoginPassword(
+                editedBankAccountLogin.getLoginPassword());
     }
 }

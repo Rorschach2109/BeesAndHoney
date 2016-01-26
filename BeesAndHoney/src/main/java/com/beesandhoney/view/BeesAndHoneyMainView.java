@@ -9,12 +9,12 @@ import com.beesandhoney.controller.BeesAndHoneyMainController;
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankingBookModel;
+import com.beesandhoney.model.BeesAndHoneyUser;
 import com.beesandhoney.model.ModelFactory;
-import com.beesandhoney.model.dao.BankAccountLoginDao;
+import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.Date;
-import java.util.List;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -39,7 +39,6 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     private TableView<BankingBookModel> bankingBookTable;
     
     public BeesAndHoneyMainView() {
-        System.out.println("com.beesandhoney.view.BeesAndHoneyMainView.<init>()");
         this.mainController = new BeesAndHoneyMainController(this);
     }
     
@@ -71,37 +70,33 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @Override
     public void update() {
-        List<BankAccountLogin> bankAccountLoginList = getBankAccountLoginList();
-
+        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
+        Session session = dao.openSession();
+        
+        BeesAndHoneyUser currentUser = dao.findByUserName(
+                this.mainController.getCurrentUserLogin(), session
+        );
+        
         ObservableList<BankingBookModel> bankingBookTableContent = 
                 this.bankingBookTable.getItems();
         
         bankingBookTableContent.clear();
         
-        for (BankAccountLogin log : bankAccountLoginList) {
+        for (BankAccountLogin log : currentUser.getBankAccountLogins()) {
             bankingBookTableContent.add(ModelFactory.createBankingBookModel(
                     log.getBankAccountLoginAlias(),
                     log.getBank().getBankName(),
                     log.getClientId())
             );
         }
+        
+        dao.closeSession(session);
     }
     
     private BankingBookModel getSelectedBankingBookModel() {
         return this.bankingBookTable.getSelectionModel().getSelectedItem();
     }
-    
-    private List<BankAccountLogin> getBankAccountLoginList() {
-        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
-        Session session = dao.openSession();
-        
-        List<BankAccountLogin> bankAccountList = dao.readAll(session);
-        
-        dao.closeSession(session);
-        
-        return bankAccountList;
-    }
-    
+
     @FXML
     private void handleEditButtonClicked() {
         BankingBookModel selectedBankingBookModel = getSelectedBankingBookModel();
@@ -136,6 +131,7 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @FXML
     private void initialize() {
+        DaoModelFactory.getBeesAndHoneyUserDao().registerObserver(this);
         DaoModelFactory.getBankAccountLoginDaoInstance().registerObserver(this);
     }
 }

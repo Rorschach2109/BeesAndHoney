@@ -5,6 +5,7 @@
  */
 package com.beesandhoney.model;
 
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -36,6 +37,9 @@ public class BankAccountLogin implements java.io.Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bankAccountLogin")
     private Set<BankAccount> bankAccounts;
     
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private BeesAndHoneyUser beesAndHoneyUser;
+    
     public BankAccountLogin() {
         this("", "", "");
     }
@@ -45,8 +49,9 @@ public class BankAccountLogin implements java.io.Serializable {
         this.clientId = clientId;
         this.bankAccountLoginAlias = bankAccountLoginAlias;
         this.loginPassword = loginPassword;
-        this.bank = null;
         this.bankAccounts = null;
+        this.bank = null;
+        this.beesAndHoneyUser = null;
     }
 
     public String getClientId() {
@@ -95,5 +100,39 @@ public class BankAccountLogin implements java.io.Serializable {
     
     public void setBankAccounts(Set<BankAccount> bankAccounts) {
         this.bankAccounts = bankAccounts;
+    }
+
+    public BeesAndHoneyUser getBeesAndHoneyUser() {
+        return beesAndHoneyUser;
+    }
+
+    public void setBeesAndHoneyUser(BeesAndHoneyUser beesAndHoneyUser) {
+        this.beesAndHoneyUser = beesAndHoneyUser;
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof BankAccountLogin)) {
+            return false;
+        }
+        
+        if (object == this) {
+            return true;
+        }
+        
+        BankAccountLogin rhs = (BankAccountLogin) object;
+        
+        return (this.bankAccountLoginId == rhs.bankAccountLoginId) && 
+                (this.clientId.equals(rhs.clientId)) &&
+                (this.bankAccountLoginAlias.equals(rhs.bankAccountLoginAlias));
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.bankAccountLoginId,
+                this.clientId,
+                this.bankAccountLoginAlias
+        );
     }
 }

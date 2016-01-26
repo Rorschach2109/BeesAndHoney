@@ -79,7 +79,6 @@ public class BeesAndHoney extends Application {
     private void changeStage(String viewResourcePath) {
         Scene stageScene = loadScene(viewResourcePath);
         if (null == stageScene) {
-            System.out.println("no scene");
             return;
         }
         
