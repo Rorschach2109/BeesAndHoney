@@ -14,8 +14,6 @@ import com.beesandhoney.model.dao.BankAccountLoginDao;
 import com.beesandhoney.model.dao.BankDao;
 import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
-import com.beesandhoney.model.dao.GenericDao;
-import com.beesandhoney.model.dao.GenericDaoHibernateImpl;
 import com.beesandhoney.statemachine.AddAccountStageState;
 import com.beesandhoney.statemachine.DecisionStageState;
 import com.beesandhoney.statemachine.EditAccountStageState;

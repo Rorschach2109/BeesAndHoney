@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +20,8 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(
-        columnNames = {"clientId", "bankAccountLoginAlias"}
+        columnNames = {"clientId", "bankAccountLoginAlias", 
+            "bankAccountLogin_userId"}
 ))
 public class BankAccountLogin implements java.io.Serializable {
     
@@ -38,6 +40,7 @@ public class BankAccountLogin implements java.io.Serializable {
     private Set<BankAccount> bankAccounts;
     
     @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "bankAccountLogin_userId")
     private BeesAndHoneyUser beesAndHoneyUser;
     
     public BankAccountLogin() {
