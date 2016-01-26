@@ -5,11 +5,10 @@
  */
 package com.beesandhoney.utils.password;
 
-/**
- *
- * @author azazello
- */
 public interface PasswordEncryptorWrapper {
+    public void initialize(String privateKey);
+    public void kill();
+    
     public String encryptPlainPassword(String plainPassword);
     public boolean comparePasswords(String plainPassword, String encryptedPassword);
 }

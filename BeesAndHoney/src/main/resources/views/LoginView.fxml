@@ -34,6 +34,11 @@
             <Font name="System Bold" size="11.0" />
          </font>
       </Label>
+      <Label fx:id="invalidSecurityPasswordLabel" layoutX="133.0" layoutY="128.0" prefHeight="16.0" prefWidth="214.0" text="Invalid security password." textFill="#d71010" visible="false">
+         <font>
+            <Font name="System Bold" size="11.0" />
+         </font>
+      </Label>
       <Label fx:id="samePasswordsLabel" layoutX="8.0" layoutY="180.0" prefHeight="44.0" prefWidth="240.0" text="Bees and Honey Password and Security Password cannot be the same." textAlignment="CENTER" textFill="#d71010" visible="false" wrapText="true">
          <font>
             <Font name="System Bold" size="11.0" />

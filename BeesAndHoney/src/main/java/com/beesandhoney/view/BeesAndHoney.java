@@ -57,8 +57,16 @@ public class BeesAndHoney extends Application {
         this.userLogin = userLogin;
         changeStage(BAH_VIEW_RESOURCE_PATH);
         
+        insertBankInfo();
+    }
+    
+    public String getUserLogin() {
+        return this.userLogin;
+    }
+    
+    private void insertBankInfo() {
         BankDao dao = DaoModelFactory.getBankDaoInstance();
-        
+
         Session session = dao.openSessionWithTransaction();
         
         for (Bank bank : BankConstants.bankModelList) {
@@ -66,10 +74,6 @@ public class BeesAndHoney extends Application {
         }
         
         dao.closeSessionWithTransaction(session);
-    }
-    
-    public String getUserLogin() {
-        return this.userLogin;
     }
     
     private void changeStage(String viewResourcePath) {

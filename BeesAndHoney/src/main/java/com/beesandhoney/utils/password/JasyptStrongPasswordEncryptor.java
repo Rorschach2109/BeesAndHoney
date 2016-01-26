@@ -18,6 +18,16 @@ public class JasyptStrongPasswordEncryptor implements PasswordEncryptorWrapper {
     public JasyptStrongPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
         this.passwordEncryptor = passwordEncryptor;
     }
+
+    @Override
+    public void initialize(String privateKey) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void kill() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     @Override
     public String encryptPlainPassword(String plainPassword) {

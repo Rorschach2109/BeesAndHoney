@@ -14,5 +14,8 @@
     <mapping class="com.beesandhoney.model.Bank"/>
     <mapping class="com.beesandhoney.model.BankAccount"/>
     <mapping class="com.beesandhoney.model.BankAccountOwner"/>
+    <mapping class="com.beesandhoney.model.BeesAndHoneyUser"/>
+    
+    <mapping package="com.beesandhoney.model"/>    
   </session-factory>
 </hibernate-configuration>

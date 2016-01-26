@@ -27,6 +27,8 @@ public final class LoginView implements IView {
     @FXML
     private Label incorrectSecurityPasswordLabel;
     @FXML
+    private Label invalidSecurityPasswordLabel;
+    @FXML
     private Label samePasswordsLabel;
     @FXML
     private TextField loginField;
@@ -57,6 +59,10 @@ public final class LoginView implements IView {
         this.incorrectSecurityPasswordLabel.setVisible(true);
     }
     
+    public void handleInvalidSecurityPassword() {
+        this.invalidSecurityPasswordLabel.setVisible(true);
+    }
+    
     public void handleSamePasswords() {
         this.samePasswordsLabel.setVisible(true);
     }
@@ -78,6 +84,7 @@ public final class LoginView implements IView {
         this.invalidPasswordLabel.setVisible(false);
         this.incorrectSecurityPasswordLabel.setVisible(false);
         this.samePasswordsLabel.setVisible(false);
+        this.invalidSecurityPasswordLabel.setVisible(false);
     }
     
     private void cleanTextFields() {

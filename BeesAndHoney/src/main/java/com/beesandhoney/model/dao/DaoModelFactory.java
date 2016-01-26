@@ -18,4 +18,8 @@ public final class DaoModelFactory {
     public static BankDao getBankDaoInstance() {
         return BankDao.getInstance();
     }
+    
+    public static BeesAndHoneyUserDao getBeesAndHoneyUserDao() {
+        return BeesAndHoneyUserDao.getInstance();
+    }
 }
