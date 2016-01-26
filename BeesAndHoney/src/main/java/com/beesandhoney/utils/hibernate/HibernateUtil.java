@@ -15,13 +15,12 @@ public class HibernateUtil {
     private static SessionFactory sessionFactory;
     
     static {
-        restart();
+        open();
     }
     
-    public static void restart() {
-        if (null != sessionFactory && false == sessionFactory.isClosed()) {
-            sessionFactory.close();
-        } else {
+    public static void open() {
+        if (null == sessionFactory || 
+                (null != sessionFactory && sessionFactory.isClosed())) {
             try {
                 Configuration configuration = new Configuration();
                 configuration.configure();
@@ -29,20 +28,23 @@ public class HibernateUtil {
                 configuration.getProperties()). buildServiceRegistry();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
             } catch (Throwable ex) {
-                System.err.println("Initial SessionFactory creation failed." + ex);
                 throw new ExceptionInInitializerError(ex);
             }
         }
     }
     
-    public static SessionFactory getSessionFactory() {
-        if (sessionFactory.isClosed()) {
-            restart();
+    public static void close() {
+        if (null != sessionFactory && false == sessionFactory.isClosed()) {
+            sessionFactory.close();
         }
-        return sessionFactory;
     }
     
-    public static void closeSessionFactory() {
-        sessionFactory.close();
+    public static void restart() {
+        close();
+        open();
+    }
+    
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
