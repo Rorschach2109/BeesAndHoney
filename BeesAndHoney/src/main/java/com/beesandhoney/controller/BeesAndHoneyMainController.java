@@ -69,7 +69,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
         
         AddAccountView addAccountView = (AddAccountView) this.observableView;
-        AbstractAddEditController controller = new EditAccountController(application);
+        AbstractBankAccountLoginController controller = new EditAccountController(application);
         addAccountView.setController(controller);
         
         addAccountView.fillBankingBookModel(selectedItem);
@@ -83,7 +83,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         this.currentState = new AddAccountStageState(this);
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
         
-        AbstractAddEditController controller = new AddAccountController(application);
+        AbstractBankAccountLoginController controller = new AddAccountController(application);
         this.observableView.setController(controller);
     }
     

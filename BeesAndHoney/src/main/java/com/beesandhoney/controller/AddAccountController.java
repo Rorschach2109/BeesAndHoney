@@ -15,7 +15,7 @@ import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.view.BeesAndHoney;
 import org.hibernate.Session;
 
-public class AddAccountController extends AbstractAddEditController {
+public class AddAccountController extends AbstractBankAccountLoginController {
 
     public AddAccountController(BeesAndHoney application) {
         super(application);

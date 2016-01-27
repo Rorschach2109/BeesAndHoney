@@ -15,7 +15,7 @@ import com.beesandhoney.view.AddAccountView;
 import com.beesandhoney.view.BeesAndHoney;
 import org.hibernate.Session;
 
-public abstract class AbstractAddEditController implements IController {
+public abstract class AbstractBankAccountLoginController implements IController {
     protected AddAccountView addAccountView;
     protected BankingBookModel originalBankingBookModel;
     
@@ -23,7 +23,7 @@ public abstract class AbstractAddEditController implements IController {
     
     private BeesAndHoney application;
     
-    public AbstractAddEditController(BeesAndHoney application) {
+    public AbstractBankAccountLoginController(BeesAndHoney application) {
         this.textValidator = new InputTextLengthValidator();
         this.addAccountView = null;
         this.application = application;

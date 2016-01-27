@@ -5,7 +5,7 @@
  */
 package com.beesandhoney.view;
 
-import com.beesandhoney.controller.AbstractAddEditController;
+import com.beesandhoney.controller.AbstractBankAccountLoginController;
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.model.BankingBookModel;
 import com.beesandhoney.utils.ObserverInterface;
@@ -23,7 +23,7 @@ import javafx.scene.input.KeyEvent;
 
 public class AddAccountView implements IObservableView {
     
-    private AbstractAddEditController controller;
+    private AbstractBankAccountLoginController controller;
     
     private boolean decisionResult;
     private ArrayList<ObserverInterface> observers;
@@ -112,7 +112,7 @@ public class AddAccountView implements IObservableView {
     
     @Override
     public void setController(IController controller) {
-        this.controller = (AbstractAddEditController) controller;
+        this.controller = (AbstractBankAccountLoginController) controller;
         this.controller.setView(this);
     }
     
