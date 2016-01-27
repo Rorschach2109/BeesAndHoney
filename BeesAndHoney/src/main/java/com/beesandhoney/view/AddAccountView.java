@@ -6,12 +6,13 @@
 package com.beesandhoney.view;
 
 import com.beesandhoney.controller.AbstractAddEditController;
-import com.beesandhoney.controller.AddAccountController;
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.model.BankingBookModel;
 import com.beesandhoney.utils.ObserverInterface;
 import com.beesandhoney.utils.constants.BankConstants;
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -83,6 +84,8 @@ public class AddAccountView implements IObservableView {
         setAccountAlias(bankingBookModel.getAlias());
         setBankName(bankingBookModel.getBankName());
         setClientId(bankingBookModel.getClientId());
+        
+        this.controller.setOriginalBankingBookModel(bankingBookModel);
     }
     
     public void setErrorLabelVisibility(boolean visible) {
@@ -143,6 +146,18 @@ public class AddAccountView implements IObservableView {
         notifyObservers();
     }
     
+    private void addListeners() {
+        this.passwordField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, 
+                    Boolean oldPropertyValue, Boolean newPropertyValue) {
+                if (newPropertyValue) {
+                    passwordField.clear();
+                }
+            }
+        });
+    }
+    
     @FXML
     private void handleCancelButtonReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
@@ -170,5 +185,6 @@ public class AddAccountView implements IObservableView {
     @FXML
     private void initialize() {
         this.bankNameChoiceBox.setItems(BankConstants.bankNameList);
+        addListeners();
     }
 }

@@ -12,21 +12,18 @@ import com.beesandhoney.model.ModelFactory;
 import com.beesandhoney.model.dao.BankDao;
 import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
-import com.beesandhoney.utils.validator.AbstractTextValidator;
-import com.beesandhoney.utils.validator.InputTextLengthValidator;
-import com.beesandhoney.view.AddAccountView;
 import com.beesandhoney.view.BeesAndHoney;
 import org.hibernate.Session;
 
 public class AddAccountController extends AbstractAddEditController {
 
-    public AddAccountController() {
-        super();
+    public AddAccountController(BeesAndHoney application) {
+        super(application);
     }
     
     @Override
     protected boolean isDuplicated() {
-        return false;
+        return (null != findDuplicate());
     }
     
     @Override

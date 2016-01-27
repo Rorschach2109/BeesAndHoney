@@ -65,10 +65,13 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     }
     
     public void handleEditBankingBookItem(BankingBookModel selectedItem) {
-        this.currentState = new EditAccountStageState(this, selectedItem);
+        this.currentState = new EditAccountStageState(this);
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
         
         AddAccountView addAccountView = (AddAccountView) this.observableView;
+        AbstractAddEditController controller = new EditAccountController(application);
+        addAccountView.setController(controller);
+        
         addAccountView.fillBankingBookModel(selectedItem);
     }
     
@@ -80,8 +83,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         this.currentState = new AddAccountStageState(this);
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
         
-        AbstractAddEditController controller = new AddAccountController();
-        controller.setApplication(application);
+        AbstractAddEditController controller = new AddAccountController(application);
         this.observableView.setController(controller);
     }
     
@@ -92,22 +94,6 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     public IObservableView getCurrentSecondStageView() {
         return this.observableView;
-    }
-    
-    public void editAccount(BankingBookModel bankingBookModel) {
-        BankAccountLogin editedBankAccountLogin = createBankAccountLoginFromAddAccountView();
-        
-        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
-        Session session = dao.openSessionWithTransaction();
-        
-        BankAccountLogin oldBankAccountLogin = 
-                getBankAccountLogin(dao, session, bankingBookModel);
-        
-        editBankAccountLogin(oldBankAccountLogin, editedBankAccountLogin);
-        
-        dao.update(oldBankAccountLogin, session);
-        
-        dao.closeSessionWithTransaction(session);
     }
     
     public void deleteBankingBookItem(BankingBookModel bankingBookModel) {
@@ -200,15 +186,5 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         dao.closeSession(session);
         
         return currentUser;
-    }
-    
-    private void editBankAccountLogin(BankAccountLogin oldBankAccountLogin, 
-            BankAccountLogin editedBankAccountLogin) {
-        oldBankAccountLogin.setBankAccountLoginAlias(
-                editedBankAccountLogin.getBankAccountLoginAlias());
-        oldBankAccountLogin.setBank(editedBankAccountLogin.getBank());
-        oldBankAccountLogin.setClientId(editedBankAccountLogin.getClientId());
-        oldBankAccountLogin.setLoginPassword(
-                editedBankAccountLogin.getLoginPassword());
     }
 }

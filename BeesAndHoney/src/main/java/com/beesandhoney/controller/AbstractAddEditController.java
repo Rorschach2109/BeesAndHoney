@@ -5,21 +5,29 @@
  */
 package com.beesandhoney.controller;
 
+import com.beesandhoney.model.BankAccountLogin;
+import com.beesandhoney.model.BankingBookModel;
+import com.beesandhoney.model.dao.BankAccountLoginDao;
+import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.validator.AbstractTextValidator;
 import com.beesandhoney.utils.validator.InputTextLengthValidator;
 import com.beesandhoney.view.AddAccountView;
 import com.beesandhoney.view.BeesAndHoney;
+import org.hibernate.Session;
 
 public abstract class AbstractAddEditController implements IController {
     protected AddAccountView addAccountView;
+    protected BankingBookModel originalBankingBookModel;
+    
     private AbstractTextValidator textValidator;
     
     private BeesAndHoney application;
     
-    public AbstractAddEditController() {
+    public AbstractAddEditController(BeesAndHoney application) {
         this.textValidator = new InputTextLengthValidator();
         this.addAccountView = null;
-        this.application = null;
+        this.application = application;
+        this.originalBankingBookModel = null;
     }
     
     protected abstract boolean isDuplicated();
@@ -27,6 +35,10 @@ public abstract class AbstractAddEditController implements IController {
     
     public void setView(AddAccountView addAccountView) {
         this.addAccountView = addAccountView;
+    }
+    
+    public void setOriginalBankingBookModel(BankingBookModel originalBankingBookModel) {
+        this.originalBankingBookModel = originalBankingBookModel;
     }
     
     public boolean saveAccountLogin() {
@@ -54,6 +66,20 @@ public abstract class AbstractAddEditController implements IController {
     
     protected String getCurrentUserLogin() {
         return this.application.getUserLogin();
+    }
+    
+    protected BankAccountLogin findDuplicate() {
+        BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
+        Session session = dao.openSession();
+        
+        BankAccountLogin duplicate = dao.findByClientIdAndAlias(
+                this.addAccountView.getClientId(), 
+                this.addAccountView.getAccountAlias(), 
+                session);
+        
+        dao.closeSession(session);
+        
+        return duplicate;
     }
     
     private boolean validateInput() {
