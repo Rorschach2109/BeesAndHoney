@@ -58,6 +58,11 @@ public class DetailsView implements IObservableView {
     }
 
     @Override
+    public void setController(IController controller) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
     public void registerObserver(ObserverInterface observer) {
         this.observers.add(observer);
     }

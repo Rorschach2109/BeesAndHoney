@@ -5,71 +5,66 @@
  */
 package com.beesandhoney.controller;
 
+import com.beesandhoney.model.Bank;
+import com.beesandhoney.model.BankAccountLogin;
+import com.beesandhoney.model.BeesAndHoneyUser;
+import com.beesandhoney.model.ModelFactory;
+import com.beesandhoney.model.dao.BankDao;
+import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
+import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.validator.AbstractTextValidator;
 import com.beesandhoney.utils.validator.InputTextLengthValidator;
 import com.beesandhoney.view.AddAccountView;
 import com.beesandhoney.view.BeesAndHoney;
+import org.hibernate.Session;
 
-public class AddAccountController implements IController {
+public class AddAccountController extends AbstractAddEditController {
 
-    private AddAccountView addAccountView;
-    private AbstractTextValidator textValidator;
-    
-    public AddAccountController(AddAccountView addAccountView) {
-        this.addAccountView = addAccountView;
-        this.textValidator = new InputTextLengthValidator();
-    }
-    
-    public boolean validateInput() {
-        return validateAccountAlias() &&
-                validateBankName() &&
-                validateClientId() &&
-                validatePassword();
+    public AddAccountController() {
+        super();
     }
     
     @Override
-    public void setApplication(BeesAndHoney application) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    private boolean validateAccountAlias() {
-        String accountAlias = addAccountView.getAccountAlias();
-        
-        if (null != accountAlias) {
-            return textValidator.validateText(accountAlias);
-        }
-        
+    protected boolean isDuplicated() {
         return false;
     }
     
-    private boolean validateBankName() {
-        String bankName = addAccountView.getBankName();
-        System.out.println("Validator: " + bankName);
-        
-        if (null != bankName) {
-            return textValidator.validateText(bankName);
-        }
-        
-        return false;
+    @Override
+    protected void handleSaveAccountLogin() {
+        insertAccount();
     }
     
-    private boolean validateClientId() {
-        String clientId = addAccountView.getClientId();
+    private void insertAccount() {
+        BankAccountLogin bankAccountLogin = createBankAccountLoginFromAddAccountView();
+
+        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
+        Session session = dao.openSessionWithTransaction();
+
+        BeesAndHoneyUser currentUser = dao.findByUserName(
+                getCurrentUserLogin(), session);        
+        currentUser.getBankAccountLogins().add(bankAccountLogin);
+        bankAccountLogin.setBeesAndHoneyUser(currentUser);
         
-        if (null != clientId) {
-            return textValidator.validateText(clientId);
-        }
-        
-        return false;
+        dao.update(currentUser, session);
+        dao.closeSessionWithTransaction(session);
     }
     
-    private boolean validatePassword() {
-        String password = addAccountView.getPassword();
+    private BankAccountLogin createBankAccountLoginFromAddAccountView() {
         
-        if (null != password) {
-            return textValidator.validateText(password);
-        }
+        BankAccountLogin bankAccountLogin = ModelFactory.createBankAccountLogin(
+                this.addAccountView.getClientId(),
+                this.addAccountView.getPassword(),
+                this.addAccountView.getAccountAlias()
+        );
         
-        return false;
+        BankDao bankDao = DaoModelFactory.getBankDaoInstance();
+        
+        Session session = bankDao.openSession();
+        Bank bank = bankDao.findByName(this.addAccountView.getBankName(), session);
+        bankDao.closeSession(session);
+        
+        bankAccountLogin.setBank(bank);
+        
+        return bankAccountLogin;
     }
 }

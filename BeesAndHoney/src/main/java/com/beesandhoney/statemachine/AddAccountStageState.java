@@ -6,7 +6,6 @@
 package com.beesandhoney.statemachine;
 
 import com.beesandhoney.controller.BeesAndHoneyMainController;
-import com.beesandhoney.view.AddAccountView;
 
 public class AddAccountStageState implements SecondStageStateInterface {
 
@@ -18,12 +17,6 @@ public class AddAccountStageState implements SecondStageStateInterface {
     
     @Override
     public void handleBeforeExit() {
-        AddAccountView addAccountView = (AddAccountView) this.controller
-                .getCurrentSecondStageView();
-        
-        if (true == addAccountView.getDecisionResult()) {
-            this.controller.insertAccount();
-        }
     }
     
 }

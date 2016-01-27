@@ -67,6 +67,11 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     public IController getController() {
         return this.mainController;
     }
+
+    @Override
+    public void setController(IController controller) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     @Override
     public void update() {

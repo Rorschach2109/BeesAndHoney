@@ -73,6 +73,11 @@ public final class LoginView implements IView {
     }
     
     @Override
+    public void setController(IController controller) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
     public void cleanUp() {
         cleanErrorLabels();
         cleanTextFields();

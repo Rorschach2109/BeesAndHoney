@@ -10,4 +10,5 @@ import com.beesandhoney.controller.IController;
 public interface IView {
     public void cleanUp();
     public IController getController();
+    public void setController(IController controller);
 }

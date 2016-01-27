@@ -5,6 +5,7 @@
  */
 package com.beesandhoney.view;
 
+import com.beesandhoney.controller.AbstractAddEditController;
 import com.beesandhoney.controller.AddAccountController;
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.model.BankingBookModel;
@@ -21,7 +22,7 @@ import javafx.scene.input.KeyEvent;
 
 public class AddAccountView implements IObservableView {
     
-    private AddAccountController controller;
+    private AbstractAddEditController controller;
     
     private boolean decisionResult;
     private ArrayList<ObserverInterface> observers;
@@ -36,10 +37,12 @@ public class AddAccountView implements IObservableView {
     private PasswordField passwordField;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label accountAlreadyExistsLabel;
     
     
     public AddAccountView() {
-        this.controller = new AddAccountController(this);
+        this.controller = null;
         this.decisionResult = false;
         this.observers = new ArrayList<>();
     }
@@ -82,6 +85,19 @@ public class AddAccountView implements IObservableView {
         setClientId(bankingBookModel.getClientId());
     }
     
+    public void setErrorLabelVisibility(boolean visible) {
+        this.errorLabel.setVisible(visible);
+    }
+    
+    public void setAccountAlreadyExistsVisibility(boolean visible) {
+        this.accountAlreadyExistsLabel.setVisible(visible);
+    }
+    
+    public void cleanErrorLabels() {
+        this.errorLabel.setVisible(false);
+        this.accountAlreadyExistsLabel.setVisible(false);
+    }
+    
     @Override
     public void cleanUp() {
     }
@@ -90,7 +106,13 @@ public class AddAccountView implements IObservableView {
     public IController getController() {
         return this.controller;
     }
-
+    
+    @Override
+    public void setController(IController controller) {
+        this.controller = (AbstractAddEditController) controller;
+        this.controller.setView(this);
+    }
+    
     @Override
     public void registerObserver(ObserverInterface observer) {
         this.observers.add(observer);
@@ -109,10 +131,8 @@ public class AddAccountView implements IObservableView {
     }
     
     private void saveAccountLogin() {
-        if (true == this.controller.validateInput()) {
+        if (true == this.controller.saveAccountLogin()) {
             setDecisionResult(true);
-        } else {
-            setErrorLabelVisibility(true);
         }
     }
     
@@ -121,10 +141,6 @@ public class AddAccountView implements IObservableView {
         
         this.decisionResult = decisionResult;
         notifyObservers();
-    }
-    
-    private void setErrorLabelVisibility(boolean visible) {
-        this.errorLabel.setVisible(visible);
     }
     
     @FXML

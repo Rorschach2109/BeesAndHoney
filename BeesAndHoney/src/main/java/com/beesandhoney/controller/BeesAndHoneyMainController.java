@@ -79,6 +79,10 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     public void handleAddBankingBookItem() {
         this.currentState = new AddAccountStageState(this);
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
+        
+        AbstractAddEditController controller = new AddAccountController();
+        controller.setApplication(application);
+        this.observableView.setController(controller);
     }
     
     public void handleDeleteBankingBookItem(BankingBookModel selectedItem) {
@@ -88,21 +92,6 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     public IObservableView getCurrentSecondStageView() {
         return this.observableView;
-    }
-    
-    public void insertAccount() {
-        BankAccountLogin bankAccountLogin = createBankAccountLoginFromAddAccountView();
-
-        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
-        Session session = dao.openSessionWithTransaction();
-
-        BeesAndHoneyUser currentUser = dao.findByUserName(
-                getCurrentUserLogin(), session);        
-        currentUser.getBankAccountLogins().add(bankAccountLogin);
-        bankAccountLogin.setBeesAndHoneyUser(currentUser);
-        
-        dao.update(currentUser, session);
-        dao.closeSessionWithTransaction(session);
     }
     
     public void editAccount(BankingBookModel bankingBookModel) {
