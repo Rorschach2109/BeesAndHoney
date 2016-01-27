@@ -5,23 +5,16 @@
  */
 package com.beesandhoney.controller;
 
-import com.beesandhoney.model.Bank;
-import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankingBookModel;
-import com.beesandhoney.model.BeesAndHoneyUser;
-import com.beesandhoney.model.ModelFactory;
-import com.beesandhoney.model.dao.BankAccountLoginDao;
-import com.beesandhoney.model.dao.BankDao;
-import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
-import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.statemachine.AddAccountStageState;
-import com.beesandhoney.statemachine.DecisionStageState;
+import com.beesandhoney.statemachine.DeleteStageState;
 import com.beesandhoney.statemachine.EditAccountStageState;
 import com.beesandhoney.statemachine.SecondStageStateInterface;
 import com.beesandhoney.utils.ObserverInterface;
 import com.beesandhoney.view.AddAccountView;
 import com.beesandhoney.view.BeesAndHoney;
 import com.beesandhoney.view.BeesAndHoneyMainView;
+import com.beesandhoney.view.DeleteAccountView;
 import com.beesandhoney.view.IObservableView;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.hibernate.Session;
 
 public class BeesAndHoneyMainController implements IController, ObserverInterface {
     
@@ -42,12 +34,12 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     private SecondStageStateInterface currentState;
     
     private static final String ADD_ACCOUNT_VIEW_RESOURCE_PATH;
-    private static final String DECISION_VIEW_RESOURCE_PATH;
+    private static final String DELETE_ACCOUNT_VIEW_RESOURCE_PATH;
     
     static
     {
         ADD_ACCOUNT_VIEW_RESOURCE_PATH = "views/AddAccountView.fxml";
-        DECISION_VIEW_RESOURCE_PATH = "views/DecisionView.fxml";
+        DELETE_ACCOUNT_VIEW_RESOURCE_PATH = "views/DeleteAccountView.fxml";
     }
     
     public BeesAndHoneyMainController(BeesAndHoneyMainView mainView) {
@@ -88,27 +80,17 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     }
     
     public void handleDeleteBankingBookItem(BankingBookModel selectedItem) {
-        this.currentState = new DecisionStageState(this, selectedItem);
-        showSecondStage(DECISION_VIEW_RESOURCE_PATH);
+        this.currentState = new DeleteStageState(this);
+        showSecondStage(DELETE_ACCOUNT_VIEW_RESOURCE_PATH);
+        
+        DeleteAccountView deleteAccountView = (DeleteAccountView) this.observableView;
+        deleteAccountView.setItemToDelete(selectedItem);
     }
     
     public IObservableView getCurrentSecondStageView() {
         return this.observableView;
     }
-    
-    public void deleteBankingBookItem(BankingBookModel bankingBookModel) {
-        Session session;
 
-        BankAccountLoginDao bankAccountDao = DaoModelFactory.getBankAccountLoginDaoInstance();
-        session = bankAccountDao.openSessionWithTransaction();
-
-        BankAccountLogin oldBankAccountLogin = 
-                getBankAccountLogin(bankAccountDao, session, bankingBookModel);
-        
-        bankAccountDao.delete(oldBankAccountLogin, session);
-        bankAccountDao.closeSessionWithTransaction(session);
-    }
-    
     @Override
     public void update() {
         this.currentState.handleBeforeExit();
@@ -147,44 +129,5 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         } catch (IOException e) {
             
         }
-    }
-    
-    private BankAccountLogin createBankAccountLoginFromAddAccountView() {
-        
-        AddAccountView addAccountView = (AddAccountView) this.observableView;
-        
-        BankAccountLogin bankAccountLogin = ModelFactory.createBankAccountLogin(
-                addAccountView.getClientId(),
-                addAccountView.getPassword(),
-                addAccountView.getAccountAlias()
-        );
-        
-        BankDao bankDao = DaoModelFactory.getBankDaoInstance();
-        
-        Session session = bankDao.openSession();
-        Bank bank = bankDao.findByName(addAccountView.getBankName(), session);
-        bankDao.closeSession(session);
-        
-        bankAccountLogin.setBank(bank);
-        
-        return bankAccountLogin;
-    }
-    
-    private BankAccountLogin getBankAccountLogin(BankAccountLoginDao dao,
-            Session session, BankingBookModel bankingBookModel) {
-        return dao.findByClientIdAndAlias(bankingBookModel.getClientId(),
-                bankingBookModel.getAlias(), session);
-    }
-    
-    private BeesAndHoneyUser getCurrentUser() {
-        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
-        Session session = dao.openSession();
-        
-        BeesAndHoneyUser currentUser = dao.findByUserName(
-                getCurrentUserLogin(), session);
-        
-        dao.closeSession(session);
-        
-        return currentUser;
     }
 }

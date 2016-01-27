@@ -14,7 +14,6 @@ import com.beesandhoney.model.ModelFactory;
 import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.ObserverInterface;
-import java.util.Date;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

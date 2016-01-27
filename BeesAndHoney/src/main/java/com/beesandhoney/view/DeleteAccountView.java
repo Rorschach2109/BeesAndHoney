@@ -5,25 +5,35 @@
  */
 package com.beesandhoney.view;
 
+import com.beesandhoney.controller.DeleteAccountController;
 import com.beesandhoney.controller.IController;
+import com.beesandhoney.model.BankingBookModel;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.ArrayList;
 
-public class DecisionView implements IObservableView {
+public class DeleteAccountView implements IObservableView {
     
     private ArrayList<ObserverInterface> observers;
-    boolean decisionResult;
+    private boolean decisionResult;
+    private DeleteAccountController controller;
+    private BankingBookModel itemToDelete;
     
-    public DecisionView() {
+    public DeleteAccountView() {
         this.observers = new ArrayList<>();
         this.decisionResult = false;
+        this.controller = new DeleteAccountController(this);
+        this.itemToDelete = null;
     }
     
     public boolean getDecisionResult() {
         return this.decisionResult;
+    }
+    
+    public void setItemToDelete(BankingBookModel itemToDelete) {
+        this.itemToDelete = itemToDelete;
     }
     
     @Override
@@ -32,7 +42,7 @@ public class DecisionView implements IObservableView {
 
     @Override
     public IController getController() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.controller;
     }
     
     @Override
@@ -58,7 +68,9 @@ public class DecisionView implements IObservableView {
     }    
     
     private void setDecisionResult(boolean decisionResult) {
-        this.decisionResult = decisionResult;
+        if (true == decisionResult) {
+            this.controller.deleteBankingBookItem(this.itemToDelete);
+        }
         notifyObservers();
     }
     
