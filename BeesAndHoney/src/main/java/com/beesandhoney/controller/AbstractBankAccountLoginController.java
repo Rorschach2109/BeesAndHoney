@@ -21,7 +21,7 @@ public abstract class AbstractBankAccountLoginController implements IController 
     
     private AbstractTextValidator textValidator;
     
-    private BeesAndHoney application;
+    protected BeesAndHoney application;
     
     public AbstractBankAccountLoginController(BeesAndHoney application) {
         this.textValidator = new InputTextLengthValidator();
@@ -68,18 +68,26 @@ public abstract class AbstractBankAccountLoginController implements IController 
         return this.application.getUserLogin();
     }
     
-    protected BankAccountLogin findDuplicate() {
+    protected boolean findDuplicate() {
+        boolean isDuplicate = false;
+        
         BankAccountLoginDao dao = DaoModelFactory.getBankAccountLoginDaoInstance();
         Session session = dao.openSession();
         
-        BankAccountLogin duplicate = dao.findByClientIdAndAlias(
+        BankAccountLogin duplicate = dao.findByClientId_Alias_UserLogin(
                 this.addAccountView.getClientId(), 
                 this.addAccountView.getAccountAlias(), 
+                this.application.getUserLogin(),
                 session);
+        
+        if (null != duplicate) {
+            isDuplicate = (duplicate.getBeesAndHoneyUser().getUserName().equals(
+                    this.application.getUserLogin()));
+        }
         
         dao.closeSession(session);
         
-        return duplicate;
+        return isDuplicate;
     }
     
     private boolean validateInput() {

@@ -16,9 +16,11 @@ import org.hibernate.Session;
 public class DeleteAccountController implements IController {
 
     private DeleteAccountView deleteAccountView;
+    private BeesAndHoney application;
     
     public DeleteAccountController(DeleteAccountView deleteAccountView) {
         this.deleteAccountView = deleteAccountView;
+        this.application = null;
     }
     
     public void deleteBankingBookItem(BankingBookModel bankingBookModel) {
@@ -28,9 +30,10 @@ public class DeleteAccountController implements IController {
         session = bankAccountDao.openSessionWithTransaction();
 
         BankAccountLogin oldBankAccountLogin = bankAccountDao
-                .findByClientIdAndAlias(
+                .findByClientId_Alias_UserLogin(
                         bankingBookModel.getClientId(),
                         bankingBookModel.getAlias(), 
+                        application.getUserLogin(),
                         session);
         
         bankAccountDao.delete(oldBankAccountLogin, session);
@@ -39,7 +42,7 @@ public class DeleteAccountController implements IController {
     
     @Override
     public void setApplication(BeesAndHoney application) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.application = application;
     }
     
 }

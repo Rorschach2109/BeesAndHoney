@@ -39,11 +39,13 @@ public class BankAccountLoginDao extends GenericDaoHibernateImpl<BankAccountLogi
         return (List<BankAccountLogin>) criteria.list();
     }
     
-    public BankAccountLogin findByClientIdAndAlias(String clientId, 
-            String bankAccountLoginAlias, Session session) {
+    public BankAccountLogin findByClientId_Alias_UserLogin(String clientId, 
+            String bankAccountLoginAlias, String userName, Session session) {
         Criteria criteria = session.createCriteria(type)
                 .add(Restrictions.eq("clientId", clientId))
-                .add(Restrictions.eq("bankAccountLoginAlias", bankAccountLoginAlias));
+                .add(Restrictions.eq("bankAccountLoginAlias", bankAccountLoginAlias))
+                .createCriteria("beesAndHoneyUser", "beesAndHoneyUser")
+                    .add(Restrictions.eq("beesAndHoneyUser.userName", userName));
         return (BankAccountLogin) criteria.uniqueResult();
     }
 }

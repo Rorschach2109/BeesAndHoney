@@ -127,9 +127,8 @@ public class BankAccountLogin implements java.io.Serializable {
         
         BankAccountLogin rhs = (BankAccountLogin) object;
         
-        return (this.bankAccountLoginId == rhs.bankAccountLoginId) && 
-                (this.clientId.equals(rhs.clientId)) &&
-                (this.bankAccountLoginAlias.equals(rhs.bankAccountLoginAlias));
+        return ((this.clientId.equals(rhs.clientId)) &&
+                (this.bankAccountLoginAlias.equals(rhs.bankAccountLoginAlias)));
     }
     
     @Override

@@ -23,7 +23,7 @@ public class AddAccountController extends AbstractBankAccountLoginController {
     
     @Override
     protected boolean isDuplicated() {
-        return (null != findDuplicate());
+        return (findDuplicate());
     }
     
     @Override

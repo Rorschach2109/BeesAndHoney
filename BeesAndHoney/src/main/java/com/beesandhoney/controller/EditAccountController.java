@@ -22,7 +22,7 @@ public class EditAccountController extends AbstractBankAccountLoginController {
     
     @Override
     protected boolean isDuplicated() {
-        if (null == findDuplicate()) {
+        if (false == findDuplicate()) {
             return false;
         }
         
@@ -70,16 +70,16 @@ public class EditAccountController extends AbstractBankAccountLoginController {
     
     private BankAccountLogin getBankAccountLogin(BankAccountLoginDao dao,
             Session session) {
-        return dao.findByClientIdAndAlias(
+        return dao.findByClientId_Alias_UserLogin(
                 this.originalBankingBookModel.getClientId(),
                 this.originalBankingBookModel.getAlias(), 
+                this.application.getUserLogin(),
                 session);
     }
     
     private boolean isChanged() {
         if (this.originalBankingBookModel.getAlias().equals(this.addAccountView.getAccountAlias()) &&
-                this.originalBankingBookModel.getClientId().equals(this.addAccountView.getClientId()) &&
-                this.originalBankingBookModel.getBankName().equals(this.addAccountView.getBankName()) ) {
+                this.originalBankingBookModel.getClientId().equals(this.addAccountView.getClientId())) {
             return false;
         }
         
