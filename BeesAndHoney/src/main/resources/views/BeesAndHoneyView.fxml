@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -8,14 +9,20 @@
 <?import javafx.collections.*?>
 <?import com.beesandhoney.model.*?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
    <bottom>
       <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="8.0" layoutY="5.0" text="Current User:" />
-            <Label fx:id="currentUserLabel" layoutX="106.0" layoutY="5.0" />
-            <Label layoutX="196.0" layoutY="5.0" text="Last access date:" />
-            <Label fx:id="lastAccessDateLabel" layoutX="317.0" layoutY="5.0" />
+            <Label layoutX="8.0" layoutY="5.0" text="Current User:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <Label fx:id="currentUserLabel" layoutX="126.0" layoutY="5.0" />
+            <Label layoutX="473.0" layoutY="5.0" text="Last access date:">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
+            <Label fx:id="lastAccessDateLabel" layoutX="618.0" layoutY="5.0" />
          </children>
       </AnchorPane>
    </bottom>
@@ -26,34 +33,58 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="342.0" prefWidth="460.0">
                      <children>
-                        <TableView fx:id="bankingBookTable" prefHeight="379.0" prefWidth="396.0">
+                        <TableView fx:id="bankingBookTable" prefHeight="421.0" prefWidth="627.0">
                           <columns>
-                            <TableColumn maxWidth="297.0" minWidth="141.0" prefWidth="172.0" text="Alias">
+                            <TableColumn maxWidth="306.0" minWidth="306.0" prefWidth="306.0" resizable="false" text="Alias">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="alias" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn maxWidth="164.0" minWidth="7.0" prefWidth="104.0" resizable="false" text="Bank Name">
+                            <TableColumn maxWidth="111.0" minWidth="111.0" prefWidth="111.0" resizable="false" text="Bank Name">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="bankName" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn prefWidth="118.0" text="Client Id">
+                            <TableColumn maxWidth="208.0" minWidth="208.0" prefWidth="208.0" resizable="false" text="Client Id">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="clientId" />
                                 </cellValueFactory>
                             </TableColumn>
                           </columns>
                         </TableView>
-                        <Button fx:id="editButton" layoutX="440.0" layoutY="255.0" maxWidth="127.0" minWidth="127.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonClicked" prefWidth="127.0" text="Edit" />
-                        <Button fx:id="deleteButton" layoutX="440.0" layoutY="339.0" mnemonicParsing="false" onMouseClicked="#handleDeleteButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Delete" />
-                        <Button fx:id="addButton" layoutX="440.0" layoutY="302.0" mnemonicParsing="false" onMouseClicked="#handleAddButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Add" />
+                        <Button fx:id="editButton" layoutX="685.0" layoutY="297.0" maxWidth="127.0" minWidth="127.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonClicked" prefWidth="127.0" text="Edit" />
+                        <Button fx:id="deleteButton" layoutX="685.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#handleDeleteButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Delete" />
+                        <Button fx:id="addButton" layoutX="685.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#handleAddButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Add" />
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Configure">
+          <Tab fx:id="accountsTab" text="Accounts">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="accountsTable" prefHeight="354.0" prefWidth="826.0">
+                          <columns>
+                            <TableColumn maxWidth="224.0" minWidth="224.0" prefWidth="224.0" resizable="false" text="Alias">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="alias" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="380.0" minWidth="380.0" prefWidth="380.0" resizable="false" text="Account Name">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="accountName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="220.0" minWidth="220.0" prefWidth="220.0" resizable="false" text="Available Funds">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="availableFunds" />
+                                </cellValueFactory>
+                            </TableColumn>
+                          </columns>
+                        </TableView>
+                        <Button fx:id="detailsButton" layoutX="14.0" layoutY="381.0" maxHeight="26.0" maxWidth="87.0" minHeight="26.0" minWidth="87.0" mnemonicParsing="false" onMouseClicked="#handleDetailsButtonClicked" prefHeight="26.0" prefWidth="87.0" text="Details" />
+                        <Button fx:id="summaryButton" layoutX="132.0" layoutY="381.0" maxHeight="26.0" maxWidth="87.0" minHeight="26.0" minWidth="87.0" mnemonicParsing="false" onMouseClicked="#handleSummaryButtonClicked" prefHeight="26.0" prefWidth="87.0" text="Summary" />
+                        <Button fx:id="refreshButton" layoutX="725.0" layoutY="381.0" maxHeight="26.0" maxWidth="87.0" minHeight="26.0" minWidth="87.0" mnemonicParsing="false" onMouseClicked="#handleRefreshButtonClicked" prefHeight="26.0" prefWidth="87.0" text="Refresh" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

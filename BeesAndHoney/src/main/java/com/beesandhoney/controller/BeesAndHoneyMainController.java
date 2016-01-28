@@ -67,10 +67,6 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         addAccountView.fillBankingBookModel(selectedItem);
     }
     
-    public void handleRefreshBankingBookTable() {
-        
-    }
-    
     public void handleAddBankingBookItem() {
         this.currentState = new AddAccountStageState(this);
         showSecondStage(ADD_ACCOUNT_VIEW_RESOURCE_PATH);
@@ -86,6 +82,18 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         DeleteAccountView deleteAccountView = (DeleteAccountView) this.observableView;
         deleteAccountView.setItemToDelete(selectedItem);
         deleteAccountView.getController().setApplication(this.application);
+    }
+    
+    public void handleShowAccountDetails() {
+        
+    }
+    
+    public void handleShowSummaryDetails() {
+        
+    }
+    
+    public void handleRefreshBankingBookTable() {
+        
     }
     
     public IObservableView getCurrentSecondStageView() {

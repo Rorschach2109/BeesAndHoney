@@ -7,6 +7,7 @@ package com.beesandhoney.view;
 
 import com.beesandhoney.controller.BeesAndHoneyMainController;
 import com.beesandhoney.controller.IController;
+import com.beesandhoney.model.AccountModel;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankingBookModel;
 import com.beesandhoney.model.BeesAndHoneyUser;
@@ -17,6 +18,7 @@ import com.beesandhoney.utils.ObserverInterface;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import org.hibernate.Session;
@@ -29,6 +31,11 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     private BorderPane mainView;
     
     @FXML
+    private Tab bankingBookTab;
+    @FXML
+    private Tab accountsTab;
+    
+    @FXML
     private Label currentUserLabel;
     
     @FXML
@@ -36,6 +43,8 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @FXML
     private TableView<BankingBookModel> bankingBookTable;
+    @FXML
+    private TableView<AccountModel> accountsTable;
     
     public BeesAndHoneyMainView() {
         this.mainController = new BeesAndHoneyMainController(this);
@@ -54,7 +63,11 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     }
     
     public ObservableList<BankingBookModel> getBankingBookTableItems() {
-        return bankingBookTable.getItems();
+        return this.bankingBookTable.getItems();
+    }
+    
+    public ObservableList<AccountModel> getAccountTableItems() {
+        return this.accountsTable.getItems();
     }
     
     @Override
@@ -113,11 +126,6 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     }
     
     @FXML
-    private void handleRefreshButtonClicked() {
-        this.mainController.handleRefreshBankingBookTable();
-    }
-    
-    @FXML
     private void handleAddButtonClicked() {
         this.mainController.handleAddBankingBookItem();
     }
@@ -131,6 +139,21 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
                     selectedBankingBookModel
             );
         }
+    }
+    
+    @FXML
+    private void handleDetailsButtonClicked() {
+        
+    }
+    
+    @FXML
+    private void handleSummaryButtonClicked() {
+        
+    }
+    
+    @FXML
+    private void handleRefreshButtonClicked() {
+        
     }
     
     @FXML
