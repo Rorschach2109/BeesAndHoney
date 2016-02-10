@@ -7,10 +7,6 @@ package com.beesandhoney.view;
 
 import com.beesandhoney.utils.ObservableInterface;
 
-/**
- *
- * @author azazello
- */
 public interface IObservableView extends IView, ObservableInterface {
     
 }

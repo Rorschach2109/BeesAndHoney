@@ -15,8 +15,8 @@ import org.hibernate.Session;
 
 public class DeleteAccountController implements IController {
 
-    private DeleteAccountView deleteAccountView;
     private BeesAndHoney application;
+    private final DeleteAccountView deleteAccountView;
     
     public DeleteAccountController(DeleteAccountView deleteAccountView) {
         this.deleteAccountView = deleteAccountView;

@@ -9,7 +9,7 @@ import com.beesandhoney.controller.BeesAndHoneyMainController;
 
 public class EditAccountStageState implements SecondStageStateInterface {
 
-    private BeesAndHoneyMainController controller;
+    private final BeesAndHoneyMainController controller;
     
     public EditAccountStageState(BeesAndHoneyMainController controller) {
         this.controller = controller;

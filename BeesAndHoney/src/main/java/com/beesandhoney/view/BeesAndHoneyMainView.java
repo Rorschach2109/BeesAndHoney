@@ -25,8 +25,6 @@ import org.hibernate.Session;
 
 public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
-    private final BeesAndHoneyMainController mainController;
-    
     @FXML
     private BorderPane mainView;
     
@@ -46,6 +44,8 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     @FXML
     private TableView<AccountModel> accountsTable;
     
+    private final BeesAndHoneyMainController mainController;
+
     public BeesAndHoneyMainView() {
         this.mainController = new BeesAndHoneyMainController(this);
     }
@@ -82,7 +82,7 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
 
     @Override
     public void setController(IController controller) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     @Override

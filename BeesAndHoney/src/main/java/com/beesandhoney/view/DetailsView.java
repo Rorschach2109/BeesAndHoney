@@ -16,8 +16,6 @@ import javafx.scene.layout.AnchorPane;
 
 public class DetailsView implements IObservableView {
     
-    private ArrayList<ObserverInterface> observers;
-    
     @FXML
     private AnchorPane detailsPane;
     @FXML
@@ -33,6 +31,8 @@ public class DetailsView implements IObservableView {
     @FXML
     private Label bankNameLabel;
         
+    private final ArrayList<ObserverInterface> observers;
+
     public DetailsView() {
         this.observers = new ArrayList<>();
     }

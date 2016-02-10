@@ -12,15 +12,16 @@ import org.jasypt.hibernate4.encryptor.HibernatePBEEncryptorRegistry;
 
 public class BouncyCastlePasswordEncryptor implements PasswordEncryptorWrapper {
 
-    private static BouncyCastlePasswordEncryptor bouncyCastleEncryptor = null;
     private StandardPBEStringEncryptor pbeEncryptor;
+
+    private static BouncyCastlePasswordEncryptor bouncyCastleEncryptor = null;
     
-    private final String ALGORITHM_NAME;
-    private final int OBTATION_ITERATIONS;
-    private final String PROVIDER_NAME;
-    
-    private final String STRING_ENCRYPTOR_NAME;
-    
+    private static final String ALGORITHM_NAME;
+    private static final int OBTATION_ITERATIONS;
+    private static final String PROVIDER_NAME;
+    private static final String STRING_ENCRYPTOR_NAME;
+
+    static
     {
         ALGORITHM_NAME = "PBEWithSHAAnd2-KeyTripleDES-CBC";
         OBTATION_ITERATIONS = 2000;
@@ -45,15 +46,15 @@ public class BouncyCastlePasswordEncryptor implements PasswordEncryptorWrapper {
             unlimitedStrengthHack();
             
             this.pbeEncryptor = new StandardPBEStringEncryptor();
-            this.pbeEncryptor.setAlgorithm(this.ALGORITHM_NAME);
-            this.pbeEncryptor.setKeyObtentionIterations(this.OBTATION_ITERATIONS);
-            this.pbeEncryptor.setProviderName(this.PROVIDER_NAME);
+            this.pbeEncryptor.setAlgorithm(ALGORITHM_NAME);
+            this.pbeEncryptor.setKeyObtentionIterations(OBTATION_ITERATIONS);
+            this.pbeEncryptor.setProviderName(PROVIDER_NAME);
             this.pbeEncryptor.setPassword(privateKey);
 
             this.pbeEncryptor.initialize();
             
             HibernatePBEEncryptorRegistry.getInstance()
-                    .registerPBEStringEncryptor(this.STRING_ENCRYPTOR_NAME, pbeEncryptor);
+                    .registerPBEStringEncryptor(STRING_ENCRYPTOR_NAME, pbeEncryptor);
             
         }
     }
@@ -76,7 +77,7 @@ public class BouncyCastlePasswordEncryptor implements PasswordEncryptorWrapper {
 
     @Override
     public boolean comparePasswords(String plainPassword, String encryptedPassword) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }    
     
     private static void unlimitedStrengthHack() {

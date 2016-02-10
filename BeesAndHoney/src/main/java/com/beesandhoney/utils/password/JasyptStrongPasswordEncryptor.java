@@ -7,10 +7,6 @@ package com.beesandhoney.utils.password;
 
 import org.jasypt.util.password.PasswordEncryptor;
 
-/**
- *
- * @author azazello
- */
 public class JasyptStrongPasswordEncryptor implements PasswordEncryptorWrapper {
     
     private final PasswordEncryptor passwordEncryptor;
@@ -21,12 +17,12 @@ public class JasyptStrongPasswordEncryptor implements PasswordEncryptorWrapper {
 
     @Override
     public void initialize(String privateKey) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
     public void kill() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     @Override

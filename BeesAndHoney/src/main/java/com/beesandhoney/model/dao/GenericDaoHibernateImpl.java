@@ -16,7 +16,8 @@ public class GenericDaoHibernateImpl <T, PK extends java.io.Serializable>
         implements GenericDao<T, PK, Session>, ObservableInterface {
     
     protected final Class<T> type;
-    private ArrayList<ObserverInterface> observers;
+    
+    private final ArrayList<ObserverInterface> observers;
     
     protected GenericDaoHibernateImpl(Class<T> type) {
         this.type = type;

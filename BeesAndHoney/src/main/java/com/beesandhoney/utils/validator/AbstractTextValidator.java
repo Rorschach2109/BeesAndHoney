@@ -7,9 +7,10 @@ package com.beesandhoney.utils.validator;
 
 public abstract class AbstractTextValidator {
     
-    private final String PATTERN_NUMBER;
-    private final String PATTERN_VALID_LETTERS;
+    private static final String PATTERN_NUMBER;
+    private static final String PATTERN_VALID_LETTERS;
     
+    static
     {
         PATTERN_NUMBER = ".*\\d+.*";
         PATTERN_VALID_LETTERS = "\\w+";
@@ -22,7 +23,7 @@ public abstract class AbstractTextValidator {
     }
     
     protected final boolean validLetters(String text) {
-        return text.matches(this.PATTERN_VALID_LETTERS);
+        return text.matches(PATTERN_VALID_LETTERS);
     }
     
     protected final boolean containsCapitalLetter(String text) {
@@ -34,6 +35,6 @@ public abstract class AbstractTextValidator {
     }
     
     protected final boolean containsNumber(String text) {
-        return text.matches(this.PATTERN_NUMBER);
+        return text.matches(PATTERN_NUMBER);
     }
 }

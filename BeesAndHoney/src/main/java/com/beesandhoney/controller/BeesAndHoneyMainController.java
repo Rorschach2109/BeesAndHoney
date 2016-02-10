@@ -25,13 +25,14 @@ import javafx.stage.Stage;
 
 public class BeesAndHoneyMainController implements IController, ObserverInterface {
     
-    private BeesAndHoneyMainView mainView;
     private BeesAndHoney application;
-    
+
     private Stage secondStage;
-    private IObservableView observableView;
-    
     private SecondStageStateInterface currentState;
+
+    private IObservableView observableView;
+
+    private final BeesAndHoneyMainView mainView;
     
     private static final String ADD_ACCOUNT_VIEW_RESOURCE_PATH;
     private static final String DELETE_ACCOUNT_VIEW_RESOURCE_PATH;
@@ -54,6 +55,10 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     public String getCurrentUserLogin() {
         return this.application.getUserLogin();
+    }
+    
+    public IObservableView getCurrentSecondStageView() {
+        return this.observableView;
     }
     
     public void handleEditBankingBookItem(BankingBookModel selectedItem) {
@@ -94,10 +99,6 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     public void handleRefreshBankingBookTable() {
         
-    }
-    
-    public IObservableView getCurrentSecondStageView() {
-        return this.observableView;
     }
 
     @Override

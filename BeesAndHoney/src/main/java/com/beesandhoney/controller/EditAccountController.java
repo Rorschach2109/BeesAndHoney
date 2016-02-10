@@ -20,20 +20,6 @@ public class EditAccountController extends AbstractBankAccountLoginController {
         super(application);
     }
     
-    @Override
-    protected boolean isDuplicated() {
-        if (false == findDuplicate()) {
-            return false;
-        }
-        
-        return isChanged();
-    }
-    
-    @Override
-    protected void handleSaveAccountLogin() {
-        editAccount();
-    }
-    
     public void editAccount() {
         BankAccountLogin editedBankAccountLogin = createBankAccountLogin();
         
@@ -47,6 +33,20 @@ public class EditAccountController extends AbstractBankAccountLoginController {
         dao.update(oldBankAccountLogin, session);
         
         dao.closeSessionWithTransaction(session);
+    }
+    
+    @Override
+    protected boolean isDuplicated() {
+        if (false == findDuplicate()) {
+            return false;
+        }
+        
+        return isChanged();
+    }
+    
+    @Override
+    protected void handleSaveAccountLogin() {
+        editAccount();
     }
     
     private BankAccountLogin createBankAccountLogin() {

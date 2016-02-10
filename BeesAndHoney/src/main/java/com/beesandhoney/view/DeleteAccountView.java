@@ -16,20 +16,15 @@ import java.util.ArrayList;
 
 public class DeleteAccountView implements IObservableView {
     
-    private ArrayList<ObserverInterface> observers;
-    private boolean decisionResult;
-    private DeleteAccountController controller;
     private BankingBookModel itemToDelete;
+
+    private final DeleteAccountController controller;
+    private final ArrayList<ObserverInterface> observers;
     
     public DeleteAccountView() {
         this.observers = new ArrayList<>();
-        this.decisionResult = false;
         this.controller = new DeleteAccountController(this);
         this.itemToDelete = null;
-    }
-    
-    public boolean getDecisionResult() {
-        return this.decisionResult;
     }
     
     public void setItemToDelete(BankingBookModel itemToDelete) {
@@ -47,7 +42,7 @@ public class DeleteAccountView implements IObservableView {
     
     @Override
     public void setController(IController controller) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     @Override

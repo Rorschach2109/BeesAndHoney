@@ -21,9 +21,10 @@ import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 
 public final class LoginController implements IController {
     
-    private LoginView loginView;
     private BeesAndHoney application;
-    private BeesAndHoneyUserDao dao;
+
+    private final BeesAndHoneyUserDao dao;
+    private final LoginView loginView;
         
     public LoginController(LoginView loginView) {
         this.loginView = loginView;
@@ -104,6 +105,16 @@ public final class LoginController implements IController {
         return inputTextValidator.validateText(inputText);
     }
     
+    private boolean validatePassword(String password, BeesAndHoneyUser user) {
+        if (0 != password.compareTo(user.getUserNamePassword())) {
+            this.loginView.handleInvalidPassword();
+            killEncryptor();
+            return false;
+        }
+        
+        return true;
+    }
+    
     private BeesAndHoneyUser getBeesAndHoneyUser(String login) 
             throws EncryptionOperationNotPossibleException {
         
@@ -122,16 +133,6 @@ public final class LoginController implements IController {
         }
         
         return user;
-    }
-    
-    private boolean validatePassword(String password, BeesAndHoneyUser user) {
-        if (0 != password.compareTo(user.getUserNamePassword())) {
-            this.loginView.handleInvalidPassword();
-            killEncryptor();
-            return false;
-        }
-        
-        return true;
     }
     
     private BeesAndHoneyUser insertUserInfo(String login, String password) {

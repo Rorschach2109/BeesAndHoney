@@ -25,9 +25,6 @@ public class AddAccountView implements IObservableView {
     
     private AbstractBankAccountLoginController controller;
     
-    private boolean decisionResult;
-    private ArrayList<ObserverInterface> observers;
-    
     @FXML
     private TextField accountLoginAliasField;
     @FXML
@@ -40,16 +37,12 @@ public class AddAccountView implements IObservableView {
     private Label errorLabel;
     @FXML
     private Label accountAlreadyExistsLabel;
-    
+
+    private final ArrayList<ObserverInterface> observers;
     
     public AddAccountView() {
         this.controller = null;
-        this.decisionResult = false;
         this.observers = new ArrayList<>();
-    }
-    
-    public boolean getDecisionResult() {
-        return this.decisionResult;
     }
     
     public String getAccountAlias() {
@@ -135,15 +128,8 @@ public class AddAccountView implements IObservableView {
     
     private void saveAccountLogin() {
         if (true == this.controller.saveAccountLogin()) {
-            setDecisionResult(true);
+            notifyObservers();
         }
-    }
-    
-    private void setDecisionResult(boolean decisionResult) {
-        setErrorLabelVisibility(false);
-        
-        this.decisionResult = decisionResult;
-        notifyObservers();
     }
     
     private void addListeners() {
@@ -161,13 +147,13 @@ public class AddAccountView implements IObservableView {
     @FXML
     private void handleCancelButtonReleased(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-            setDecisionResult(false);
+            notifyObservers();
         }
     }
     
     @FXML
     private void handleCancelButtonClicked() {
-        setDecisionResult(false);
+        notifyObservers();
     }
     
     @FXML

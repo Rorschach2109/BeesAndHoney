@@ -9,7 +9,7 @@ import com.beesandhoney.controller.BeesAndHoneyMainController;
 
 public class DeleteStageState implements SecondStageStateInterface {
 
-    private BeesAndHoneyMainController controller;
+    private final BeesAndHoneyMainController controller;
     
     public DeleteStageState(BeesAndHoneyMainController controller) {
         this.controller = controller;

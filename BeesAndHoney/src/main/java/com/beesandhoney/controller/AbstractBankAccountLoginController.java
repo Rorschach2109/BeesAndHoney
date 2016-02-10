@@ -16,12 +16,13 @@ import com.beesandhoney.view.BeesAndHoney;
 import org.hibernate.Session;
 
 public abstract class AbstractBankAccountLoginController implements IController {
+
     protected AddAccountView addAccountView;
     protected BankingBookModel originalBankingBookModel;
-    
-    private AbstractTextValidator textValidator;
-    
+   
     protected BeesAndHoney application;
+
+    private final AbstractTextValidator textValidator;
     
     public AbstractBankAccountLoginController(BeesAndHoney application) {
         this.textValidator = new InputTextLengthValidator();
