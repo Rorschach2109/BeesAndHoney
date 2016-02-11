@@ -133,6 +133,8 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
             this.secondStage = new Stage();
             this.secondStage.initModality(Modality.WINDOW_MODAL);
             this.secondStage.initOwner(this.application.getCurrentScene().getWindow());
+            this.secondStage.setTitle(this.application.getClass().getSimpleName());
+            this.secondStage.setResizable(false);
             this.secondStage.setScene(scene);
             this.secondStage.show();
             

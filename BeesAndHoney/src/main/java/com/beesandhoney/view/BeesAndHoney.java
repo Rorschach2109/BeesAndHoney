@@ -99,7 +99,7 @@ public class BeesAndHoney extends Application {
     }
     
     private void configureStage(Stage stage) {
-        stage.setTitle("BeesAndHoney");
+        stage.setTitle(BeesAndHoney.class.getSimpleName());
         stage.setResizable(false);
     }
     
