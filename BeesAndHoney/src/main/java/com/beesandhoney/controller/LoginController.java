@@ -28,7 +28,7 @@ public final class LoginController implements IController {
         
     public LoginController(LoginView loginView) {
         this.loginView = loginView;
-        this.dao = DaoModelFactory.getBeesAndHoneyUserDao();
+        this.dao = DaoModelFactory.getBeesAndHoneyUserDaoInstance();
     }
     
     public void logIn(String login, String password, String securityPassword) {
@@ -138,7 +138,7 @@ public final class LoginController implements IController {
     private BeesAndHoneyUser insertUserInfo(String login, String password) {
         Session session = dao.openSessionWithTransaction();
         
-        BeesAndHoneyUser currentUser = ModelFactory.createBeesAndHoneyUser(
+        BeesAndHoneyUser currentUser = ModelFactory.createBeesAndHoneyUserModel(
                 login, password);
         dao.create(currentUser, session);
         

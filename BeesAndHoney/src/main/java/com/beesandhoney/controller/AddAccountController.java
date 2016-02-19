@@ -34,7 +34,7 @@ public class AddAccountController extends AbstractBankAccountLoginController {
     private void insertAccount() {
         BankAccountLogin bankAccountLogin = createBankAccountLoginFromAddAccountView();
 
-        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
+        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDaoInstance();
         Session session = dao.openSessionWithTransaction();
 
         BeesAndHoneyUser currentUser = dao.findByUserName(
@@ -48,7 +48,7 @@ public class AddAccountController extends AbstractBankAccountLoginController {
     
     private BankAccountLogin createBankAccountLoginFromAddAccountView() {
         
-        BankAccountLogin bankAccountLogin = ModelFactory.createBankAccountLogin(
+        BankAccountLogin bankAccountLogin = ModelFactory.createBankAccountLoginModel(
                 this.addAccountView.getClientId(),
                 this.addAccountView.getPassword(),
                 this.addAccountView.getAccountAlias()

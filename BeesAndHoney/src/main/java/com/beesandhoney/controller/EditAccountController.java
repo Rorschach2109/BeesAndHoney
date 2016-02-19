@@ -51,7 +51,7 @@ public class EditAccountController extends AbstractBankAccountLoginController {
     
     private BankAccountLogin createBankAccountLogin() {
         
-        BankAccountLogin bankAccountLogin = ModelFactory.createBankAccountLogin(
+        BankAccountLogin bankAccountLogin = ModelFactory.createBankAccountLoginModel(
                 this.addAccountView.getClientId(),
                 this.addAccountView.getPassword(),
                 this.addAccountView.getAccountAlias()
