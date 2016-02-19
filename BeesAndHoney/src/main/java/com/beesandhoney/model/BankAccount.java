@@ -5,7 +5,9 @@
  */
 package com.beesandhoney.model;
 
+import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -14,7 +16,8 @@ import javax.persistence.ManyToOne;
 public class BankAccount implements java.io.Serializable {
     
     @Id
-    private int accountNumber;
+    private String accountNumber;
+    @Column(columnDefinition = "varchar(60) COLLATE utf8_bin")
     private String accountName;
     private double availableSources;
     private double accountBalance;
@@ -22,14 +25,14 @@ public class BankAccount implements java.io.Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     private BankAccountLogin bankAccountLogin;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private BankAccountOwner bankAccountOwner;
     
     public BankAccount() {
-        this(-1, "", 0.0, 0.0);
+        this("", "", 0.0, 0.0);
     }
     
-    public BankAccount(int accountNumber, String accountName, 
+    public BankAccount(String accountNumber, String accountName, 
             double availableSources, double accoutnBalance) {
         this.accountNumber = accountNumber;
         this.accountName = accountName;
@@ -39,11 +42,11 @@ public class BankAccount implements java.io.Serializable {
         this.bankAccountOwner = null;
     }
 
-    public int getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -85,5 +88,24 @@ public class BankAccount implements java.io.Serializable {
 
     public void setBankAccountOwner(BankAccountOwner bankAccountOwner) {
         this.bankAccountOwner = bankAccountOwner;
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof BankAccount)) {
+            return false;
+        }
+        
+        if (object == this) {
+            return true;
+        }
+        
+        BankAccount rhs = (BankAccount) object;
+        return (this.accountNumber.equals(rhs.accountNumber));
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.accountNumber);
     }
 }

@@ -5,9 +5,12 @@
  */
 package com.beesandhoney.model;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -15,29 +18,31 @@ import javax.persistence.OneToMany;
 public class BankAccountOwner implements java.io.Serializable {
     
     @Id
-    private BankAccountOwnerKey bankAccountOwnerKey;
+    @Column(columnDefinition = "varchar(60) COLLATE utf8_bin")
+    private String ownerNameSurname;
+    @Column(columnDefinition = "varchar(60) COLLATE utf8_bin")
     private String ownerAddress;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bankAccountOwner")
     private Set<BankAccount> bankAccounts;
 
     public BankAccountOwner() {
-        this(new BankAccountOwnerKey(), "");
+        this("", "");
     }
 
-    public BankAccountOwner(BankAccountOwnerKey bankAccountOwnerKey, 
+    public BankAccountOwner(String ownerNameSurname, 
             String ownerAddress) {
-        this.bankAccountOwnerKey = bankAccountOwnerKey;
+        this.ownerNameSurname = ownerNameSurname;
         this.ownerAddress = ownerAddress;
-        this.bankAccounts = null;
+        this.bankAccounts = new HashSet<>();
     }
 
-    public BankAccountOwnerKey getBankAccountOwnerKey() {
-        return bankAccountOwnerKey;
+    public String getOwnerNameSurname() {
+        return ownerNameSurname;
     }
 
-    public void setBankAccountOwnerKey(BankAccountOwnerKey bankAccountOwnerKey) {
-        this.bankAccountOwnerKey = bankAccountOwnerKey;
+    public void setOwnerNameSurname(String ownerNameSurname) {
+        this.ownerNameSurname = ownerNameSurname;
     }
 
     public String getOwnerAddress() {

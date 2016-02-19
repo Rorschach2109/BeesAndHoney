@@ -8,7 +8,9 @@ package com.beesandhoney.model;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,17 +33,18 @@ public class BankAccountLogin implements java.io.Serializable {
     private int bankAccountLoginId;
     
     private String clientId;
+    @Column(columnDefinition = "varchar(60) COLLATE utf8_bin")
     private String bankAccountLoginAlias;
     @Type(type = "encryptedPassword")
     private String loginPassword;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Bank bank;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bankAccountLogin")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "bankAccountLogin", fetch = FetchType.EAGER)
     private Set<BankAccount> bankAccounts;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "bankAccountLogin_userId")
     private BeesAndHoneyUser beesAndHoneyUser;
     

@@ -16,7 +16,7 @@ public final class ModelFactory {
         return new Bank(bankName, bankUrl);
     }
     
-    public static BankAccount createBankAccountModel(int accountNumber,
+    public static BankAccount createBankAccountModel(String accountNumber,
             String accountName, double availableSources, 
             double accoutnBalance) {
         
@@ -25,7 +25,7 @@ public final class ModelFactory {
         );
     }
     
-    public static BankAccountLogin createBankAccountLogin(String clientId,
+    public static BankAccountLogin createBankAccountLoginModel(String clientId,
             String loginPassword, String bankAccountLoginAlias) {
         
         return new BankAccountLogin(
@@ -33,12 +33,10 @@ public final class ModelFactory {
         );
     }
     
-    public static BankAccountOwner createBankAccountOwnerModel(String ownerName,
-            String ownerSurname, String ownerAddress) {
+    public static BankAccountOwner createBankAccountOwnerModel(String ownerNameSurname, 
+            String ownerAddress) {
         
-        return new BankAccountOwner(
-                new BankAccountOwnerKey(ownerName, ownerSurname), ownerAddress
-        );
+        return new BankAccountOwner(ownerNameSurname, ownerAddress);
     }
     
     public static BankingBookModel createBankingBookModel(String alias, 
@@ -47,7 +45,7 @@ public final class ModelFactory {
         return new BankingBookModel(alias, bankName, accountNumber);
     }
     
-    public static BeesAndHoneyUser createBeesAndHoneyUser(String userName, 
+    public static BeesAndHoneyUser createBeesAndHoneyUserModel(String userName, 
             String userNamePassword) {
         
         return new BeesAndHoneyUser(
