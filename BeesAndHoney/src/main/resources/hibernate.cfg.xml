@@ -5,11 +5,22 @@
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    
+    <property name="hibernate.connection.useUnicode">true</property> 
+    <property name="hibernate.connection.CharSet">utf8</property>
+    <property name="hibernate.connection.characterEncoding">UTF-8</property> 
+    
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/BeesAndHoney?createDatabaseIfNotExist=true</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password"></property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     
+    <property name="hibernate.c3p0.min_size">5</property>
+    <property name="hibernate.c3p0.max_size">20</property>
+    <property name="hibernate.c3p0.timeout">3000</property>
+    <property name="hibernate.c3p0.max_statements">50</property>
+    <property name="hibernate.c3p0.idle_test_period">300</property>
+  
     <mapping class="com.beesandhoney.model.BankAccountLogin"/>
     <mapping class="com.beesandhoney.model.Bank"/>
     <mapping class="com.beesandhoney.model.BankAccount"/>
