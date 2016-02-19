@@ -55,7 +55,8 @@
                         <Button fx:id="editButton" layoutX="685.0" layoutY="297.0" maxWidth="127.0" minWidth="127.0" mnemonicParsing="false" onMouseClicked="#handleEditButtonClicked" prefWidth="127.0" text="Edit" />
                         <Button fx:id="deleteButton" layoutX="685.0" layoutY="381.0" mnemonicParsing="false" onMouseClicked="#handleDeleteButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Delete" />
                         <Button fx:id="addButton" layoutX="685.0" layoutY="344.0" mnemonicParsing="false" onMouseClicked="#handleAddButtonClicked" prefHeight="26.0" prefWidth="127.0" text="Add" />
-                     </children></AnchorPane>
+                     </children>
+              </AnchorPane>
             </content>
           </Tab>
           <Tab fx:id="accountsTab" text="Accounts">
