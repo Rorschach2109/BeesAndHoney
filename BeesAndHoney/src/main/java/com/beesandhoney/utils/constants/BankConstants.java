@@ -13,14 +13,14 @@ import javafx.collections.ObservableList;
 
 public final class BankConstants {
 
-    private static class BankPKO {
-        private static final String NAME = "PKO BP";
-        private static final String URL = "https://www.ipko.pl";
+    public static class BankPKO {
+        public static final String NAME = "PKO BP";
+        public static final String URL = "https://www.ipko.pl/stare";
     }
     
-    private static class BankBZWBK {
-        private static final String NAME = "BZ WBK";
-        private static final String URL = "https://www.bzwbk.pl";
+    public static class BankBZWBK {
+        public static final String NAME = "BZ WBK";
+        public static final String URL = "https://www.bzwbk.pl";
     }
     
     public static ArrayList<Bank> bankModelList;
@@ -42,11 +42,9 @@ public final class BankConstants {
         try {
             Field nameField = Class.forName(bankClassName)
                     .getDeclaredField("NAME");
-            nameField.setAccessible(true);
                 
             Field urlField = Class.forName(bankClassName)
                     .getDeclaredField("URL");
-            urlField.setAccessible(true);
                 
             bankModelList.add(new Bank(
                     (String) nameField.get(null), (String) urlField.get(null)
