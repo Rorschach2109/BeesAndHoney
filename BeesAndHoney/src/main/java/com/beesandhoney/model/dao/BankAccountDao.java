@@ -11,7 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, Integer> {
+public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, String> {
     
     private static BankAccountDao instance;
     
@@ -50,4 +50,6 @@ public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, I
         
         return criteria.list();
     }
+    
+    
 }

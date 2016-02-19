@@ -10,7 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class BankDao extends GenericDaoHibernateImpl<Bank, Integer> {
+public class BankDao extends GenericDaoHibernateImpl<Bank, String> {
     
     private static BankDao instance;
     

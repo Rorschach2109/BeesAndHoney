@@ -87,7 +87,7 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @Override
     public void update() {
-        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDao();
+        BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDaoInstance();
         Session session = dao.openSession();
         
         BeesAndHoneyUser currentUser = dao.findByUserName(
@@ -153,12 +153,12 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @FXML
     private void handleRefreshButtonClicked() {
-        
+        this.mainController.handleRefreshBankingBookTable();
     }
     
     @FXML
     private void initialize() {
-        DaoModelFactory.getBeesAndHoneyUserDao().registerObserver(this);
+        DaoModelFactory.getBeesAndHoneyUserDaoInstance().registerObserver(this);
         DaoModelFactory.getBankAccountLoginDaoInstance().registerObserver(this);
     }
 }
