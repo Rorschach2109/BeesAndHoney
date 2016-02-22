@@ -11,7 +11,6 @@ import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankAccountOwner;
 import com.beesandhoney.model.ModelFactory;
 import com.beesandhoney.utils.ObserverInterface;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -141,7 +140,6 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
 
         double accountBalance = convertStringToDouble(accountBalanceString);
         double availableSources = convertStringToDouble(availableSourcesString);
-        
         BankAccount bankAccount = ModelFactory.createBankAccountModel(accountNumberString, 
                 accountNameString, availableSources, accountBalance);
         BankAccountOwner bankAccountOwner = ModelFactory.createBankAccountOwnerModel(
@@ -154,13 +152,13 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
     }
     
     private double convertStringToDouble(String text) {
-        Pattern pattern = Pattern.compile("([0-9,\\-]*).*");
+        Pattern pattern = Pattern.compile("([0-9,\\- ]*).*");
         Matcher matcher = pattern.matcher(text);
         
         double returnValue = 0.0;
         
         if (matcher.find()) {
-            String numberString = matcher.group(1).replaceAll(",", ".");
+            String numberString = matcher.group(1).replaceAll(",", ".").replaceAll(" ", "");
             returnValue = Double.parseDouble(numberString);
         }
         
