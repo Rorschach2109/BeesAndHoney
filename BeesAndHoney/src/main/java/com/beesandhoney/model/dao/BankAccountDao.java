@@ -51,5 +51,12 @@ public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, S
         return criteria.list();
     }
     
-    
+    public List<BankAccount> findByClientId(String clientId, Session session) {
+        System.out.println("clientId: " + clientId);
+        Criteria criteria = session.createCriteria(type)
+                .createCriteria("bankAccountLogin", "bankAccountLogin")
+                    .add(Restrictions.eq("bankAccountLogin.clientId", clientId));
+        
+        return criteria.list();
+    }
 }

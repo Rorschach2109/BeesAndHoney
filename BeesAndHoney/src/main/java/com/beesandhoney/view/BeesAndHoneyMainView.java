@@ -8,17 +8,23 @@ package com.beesandhoney.view;
 import com.beesandhoney.controller.BeesAndHoneyMainController;
 import com.beesandhoney.controller.IController;
 import com.beesandhoney.model.AccountModel;
+import com.beesandhoney.model.BankAccount;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankingBookModel;
 import com.beesandhoney.model.BeesAndHoneyUser;
 import com.beesandhoney.model.ModelFactory;
+import com.beesandhoney.model.dao.BankAccountDao;
 import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.ObserverInterface;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import org.hibernate.Session;
@@ -29,10 +35,8 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     private BorderPane mainView;
     
     @FXML
-    private Tab bankingBookTab;
-    @FXML
-    private Tab accountsTab;
-    
+    private TabPane mainViewTabPane;
+        
     @FXML
     private Label currentUserLabel;
     
@@ -45,6 +49,13 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     private TableView<AccountModel> accountsTable;
     
     private final BeesAndHoneyMainController mainController;
+    
+    private enum ETabState {
+        BANKING_BOOK_TAB,
+        ACCOUNTS_TAB
+    };
+    
+    private ETabState tabState = ETabState.BANKING_BOOK_TAB;
 
     public BeesAndHoneyMainView() {
         this.mainController = new BeesAndHoneyMainController(this);
@@ -70,6 +81,11 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         return this.accountsTable.getItems();
     }
     
+    public void updateTables() {
+        updateBankingBookTable();
+        updateAccountsTable();
+    }
+    
     @Override
     public void cleanUp() {
         
@@ -87,6 +103,63 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @Override
     public void update() {
+        switch (this.tabState) {
+            case BANKING_BOOK_TAB: {
+                updateBankingBookTable();
+                break;
+            }
+            
+            case ACCOUNTS_TAB: {
+                updateAccountsTable();
+                break;
+            }
+            
+            default: {
+                break;
+            }
+        }
+        
+    }
+    
+    private BankingBookModel getSelectedBankingBookModel() {
+        return this.bankingBookTable.getSelectionModel().getSelectedItem();
+    }
+    
+    private void addListeners() {
+        this.mainViewTabPane.getSelectionModel().selectedIndexProperty().addListener(
+                new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observable, 
+                            Number oldValue, Number newValue) {
+                        tabState = ETabState.values()[newValue.intValue()];
+                    }
+                }
+        );
+    }
+    
+    private void updateAccountsTable() {
+        BankAccountDao dao = DaoModelFactory.getBankAccountDaoInstance();
+        Session session = dao.openSession();
+        
+        ObservableList<AccountModel> accountModelTableContent = 
+                this.accountsTable.getItems();
+        
+        accountModelTableContent.clear();
+        
+        for (BankingBookModel bookModel : this.getBankingBookTableItems()) {
+            for (BankAccount bankAccount : dao.findByClientId(bookModel.getClientId(), session)) {
+                accountModelTableContent.add(ModelFactory.createAccountModel(
+                        bookModel.getAlias(), 
+                        bankAccount.getAccountName(), 
+                        bankAccount.getAvailableSources()));
+            }
+            
+        }
+        
+        dao.closeSession(session);
+    }
+    
+    private void updateBankingBookTable() {
         BeesAndHoneyUserDao dao = DaoModelFactory.getBeesAndHoneyUserDaoInstance();
         Session session = dao.openSession();
         
@@ -108,10 +181,6 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         }
         
         dao.closeSession(session);
-    }
-    
-    private BankingBookModel getSelectedBankingBookModel() {
-        return this.bankingBookTable.getSelectionModel().getSelectedItem();
     }
 
     @FXML
@@ -160,5 +229,8 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     private void initialize() {
         DaoModelFactory.getBeesAndHoneyUserDaoInstance().registerObserver(this);
         DaoModelFactory.getBankAccountLoginDaoInstance().registerObserver(this);
+        DaoModelFactory.getBankAccountOwnerDaoInstance().registerObserver(this);
+        
+        addListeners();
     }
 }

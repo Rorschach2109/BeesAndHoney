@@ -45,6 +45,11 @@ public final class ModelFactory {
         return new BankingBookModel(alias, bankName, accountNumber);
     }
     
+    public static AccountModel createAccountModel(String alias, 
+            String accountName, double availableSources) {
+        return new AccountModel(alias, accountName, availableSources);
+    }
+    
     public static BeesAndHoneyUser createBeesAndHoneyUserModel(String userName, 
             String userNamePassword) {
         

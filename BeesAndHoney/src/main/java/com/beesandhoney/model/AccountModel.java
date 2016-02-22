@@ -5,22 +5,23 @@
  */
 package com.beesandhoney.model;
 
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class AccountModel {
     
     private SimpleStringProperty alias;
     private SimpleStringProperty accountName;
-    private SimpleStringProperty availableFunds;
+    private SimpleDoubleProperty availableSources;
     
     public AccountModel() {
-        this("", "", "");
+        this("", "", 0);
     }
     
-    public AccountModel(String alias, String accountName, String availableFunds) {
-        this.alias.set(alias);
-        this.accountName.set(accountName);
-        this.availableFunds.set(availableFunds);
+    public AccountModel(String alias, String accountName, double availableSources) {
+        this.alias = new SimpleStringProperty(alias);
+        this.accountName = new SimpleStringProperty(accountName);
+        this.availableSources = new SimpleDoubleProperty(availableSources);
     }
 
     public String getAlias() {
@@ -39,12 +40,12 @@ public class AccountModel {
         this.accountName.set(accountName);
     }
 
-    public String getAvailableFunds() {
-        return availableFunds.get();
+    public double getAvailableSources() {
+        return availableSources.get();
     }
 
-    public void setAvailableFunds(String availableFunds) {
-        this.availableFunds.set(availableFunds);
+    public void setAvailableSources(double availableSources) {
+        this.availableSources.set(availableSources);
     }
     
     

@@ -27,7 +27,7 @@
       </AnchorPane>
    </bottom>
    <center>
-      <TabPane prefHeight="422.0" prefWidth="579.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+      <TabPane fx:id="mainViewTabPane" prefHeight="422.0" prefWidth="579.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
           <Tab fx:id="bankingBookTab" text="Banking Book">
             <content>
@@ -77,7 +77,7 @@
                             </TableColumn>
                             <TableColumn maxWidth="220.0" minWidth="220.0" prefWidth="220.0" resizable="false" text="Available Funds">
                                 <cellValueFactory>
-                                    <PropertyValueFactory property="availableFunds" />
+                                    <PropertyValueFactory property="availableSources" />
                                 </cellValueFactory>
                             </TableColumn>
                           </columns>
