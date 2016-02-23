@@ -33,7 +33,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="342.0" prefWidth="460.0">
                      <children>
-                        <TableView fx:id="bankingBookTable" prefHeight="421.0" prefWidth="657.0">
+                        <TableView fx:id="bankingBookTable" maxHeight="421.0" maxWidth="657.0" minHeight="421.0" minWidth="657.0" prefHeight="421.0" prefWidth="657.0">
                           <columns>
                             <TableColumn maxWidth="316.0" minWidth="316.0" prefWidth="316.0" resizable="false" text="Alias">
                                 <cellValueFactory>
@@ -63,7 +63,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="accountsTable" prefHeight="354.0" prefWidth="854.0">
+                        <TableView fx:id="accountsTable" maxHeight="354.0" maxWidth="856.0" minHeight="354.0" minWidth="856.0" prefHeight="354.0" prefWidth="856.0">
                           <columns>
                             <TableColumn maxWidth="1822.0" minWidth="182.0" prefWidth="182.0" resizable="false" text="Alias">
                                 <cellValueFactory>
