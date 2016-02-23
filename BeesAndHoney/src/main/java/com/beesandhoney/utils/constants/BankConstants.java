@@ -20,7 +20,7 @@ public final class BankConstants {
     
     public static class BankBZWBK {
         public static final String NAME = "BZ WBK";
-        public static final String URL = "https://www.bzwbk.pl";
+        public static final String URL = "https://www.centrum24.pl/centrum24-web/login";
     }
     
     public static ArrayList<Bank> bankModelList;
