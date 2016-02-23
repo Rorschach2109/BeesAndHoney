@@ -18,10 +18,10 @@ public final class ModelFactory {
     
     public static BankAccount createBankAccountModel(String accountNumber,
             String accountName, double availableSources, 
-            double accoutnBalance) {
+            double accoutnBalance, String currency) {
         
         return new BankAccount(
-                accountNumber, accountName, availableSources, accoutnBalance
+                accountNumber, accountName, availableSources, accoutnBalance, currency
         );
     }
     
@@ -45,9 +45,9 @@ public final class ModelFactory {
         return new BankingBookModel(alias, bankName, accountNumber);
     }
     
-    public static AccountModel createAccountModel(String alias, 
-            String accountName, double availableSources) {
-        return new AccountModel(alias, accountName, availableSources);
+    public static AccountModel createAccountModel(String alias, String accountName, 
+            double availableSources, String accountNumber, String currency) {
+        return new AccountModel(alias, accountName, availableSources, accountNumber, currency);
     }
     
     public static BeesAndHoneyUser createBeesAndHoneyUserModel(String userName, 

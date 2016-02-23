@@ -7,11 +7,11 @@ package com.beesandhoney.controller;
 
 import com.beesandhoney.browser.IWebBrowser;
 import com.beesandhoney.browser.WebBrowser;
+import com.beesandhoney.model.AccountModel;
 import com.beesandhoney.model.BankAccount;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankAccountOwner;
 import com.beesandhoney.model.BankingBookModel;
-import com.beesandhoney.model.dao.BankAccountDao;
 import com.beesandhoney.model.dao.BankAccountLoginDao;
 import com.beesandhoney.model.dao.BankAccountOwnerDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
@@ -20,11 +20,11 @@ import com.beesandhoney.statemachine.DeleteStageState;
 import com.beesandhoney.statemachine.EditAccountStageState;
 import com.beesandhoney.statemachine.SecondStageStateInterface;
 import com.beesandhoney.utils.ObserverInterface;
-import com.beesandhoney.utils.hibernate.HibernateUtil;
 import com.beesandhoney.view.AddAccountView;
 import com.beesandhoney.view.BeesAndHoney;
 import com.beesandhoney.view.BeesAndHoneyMainView;
 import com.beesandhoney.view.DeleteAccountView;
+import com.beesandhoney.view.AccountDetailsView;
 import com.beesandhoney.view.IObservableView;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,11 +60,13 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     private static final String ADD_ACCOUNT_VIEW_RESOURCE_PATH;
     private static final String DELETE_ACCOUNT_VIEW_RESOURCE_PATH;
+    private static final String ACCOUNT_DETAILS_VIEW_RESOURCE_PATH;
     
     static
     {
         ADD_ACCOUNT_VIEW_RESOURCE_PATH = "views/AddAccountView.fxml";
         DELETE_ACCOUNT_VIEW_RESOURCE_PATH = "views/DeleteAccountView.fxml";
+        ACCOUNT_DETAILS_VIEW_RESOURCE_PATH = "views/AccountDetailsView.fxml";
     }
     
     public BeesAndHoneyMainController(BeesAndHoneyMainView mainView) {
@@ -119,8 +121,11 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         deleteAccountView.getController().setApplication(this.application);
     }
     
-    public void handleShowAccountDetails() {
+    public void handleShowAccountDetails(AccountModel selectedItem) {
+        showSecondStage(ACCOUNT_DETAILS_VIEW_RESOURCE_PATH);
         
+        AccountDetailsView detailsView = (AccountDetailsView) this.observableView;
+        detailsView.fillAccountDetails(selectedItem);        
     }
     
     public void handleShowSummaryDetails() {
@@ -150,7 +155,9 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     
     @Override
     public void update() {
-        this.currentState.handleBeforeExit();
+        if (null != this.currentState) {
+            this.currentState.handleBeforeExit();
+        }
         this.secondStage.close();
 
         this.secondStage = null;
@@ -266,7 +273,9 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
             bankAccounts.add(bankAccount);
         }
 
+        existingOwner.setOwnerAddress(bankAccount.getBankAccountOwner().getOwnerAddress());
         existingOwner.setBankAccounts(bankAccounts);
+        
         dao.update(existingOwner, session);
     }
     

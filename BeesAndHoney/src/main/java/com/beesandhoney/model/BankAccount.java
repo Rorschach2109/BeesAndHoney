@@ -21,6 +21,7 @@ public class BankAccount implements java.io.Serializable {
     private String accountName;
     private double availableSources;
     private double accountBalance;
+    private String currency;
     
     @ManyToOne(cascade = CascadeType.ALL)
     private BankAccountLogin bankAccountLogin;
@@ -29,15 +30,16 @@ public class BankAccount implements java.io.Serializable {
     private BankAccountOwner bankAccountOwner;
     
     public BankAccount() {
-        this("", "", 0.0, 0.0);
+        this("", "", 0.0, 0.0, "");
     }
     
     public BankAccount(String accountNumber, String accountName, 
-            double availableSources, double accoutnBalance) {
+            double availableSources, double accoutnBalance, String currency) {
         this.accountNumber = accountNumber;
         this.accountName = accountName;
         this.availableSources = availableSources;
         this.accountBalance = accoutnBalance;
+        this.currency = currency;
         this.bankAccountLogin = null;
         this.bankAccountOwner = null;
     }
@@ -72,6 +74,14 @@ public class BankAccount implements java.io.Serializable {
 
     public void setAccountBalance(double accountBalance) {
         this.accountBalance = accountBalance;
+    }
+    
+    public String getCurrency() {
+        return this.currency;
+    }
+    
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
     
     public BankAccountLogin getBankAccountLogin() {

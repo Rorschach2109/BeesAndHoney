@@ -140,8 +140,10 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
 
         double accountBalance = convertStringToDouble(accountBalanceString);
         double availableSources = convertStringToDouble(availableSourcesString);
+        String currency = getCurrency(accountBalanceString);
+        
         BankAccount bankAccount = ModelFactory.createBankAccountModel(accountNumberString, 
-                accountNameString, availableSources, accountBalance);
+                accountNameString, availableSources, accountBalance, currency);
         BankAccountOwner bankAccountOwner = ModelFactory.createBankAccountOwnerModel(
                 ownerNameSurnameString, ownerAddressString);
         
@@ -163,6 +165,18 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         }
         
         return returnValue;
+    }
+    
+    private String getCurrency(String text) {
+        Pattern pattern = Pattern.compile(".* ([a-zA-Z]+)");
+        Matcher matcher = pattern.matcher(text);
+        
+        String currency = "";
+        if (matcher.find()) {
+            currency = matcher.group(1);
+        }
+        
+        return currency;
     }
     
     private Object executeJavaScriptCommand(String filledCommand) {

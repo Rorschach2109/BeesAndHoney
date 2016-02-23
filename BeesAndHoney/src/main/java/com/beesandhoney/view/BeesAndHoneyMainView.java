@@ -22,8 +22,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -50,13 +48,6 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     private final BeesAndHoneyMainController mainController;
     
-    private enum ETabState {
-        BANKING_BOOK_TAB,
-        ACCOUNTS_TAB
-    };
-    
-    private ETabState tabState = ETabState.BANKING_BOOK_TAB;
-
     public BeesAndHoneyMainView() {
         this.mainController = new BeesAndHoneyMainController(this);
     }
@@ -103,38 +94,15 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @Override
     public void update() {
-        switch (this.tabState) {
-            case BANKING_BOOK_TAB: {
-                updateBankingBookTable();
-                break;
-            }
-            
-            case ACCOUNTS_TAB: {
-                updateAccountsTable();
-                break;
-            }
-            
-            default: {
-                break;
-            }
-        }
-        
+        updateTables();
     }
     
     private BankingBookModel getSelectedBankingBookModel() {
         return this.bankingBookTable.getSelectionModel().getSelectedItem();
     }
     
-    private void addListeners() {
-        this.mainViewTabPane.getSelectionModel().selectedIndexProperty().addListener(
-                new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observable, 
-                            Number oldValue, Number newValue) {
-                        tabState = ETabState.values()[newValue.intValue()];
-                    }
-                }
-        );
+    private AccountModel getSelectedAccountModel() {
+        return this.accountsTable.getSelectionModel().getSelectedItem();
     }
     
     private void updateAccountsTable() {
@@ -151,7 +119,9 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
                 accountModelTableContent.add(ModelFactory.createAccountModel(
                         bookModel.getAlias(), 
                         bankAccount.getAccountName(), 
-                        bankAccount.getAvailableSources()));
+                        bankAccount.getAvailableSources(),
+                        bankAccount.getAccountNumber(),
+                        bankAccount.getCurrency()));
             }
             
         }
@@ -212,7 +182,13 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     
     @FXML
     private void handleDetailsButtonClicked() {
+        AccountModel selectedAccountModel = getSelectedAccountModel();
         
+        if (null != selectedAccountModel) {
+            this.mainController.handleShowAccountDetails(
+                    selectedAccountModel
+            );
+        }
     }
     
     @FXML
@@ -230,7 +206,5 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         DaoModelFactory.getBeesAndHoneyUserDaoInstance().registerObserver(this);
         DaoModelFactory.getBankAccountLoginDaoInstance().registerObserver(this);
         DaoModelFactory.getBankAccountOwnerDaoInstance().registerObserver(this);
-        
-        addListeners();
     }
 }

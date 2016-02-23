@@ -13,15 +13,20 @@ public class AccountModel {
     private SimpleStringProperty alias;
     private SimpleStringProperty accountName;
     private SimpleDoubleProperty availableSources;
+    private SimpleStringProperty currency;
+    private final String accountNumber;
     
     public AccountModel() {
-        this("", "", 0);
+        this("", "", 0, "", "");
     }
     
-    public AccountModel(String alias, String accountName, double availableSources) {
+    public AccountModel(String alias, String accountName, double availableSources,
+            String accountNumber, String currency) {
         this.alias = new SimpleStringProperty(alias);
         this.accountName = new SimpleStringProperty(accountName);
         this.availableSources = new SimpleDoubleProperty(availableSources);
+        this.currency = new SimpleStringProperty(currency);
+        this.accountNumber = accountNumber;
     }
 
     public String getAlias() {
@@ -48,5 +53,15 @@ public class AccountModel {
         this.availableSources.set(availableSources);
     }
     
+    public String getCurrency() {
+        return currency.get();
+    }
     
+    public void setCurrency(String currency) {
+        this.currency.set(currency);
+    }
+    
+    public String getAccountNumber() {
+        return this.accountNumber;
+    }
 }

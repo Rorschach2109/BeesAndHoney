@@ -38,6 +38,6 @@ public final class BrowserConstantsManagerPKO extends AbstractBrowserConstantsMa
         commandAvailableSources = "document.getElementsByClassName('insideTable')[1].children[0].children[0].children[1].childNodes[0].innerText";
         commandOwnerNameSurname = "document.getElementsByName('content_table')[0].children[0].children[13].children[1].childNodes[0].wholeText";
         commandOwnerAddress = "document.getElementsByName('content_table')[0].children[0].children[17].children[1].childNodes[0].wholeText + "
-                + "' ' + document.getElementsByName('content_table')[0].children[0].children[17].children[1].childNodes[2].wholeText";
+                + "', ' + document.getElementsByName('content_table')[0].children[0].children[17].children[1].childNodes[2].wholeText";
     }
 }

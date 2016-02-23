@@ -5,47 +5,54 @@
  */
 package com.beesandhoney.view;
 
+import com.beesandhoney.controller.AccountDetailsController;
 import com.beesandhoney.controller.IController;
+import com.beesandhoney.model.AccountModel;
+import com.beesandhoney.model.BankAccount;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 
-public class DetailsView implements IObservableView {
+public class AccountDetailsView implements IObservableView {
+
+    private final AccountDetailsController controller;
+    private final ArrayList<ObserverInterface> observers;
     
-    @FXML
-    private AnchorPane detailsPane;
     @FXML
     private Label accountNameLabel;
     @FXML
     private Label accountNumberLabel;
     @FXML
-    private Label accountOwnerLabel;
+    private Label accountOwnerNameLabel;
+    @FXML
+    private Label accountOwnerAddressLabel;
     @FXML
     private Label availableFundsLabel;
     @FXML
     private Label balanceLabel;
     @FXML
     private Label bankNameLabel;
-        
-    private final ArrayList<ObserverInterface> observers;
 
-    public DetailsView() {
+    public AccountDetailsView() {
+        this.controller = new AccountDetailsController();
         this.observers = new ArrayList<>();
     }
 
-    public void fillDetailsLabels(String accountName, String accountNumber,
-            String accountOwner, String availableFunds, String balance, 
-            String bankName) {
-        this.accountNameLabel.setText(accountName);
-        this.accountNumberLabel.setText(accountNumber);
-        this.accountOwnerLabel.setText(accountOwner);
-        this.availableFundsLabel.setText(availableFunds);
-        this.balanceLabel.setText(balance);
-        this.bankNameLabel.setText(bankName);
+    public void fillAccountDetails(AccountModel selectedItem) {
+        BankAccount bankAccount = this.controller.getAccountInformation(selectedItem);
+        
+        if (null != bankAccount) {
+            this.accountNameLabel.setText(bankAccount.getAccountName());
+            this.accountNumberLabel.setText(bankAccount.getAccountNumber());
+            this.accountOwnerNameLabel.setText(bankAccount.getBankAccountOwner().getOwnerNameSurname());
+            this.accountOwnerAddressLabel.setText(bankAccount.getBankAccountOwner().getOwnerAddress());
+            this.availableFundsLabel.setText(Double.toString(bankAccount.getAvailableSources()) + " " + bankAccount.getCurrency());
+            this.balanceLabel.setText(Double.toString(bankAccount.getAccountBalance()) + " " + bankAccount.getCurrency());
+            this.bankNameLabel.setText(bankAccount.getBankAccountLogin().getBank().getBankName());
+        }
     }
     
     @Override
@@ -54,12 +61,12 @@ public class DetailsView implements IObservableView {
 
     @Override
     public IController getController() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
     public void setController(IController controller) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported.");
     }
     
     @Override
