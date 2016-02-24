@@ -20,7 +20,7 @@ public final class WebBrowserStateFactory {
             }
             
             case BankConstants.BankBZWBK.NAME: {
-                return null;
+                return new WebBrowserStateWBK(BankConstants.BankBZWBK.URL);
             }
             
             default: {

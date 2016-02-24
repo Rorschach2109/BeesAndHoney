@@ -17,8 +17,6 @@ import com.beesandhoney.model.dao.BankAccountDao;
 import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.ObserverInterface;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -114,7 +112,7 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         
         accountModelTableContent.clear();
         
-        for (BankingBookModel bookModel : this.getBankingBookTableItems()) {
+        for (BankingBookModel bookModel : getBankingBookTableItems()) {
             for (BankAccount bankAccount : dao.findByClientId(bookModel.getClientId(), session)) {
                 accountModelTableContent.add(ModelFactory.createAccountModel(
                         bookModel.getAlias(), 

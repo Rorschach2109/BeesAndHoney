@@ -27,8 +27,12 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
     protected BankAccountLogin currentBankAccountLogin;
     protected BankAccount stashedBankAccount;
     
-    private int accountsNumber;
-    private int currentAccountIndex;
+    protected int accountsCount;
+    protected int creditCardsAccountsCount;
+    protected int currentAccountIndex;
+    
+    protected String accountSectionString;
+    private boolean isLogged;
     
     private final List<ObserverInterface> observers;
     
@@ -39,8 +43,11 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         this.constantsManager = constantsManager;
         this.constantsManager.initialize();
         
-        this.accountsNumber = 0;
+        this.accountsCount = 0;
+        this.creditCardsAccountsCount = 0;
         this.currentAccountIndex = 0;
+        
+        this.isLogged = false;
         
         this.observers = new ArrayList<>();
     }
@@ -68,8 +75,19 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
     }
     
     @Override
+    public void getAccountInformation(BankAccountLogin bankAccountLogin) {
+        this.currentBankAccountLogin = bankAccountLogin;
+        enterLoginPage();
+    }
+    
+    @Override
     public void logout() {
+        this.accountsCount = 0;
+        this.currentAccountIndex = 0;
+        this.isLogged = false;
+        
         executeJavaScriptCommand(this.constantsManager.getCommandClickLogoutButton());
+        
         notifyObservers();
     }
 
@@ -78,9 +96,9 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         return this.stashedBankAccount;
     }
     
-    protected boolean enterLoginPage() {
-        this.webEngine.load(this.loginPageUrl);
-        return true;
+    @Override
+    public boolean isLogged() {
+        return this.isLogged;
     }
     
     protected void insertClientId(String clientId) {
@@ -97,31 +115,28 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
     
     protected void clickLoginButton() {
         executeJavaScriptCommand(this.constantsManager.getCommandClickLoginButton());
+        this.isLogged = true;
     }
     
     protected void enterHomePage() {
-        if (this.currentAccountIndex < this.accountsNumber) {
-            executeJavaScriptCommand(this.constantsManager.getCommandEnterHomePage());
-        } else {
-            this.currentAccountIndex = 0;
-            this.accountsNumber = 0;
-            logout();
-        }            
+        executeJavaScriptCommand(this.constantsManager.getCommandEnterHomePage());
     }
     
     protected void enterAccountsInformationMenu() {
         executeJavaScriptCommand(this.constantsManager.getCommandClickAccountDetailsMenu());
     }
     
-    protected void enterAccountInformation() {
-        this.accountsNumber = (Integer) executeJavaScriptCommand(this.constantsManager.getCommandGetAccountsCount());
-        
-        String commandPattern = this.constantsManager.getCommandClickAccountDetails();
-        String command = String.format(commandPattern, Integer.toString(this.currentAccountIndex));
-
-        ++this.currentAccountIndex;
-        
+    protected void enterAccountInformation(String command) {
         executeJavaScriptCommand(command);
+    }
+    
+    protected int setAccountsCount() {
+        this.accountsCount = (Integer) executeJavaScriptCommand(
+                this.constantsManager.getCommandGetAccountsCount());
+        this.creditCardsAccountsCount = (Integer) executeJavaScriptCommand(
+                this.constantsManager.getCommandGetCreditCardsAccountsCount());
+        
+        return this.accountsCount + this.creditCardsAccountsCount;
     }
     
     protected void parseBankAccount() {
@@ -153,15 +168,23 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         this.stashedBankAccount = bankAccount;
     }
     
+    private void enterLoginPage() {
+        this.webEngine.load(this.loginPageUrl);
+    }
+    
     private double convertStringToDouble(String text) {
+        System.out.println(text);
         Pattern pattern = Pattern.compile("([0-9,\\- ]*).*");
         Matcher matcher = pattern.matcher(text);
         
         double returnValue = 0.0;
         
         if (matcher.find()) {
+            System.out.println("[AK]: " + matcher.group(1));
             String numberString = matcher.group(1).replaceAll(",", ".").replaceAll(" ", "");
+            System.out.println("[AK]: " + numberString);
             returnValue = Double.parseDouble(numberString);
+            System.out.println("[AK]: " + returnValue);
         }
         
         return returnValue;
@@ -179,7 +202,7 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         return currency;
     }
     
-    private Object executeJavaScriptCommand(String filledCommand) {
+    protected Object executeJavaScriptCommand(String filledCommand) {
         return this.webEngine.executeScript(filledCommand);
     }
 }

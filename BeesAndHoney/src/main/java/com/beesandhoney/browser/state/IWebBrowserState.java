@@ -28,4 +28,6 @@ public interface IWebBrowserState extends ObservableInterface {
     
     @Override
     public void notifyObservers();
+    
+    public boolean isLogged();
 }

@@ -15,7 +15,10 @@ public abstract class AbstractBrowserConstantsManager {
     
     protected String commandClickAccountDetailsMenu;
     protected String commandClickAccountDetails;
+    protected String commandClickCreditCardAccountDetails;
+    
     protected String commandGetAccountsCount;
+    protected String commandGetCreditCardsAccountsCount;
     
     protected String commandEnterHomePage;
     
@@ -27,6 +30,7 @@ public abstract class AbstractBrowserConstantsManager {
     protected String commandOwnerAddress;
     
     public AbstractBrowserConstantsManager() {
+        commandGetCreditCardsAccountsCount = "0";
     }
 
     public abstract void initialize();
@@ -55,14 +59,21 @@ public abstract class AbstractBrowserConstantsManager {
         return commandClickAccountDetails;
     }
 
+    public String getCommandClickCreditCardAccountDetails() {
+        return commandClickCreditCardAccountDetails;
+    }
+
     public String getCommandGetAccountsCount() {
         return commandGetAccountsCount;
+    }
+
+    public String getCommandGetCreditCardsAccountsCount() {
+        return commandGetCreditCardsAccountsCount;
     }
 
     public String getCommandEnterHomePage() {
         return commandEnterHomePage;
     }
-
 
     public String getCommandAccountNumber() {
         return commandAccountNumber;

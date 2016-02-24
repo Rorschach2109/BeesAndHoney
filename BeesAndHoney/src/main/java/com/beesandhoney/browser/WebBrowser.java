@@ -48,10 +48,13 @@ public class WebBrowser extends Region implements IWebBrowser, ObserverInterface
 
     @Override
     public void update() {
-        this.mainController.stashAccountInformation(
-                this.state.getStashedAccountInformation()
-        );
-        this.mainController.nextAccountInformation();
+        if (true == this.state.isLogged()) {
+            this.mainController.stashAccountInformation(
+                    this.state.getStashedAccountInformation()
+            );
+        } else {
+            this.mainController.nextAccountInformation();
+        }
     }
     
     @Override

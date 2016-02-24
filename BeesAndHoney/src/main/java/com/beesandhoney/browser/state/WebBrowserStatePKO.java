@@ -6,13 +6,10 @@
 package com.beesandhoney.browser.state;
 
 import com.beesandhoney.browser.constants.BrowserConstantsManagerPKO;
-import com.beesandhoney.model.BankAccount;
 import com.beesandhoney.model.BankAccountLogin;
-import com.beesandhoney.model.BankAccountOwner;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
-import javafx.scene.web.WebEngine;
 
 public final class WebBrowserStatePKO extends AbstractWebBrowserState {
 
@@ -26,7 +23,7 @@ public final class WebBrowserStatePKO extends AbstractWebBrowserState {
     private EState innerState;
     
     private ChangeListener<Worker.State> changeListener;
-    
+        
     public WebBrowserStatePKO(String loginPageUrl) {
         super(loginPageUrl, new BrowserConstantsManagerPKO());
         
@@ -34,23 +31,20 @@ public final class WebBrowserStatePKO extends AbstractWebBrowserState {
     }
     
     @Override
-    public void setWebEngine(WebEngine webEngine) {
-        super.setWebEngine(webEngine);
-    }
-    
-    @Override
     public void getAccountInformation(BankAccountLogin bankAccountLogin) {
-        this.currentBankAccountLogin = bankAccountLogin;
         addAccountInformationListener();
-        enterLoginPage();
+        
+        super.getAccountInformation(bankAccountLogin);
     }
     
     @Override
     public void logout() {
         this.webEngine.getLoadWorker().stateProperty().removeListener(this.changeListener);
         this.innerState = EState.LOGIN_PAGE;
+        
         super.logout();
     }
+
 
     private void addAccountInformationListener() {
         this.changeListener = new ChangeListener<Worker.State>() {
@@ -97,6 +91,22 @@ public final class WebBrowserStatePKO extends AbstractWebBrowserState {
                 this.changeListener
         );
     }
+        
+    private void enterAccountInformation() {
+        int allAcountsCount = setAccountsCount();
+        
+        if(this.currentAccountIndex < allAcountsCount) {
+            enterAccountInformation(getEnterAccountInformationCommand());
+            ++this.currentAccountIndex;
+        } else {
+            logout();
+        }
+    }
+    
+    private String getEnterAccountInformationCommand() {
+        String commandPattern = this.constantsManager.getCommandClickAccountDetails();
+        return String.format(commandPattern, Integer.toString(this.currentAccountIndex));
+    }
     
     private void performLogin() {
         insertClientId(this.currentBankAccountLogin.getClientId());
@@ -106,6 +116,7 @@ public final class WebBrowserStatePKO extends AbstractWebBrowserState {
     
     private void performParsingInformation() {
         parseBankAccount();
+        notifyObservers();
         enterHomePage();
     }
 }
