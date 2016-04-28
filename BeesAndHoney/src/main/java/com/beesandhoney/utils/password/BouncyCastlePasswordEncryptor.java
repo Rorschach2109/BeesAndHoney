@@ -6,6 +6,7 @@
 package com.beesandhoney.utils.password;
 
 import java.lang.reflect.Field;
+import java.security.Security;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.hibernate4.encryptor.HibernatePBEEncryptorRegistry;
@@ -44,7 +45,7 @@ public class BouncyCastlePasswordEncryptor implements PasswordEncryptorWrapper {
     public void initialize(String privateKey) {
         if (null == this.pbeEncryptor) {
             unlimitedStrengthHack();
-            
+            Security.addProvider(new BouncyCastleProvider());
             this.pbeEncryptor = new StandardPBEStringEncryptor();
             this.pbeEncryptor.setAlgorithm(ALGORITHM_NAME);
             this.pbeEncryptor.setKeyObtentionIterations(OBTATION_ITERATIONS);

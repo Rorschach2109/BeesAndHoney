@@ -5,6 +5,8 @@
  */
 package com.beesandhoney.model;
 
+import com.beesandhoney.utils.constants.BankAccountConstants.BankAccountType;
+
 public final class ModelFactory {
     
     private ModelFactory() {
@@ -17,11 +19,12 @@ public final class ModelFactory {
     }
     
     public static BankAccount createBankAccountModel(String accountNumber,
-            String accountName, double availableSources, 
-            double accoutnBalance, String currency) {
+            String accountName, double availableSources, double accountBalance, 
+            String currency) {
         
         return new BankAccount(
-                accountNumber, accountName, availableSources, accoutnBalance, currency
+                accountNumber, accountName, availableSources,
+                accountBalance, currency
         );
     }
     
@@ -48,6 +51,13 @@ public final class ModelFactory {
     public static AccountModel createAccountModel(String alias, String accountName, 
             double availableSources, String accountNumber, String currency) {
         return new AccountModel(alias, accountName, availableSources, accountNumber, currency);
+    }
+    
+    public static CreditCardModel createCreditCardModel(String alias, 
+            String creditCardName, double limit, double availableFunds, 
+            String currency, String accountNumber) {
+        return new CreditCardModel(alias, creditCardName, limit, 
+                availableFunds, currency, accountNumber);
     }
     
     public static BeesAndHoneyUser createBeesAndHoneyUserModel(String userName, 

@@ -158,6 +158,10 @@ public class WebBrowserStateWBK extends AbstractWebBrowserState {
         this.currentAccountNumber = (String) executeJavaScriptCommand(command);
     }
     
+    private boolean isCreditCard() {
+        return this.currentAccountIndex >= this.accountsCount;
+    }
+    
     private void enterAccountInformationPage() {
         int allAccountsCount = setAccountsCount();
         
@@ -170,7 +174,7 @@ public class WebBrowserStateWBK extends AbstractWebBrowserState {
         String sectionName = "";
         int accountIndex = 0;
         
-        if (this.currentAccountIndex < this.accountsCount) {
+        if (false == isCreditCard()) {
             command = this.constantsManager.getCommandClickAccountDetails();
             sectionName = ACCOUNTS_SECTION_NAME;
             accountIndex = this.currentAccountIndex;
@@ -184,13 +188,17 @@ public class WebBrowserStateWBK extends AbstractWebBrowserState {
         command = String.format(command, sectionName, accountIndex);
         captureAccountNumber(sectionName, accountIndex);
         
-        ++this.currentAccountIndex;
-        
         enterAccountInformation(command);
     }
     
     private void performParsingInformation() {
-        parseBankAccount();
+        if (false == isCreditCard()) {
+            parseBankAccount();
+        } else {
+            parseCreditCardAccount();
+        }
+        ++this.currentAccountIndex;
+
         this.stashedBankAccount.setAccountNumber(this.currentAccountNumber);
 
         notifyObservers();

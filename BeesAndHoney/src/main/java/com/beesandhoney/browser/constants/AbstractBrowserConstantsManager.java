@@ -24,6 +24,7 @@ public abstract class AbstractBrowserConstantsManager {
     
     protected String commandAccountNumber;
     protected String commandAccountName;
+    protected String commandCreditCardLimit;
     protected String commandAccountBalance;
     protected String commandAvailableSources;
     protected String commandOwnerNameSurname;
@@ -81,6 +82,10 @@ public abstract class AbstractBrowserConstantsManager {
 
     public String getCommandAccountName() {
         return commandAccountName;
+    }
+    
+    public String getCommandCreditCardLimit() {
+        return commandCreditCardLimit;
     }
 
     public String getCommandAccountBalance() {

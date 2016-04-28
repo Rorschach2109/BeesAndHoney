@@ -6,6 +6,7 @@
 package com.beesandhoney.model.dao;
 
 import com.beesandhoney.model.BankAccount;
+import com.beesandhoney.utils.constants.BankAccountConstants.BankAccountType;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -53,6 +54,16 @@ public final class BankAccountDao extends GenericDaoHibernateImpl<BankAccount, S
     
     public List<BankAccount> findByClientId(String clientId, Session session) {
         Criteria criteria = session.createCriteria(type)
+                .createCriteria("bankAccountLogin", "bankAccountLogin")
+                    .add(Restrictions.eq("bankAccountLogin.clientId", clientId))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return (List<BankAccount>) criteria.list();
+    }
+    
+    public List<BankAccount> findByClientIdAndAccountType(
+            String clientId, BankAccountType accountType, Session session) {
+        Criteria criteria = session.createCriteria(type)
+                .add(Restrictions.eq("bankAccountType", accountType))
                 .createCriteria("bankAccountLogin", "bankAccountLogin")
                     .add(Restrictions.eq("bankAccountLogin.clientId", clientId))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

@@ -10,6 +10,7 @@ import com.beesandhoney.model.BankAccount;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankAccountOwner;
 import com.beesandhoney.model.ModelFactory;
+import com.beesandhoney.utils.constants.BankAccountConstants.BankAccountType;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +141,19 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
     }
     
     protected void parseBankAccount() {
+        createNoTypeBankAccount();
+    
+        this.stashedBankAccount.setBankAccountType(BankAccountType.BANK_ACCOUNT);
+    }
+    
+    protected void parseCreditCardAccount() {
+        createNoTypeBankAccount();
+        
+        this.stashedBankAccount.setBankAccountType(BankAccountType.CREDIT_CARD);
+        this.stashedBankAccount.setAccountLimit(100);
+    }
+    
+    private void createNoTypeBankAccount() {
         String accountNameString = (String) executeJavaScriptCommand(
                 this.constantsManager.getCommandAccountName());
         String accountNumberString = (String) executeJavaScriptCommand(
@@ -157,8 +171,9 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         double availableSources = convertStringToDouble(availableSourcesString);
         String currency = getCurrency(accountBalanceString);
         
-        BankAccount bankAccount = ModelFactory.createBankAccountModel(accountNumberString, 
-                accountNameString, availableSources, accountBalance, currency);
+        BankAccount bankAccount = ModelFactory.createBankAccountModel(
+                accountNumberString, accountNameString, availableSources, 
+                accountBalance, currency);
         BankAccountOwner bankAccountOwner = ModelFactory.createBankAccountOwnerModel(
                 ownerNameSurnameString, ownerAddressString);
         
@@ -173,18 +188,14 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
     }
     
     private double convertStringToDouble(String text) {
-        System.out.println(text);
         Pattern pattern = Pattern.compile("([0-9,\\- ]*).*");
         Matcher matcher = pattern.matcher(text);
         
         double returnValue = 0.0;
         
         if (matcher.find()) {
-            System.out.println("[AK]: " + matcher.group(1));
             String numberString = matcher.group(1).replaceAll(",", ".").replaceAll(" ", "");
-            System.out.println("[AK]: " + numberString);
             returnValue = Double.parseDouble(numberString);
-            System.out.println("[AK]: " + returnValue);
         }
         
         return returnValue;

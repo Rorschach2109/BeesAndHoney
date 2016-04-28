@@ -12,16 +12,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.beesandhoney.utils.constants.BankAccountConstants.BankAccountType;
+
 @Entity
 public class BankAccount implements java.io.Serializable {
-    
+        
     @Id
     private String accountNumber;
     @Column(columnDefinition = "varchar(60) COLLATE utf8_bin")
     private String accountName;
+    private double accountLimit;
     private double availableSources;
     private double accountBalance;
     private String currency;
+    private BankAccountType bankAccountType;
     
     @ManyToOne(cascade = CascadeType.ALL)
     private BankAccountLogin bankAccountLogin;
@@ -33,13 +37,15 @@ public class BankAccount implements java.io.Serializable {
         this("", "", 0.0, 0.0, "");
     }
     
-    public BankAccount(String accountNumber, String accountName, 
-            double availableSources, double accoutnBalance, String currency) {
+    public BankAccount(String accountNumber, String accountName,
+            double availableSources, double accountBalance, String currency) {
         this.accountNumber = accountNumber;
         this.accountName = accountName;
+        this.accountLimit = Double.MAX_VALUE;
         this.availableSources = availableSources;
-        this.accountBalance = accoutnBalance;
+        this.accountBalance = accountBalance;
         this.currency = currency;
+        this.bankAccountType = BankAccountType.NO_TYPE;
         this.bankAccountLogin = null;
         this.bankAccountOwner = null;
     }
@@ -60,6 +66,14 @@ public class BankAccount implements java.io.Serializable {
         this.accountName = accountName;
     }
 
+    public double getAccountLimit() {
+        return accountLimit;
+    }
+    
+    public void setAccountLimit(double accountLimit) {
+        this.accountLimit = accountLimit;
+    }
+    
     public double getAvailableSources() {
         return availableSources;
     }
@@ -98,6 +112,14 @@ public class BankAccount implements java.io.Serializable {
 
     public void setBankAccountOwner(BankAccountOwner bankAccountOwner) {
         this.bankAccountOwner = bankAccountOwner;
+    }
+    
+    public BankAccountType getBankAccountType() {
+        return this.bankAccountType;
+    }
+    
+    public void setBankAccountType(BankAccountType bankAccountType) {
+        this.bankAccountType = bankAccountType;
     }
     
     @Override

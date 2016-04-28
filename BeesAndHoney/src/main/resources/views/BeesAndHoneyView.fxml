@@ -9,7 +9,7 @@
 <?import javafx.collections.*?>
 <?import com.beesandhoney.model.*?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
    <bottom>
       <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
          <children>
@@ -63,9 +63,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="accountsTable" maxHeight="354.0" maxWidth="856.0" minHeight="354.0" minWidth="856.0" prefHeight="354.0" prefWidth="856.0">
+                        <TableView fx:id="accountsTable" maxHeight="198.0" maxWidth="856.0" minHeight="198.0" minWidth="856.0" prefHeight="198.0" prefWidth="856.0">
                           <columns>
-                            <TableColumn maxWidth="1822.0" minWidth="182.0" prefWidth="182.0" resizable="false" text="Alias">
+                            <TableColumn maxWidth="182.0" minWidth="182.0" prefWidth="182.0" resizable="false" text="Alias">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="alias" />
                                 </cellValueFactory>
@@ -85,6 +85,35 @@
                                     <PropertyValueFactory property="currency" />
                                </cellValueFactory>
                            </TableColumn>
+                          </columns>
+                        </TableView>
+                        <TableView fx:id="creditCardsTable" layoutY="198.0" maxHeight="172.0" maxWidth="856.0" minHeight="172.0" minWidth="856.0" prefHeight="172.0" prefWidth="856.0">
+                          <columns>
+                            <TableColumn maxWidth="182.0" minWidth="182.0" prefWidth="182.0" resizable="false" text="Alias">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="alias" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="263.0" minWidth="263.0" prefWidth="263.0" resizable="false" text="Credit Card Name">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="creditCardName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="146.0" minWidth="146.0" prefWidth="146.0" resizable="false" text="Limit">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="creditCardLimit" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="176.0" minWidth="176.0" prefWidth="176.0" resizable="false" text="Available Funds">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="availableFunds" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn maxWidth="90.0" minWidth="90.0" prefWidth="90.0" resizable="false" text="Currency">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="currency" />
+                                </cellValueFactory>
+                            </TableColumn>
                           </columns>
                         </TableView>
                         <Button fx:id="detailsButton" layoutX="14.0" layoutY="381.0" maxHeight="26.0" maxWidth="87.0" minHeight="26.0" minWidth="87.0" mnemonicParsing="false" onMouseClicked="#handleDetailsButtonClicked" prefHeight="26.0" prefWidth="87.0" text="Details" />

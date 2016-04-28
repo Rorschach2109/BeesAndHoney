@@ -12,11 +12,13 @@ import com.beesandhoney.model.BankAccount;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankingBookModel;
 import com.beesandhoney.model.BeesAndHoneyUser;
+import com.beesandhoney.model.CreditCardModel;
 import com.beesandhoney.model.ModelFactory;
 import com.beesandhoney.model.dao.BankAccountDao;
 import com.beesandhoney.model.dao.BeesAndHoneyUserDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
 import com.beesandhoney.utils.ObserverInterface;
+import com.beesandhoney.utils.constants.BankAccountConstants.BankAccountType;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -43,6 +45,8 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     private TableView<BankingBookModel> bankingBookTable;
     @FXML
     private TableView<AccountModel> accountsTable;
+    @FXML
+    private TableView<CreditCardModel> creditCardsTable;
     
     private final BeesAndHoneyMainController mainController;
     
@@ -70,9 +74,14 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         return this.accountsTable.getItems();
     }
     
+    public ObservableList<CreditCardModel> getCreditCardTableItems() {
+        return this.creditCardsTable.getItems();
+    }
+    
     public void updateTables() {
         updateBankingBookTable();
         updateAccountsTable();
+        updateCreditCardsTable();
     }
     
     @Override
@@ -113,7 +122,8 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         accountModelTableContent.clear();
         
         for (BankingBookModel bookModel : getBankingBookTableItems()) {
-            for (BankAccount bankAccount : dao.findByClientId(bookModel.getClientId(), session)) {
+            for (BankAccount bankAccount : dao.findByClientIdAndAccountType(
+                    bookModel.getClientId(), BankAccountType.BANK_ACCOUNT, session)) {
                 accountModelTableContent.add(ModelFactory.createAccountModel(
                         bookModel.getAlias(), 
                         bankAccount.getAccountName(), 
@@ -121,7 +131,31 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
                         bankAccount.getAccountNumber(),
                         bankAccount.getCurrency()));
             }
-            
+        }
+        
+        dao.closeSession(session);
+    }
+    
+    private void updateCreditCardsTable() {
+        BankAccountDao dao = DaoModelFactory.getBankAccountDaoInstance();
+        Session session = dao.openSession();
+        
+        ObservableList<CreditCardModel> creditCardModelTableContent = 
+                this.creditCardsTable.getItems();
+        
+        creditCardModelTableContent.clear();
+        
+        for (BankingBookModel bookModel : getBankingBookTableItems()) {
+            for (BankAccount bankAccount : dao.findByClientIdAndAccountType(
+                    bookModel.getClientId(), BankAccountType.CREDIT_CARD, session)) {
+                creditCardModelTableContent.add(ModelFactory.createCreditCardModel(
+                        bookModel.getAlias(), 
+                        bankAccount.getAccountName(), 
+                        bankAccount.getAccountLimit(),
+                        bankAccount.getAvailableSources(),
+                        bankAccount.getAccountNumber(),
+                        bankAccount.getCurrency()));
+            }
         }
         
         dao.closeSession(session);
