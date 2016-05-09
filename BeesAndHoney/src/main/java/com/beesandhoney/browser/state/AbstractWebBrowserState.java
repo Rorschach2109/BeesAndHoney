@@ -150,7 +150,11 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         createNoTypeBankAccount();
         
         this.stashedBankAccount.setBankAccountType(BankAccountType.CREDIT_CARD);
-        this.stashedBankAccount.setAccountLimit(100);
+        
+        String creditCardLimitString = (String) executeJavaScriptCommand(
+                this.constantsManager.getCommandCreditCardLimit());
+        double creditCardLimit = convertStringToDouble(creditCardLimitString);
+        this.stashedBankAccount.setAccountLimit(creditCardLimit);
     }
     
     private void createNoTypeBankAccount() {
@@ -193,7 +197,7 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         
         double returnValue = 0.0;
         
-        if (matcher.find()) {
+        if (false == text.isEmpty() && matcher.find()) {
             String numberString = matcher.group(1).replaceAll(",", ".").replaceAll(" ", "");
             returnValue = Double.parseDouble(numberString);
         }

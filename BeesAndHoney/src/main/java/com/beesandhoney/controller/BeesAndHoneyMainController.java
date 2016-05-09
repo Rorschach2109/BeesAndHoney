@@ -286,6 +286,7 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
                 existingBankAccount.setAccountName(bankAccount.getAccountName());
                 existingBankAccount.setAccountBalance(bankAccount.getAccountBalance());
                 existingBankAccount.setAvailableSources(bankAccount.getAvailableSources());
+                existingBankAccount.setAccountLimit(bankAccount.getAccountLimit());
             }
         }
     }

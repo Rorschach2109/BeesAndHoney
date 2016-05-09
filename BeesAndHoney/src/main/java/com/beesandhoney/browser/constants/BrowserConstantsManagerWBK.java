@@ -36,7 +36,7 @@ public class BrowserConstantsManagerWBK extends AbstractBrowserConstantsManager 
     private void initializeJavascriptAccountInformationCommands() {
         commandAccountNumber = "";
         commandAccountName = "document.getElementsByClassName('report-table')[0].getElementsByTagName('tbody')[0].children[0].children[1].childNodes[1].innerText;";
-        commandCreditCardLimit = "";
+        commandCreditCardLimit = "document.getElementsByClassName('report-table')[0].getElementsByTagName('tbody')[0].children[4].children[1].childNodes[1].innerHTML.replace('&nbsp;', '');";
         commandAccountBalance = "document.getElementsByClassName('report-table')[0].getElementsByTagName('tbody')[0].children[2].children[1].childNodes[1].innerHTML.replace('&nbsp;', '');";
         commandAvailableSources = "document.getElementsByClassName('report-table')[0].getElementsByTagName('tbody')[0].children[3].children[1].childNodes[1].innerHTML.replace('&nbsp;', '');";
         commandOwnerNameSurname = "document.getElementsByClassName('report-table')[1].getElementsByTagName('tbody')[0].children[0].children[1].childNodes[1].innerText;";

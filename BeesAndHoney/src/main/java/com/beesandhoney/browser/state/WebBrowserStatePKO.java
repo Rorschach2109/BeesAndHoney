@@ -39,7 +39,6 @@ public final class WebBrowserStatePKO extends AbstractWebBrowserState {
     
     @Override
     public void logout() {
-        System.out.println("[AK] IPKO Logout");
         this.webEngine.getLoadWorker().stateProperty().removeListener(this.changeListener);
         this.innerState = EState.LOGIN_PAGE;
         
