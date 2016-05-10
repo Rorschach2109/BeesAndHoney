@@ -75,7 +75,11 @@ public class WebBrowserStateWBK extends AbstractWebBrowserState {
                     
                     case PASSWORD_PAGE: {
                         innerState = EState.HOME_PAGE;
-                        insertPassword();
+                        if (isOrdinaryPassword()) {
+                            insertOrdinaryPassword();
+                        } else {
+                            insertMaskedPassword();
+                        }
                         break;
                     }
                     
@@ -148,9 +152,19 @@ public class WebBrowserStateWBK extends AbstractWebBrowserState {
         clickLoginButton();
     }
     
-    private void insertPassword() {
-        insertPassword(this.currentBankAccountLogin.getLoginPassword());
+    private boolean isOrdinaryPassword() {
+        return (boolean) executeJavaScriptCommand(
+                this.constantsManager.getCommandIsOrdinaryPassword()
+        );
+    }
+    
+    private void insertOrdinaryPassword() {
+        insertOrdinaryPassword(this.currentBankAccountLogin.getLoginPassword());
         clickLoginButton();
+    }
+    
+    private void insertMaskedPassword() {
+        
     }
     
     private void captureAccountNumber(String sectionName, int accountIndex) {

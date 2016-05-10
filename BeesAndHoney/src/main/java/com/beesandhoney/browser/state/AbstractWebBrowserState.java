@@ -108,9 +108,9 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         executeJavaScriptCommand(command);
     }
     
-    protected void insertPassword(String clientId) {
-        String commandPattern = this.constantsManager.getCommandSetPassword();
-        String command = String.format(commandPattern, clientId);
+    protected void insertOrdinaryPassword(String password) {
+        String commandPattern = this.constantsManager.getCommandSetOrdinaryPassword();
+        String command = String.format(commandPattern, password);
         executeJavaScriptCommand(command);
     }
     

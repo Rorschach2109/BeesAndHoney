@@ -8,7 +8,10 @@ package com.beesandhoney.browser.constants;
 public abstract class AbstractBrowserConstantsManager {
     
     protected String commandSetClientId;
-    protected String commandSetPassword;
+    
+    protected String commandIsOrdinaryPassword;
+    protected String commandSetOrdinaryPassword;
+    protected String commandSetMaskedPassword;
 
     protected String commandClickLoginButton;
     protected String commandClickLogoutButton;
@@ -40,8 +43,16 @@ public abstract class AbstractBrowserConstantsManager {
         return commandSetClientId;
     }
 
-    public String getCommandSetPassword() {
-        return commandSetPassword;
+    public String getCommandIsOrdinaryPassword() {
+        return commandIsOrdinaryPassword;
+    }
+    
+    public String getCommandSetOrdinaryPassword() {
+        return commandSetOrdinaryPassword;
+    }
+    
+    public String getCommandSetMaskedPassword() {
+        return commandSetMaskedPassword;
     }
 
     public String getCommandClickLoginButton() {

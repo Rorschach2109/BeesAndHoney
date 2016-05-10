@@ -19,7 +19,10 @@ public final class BrowserConstantsManagerPKO extends AbstractBrowserConstantsMa
     
     private void initializeJavascriptLoginCommands() {
         commandSetClientId = "document.getElementById('client_id_field').value = '%s';";
-        commandSetPassword = "document.getElementById('password_field').value = '%s';";
+        
+        commandIsOrdinaryPassword = "";
+        commandSetOrdinaryPassword = "document.getElementById('password_field').value = '%s';";
+        commandSetMaskedPassword = "";
         
         commandClickLoginButton = "document.getElementsByName('btn_ok')[1].click();";
         commandClickLogoutButton = "document.getElementById('tm5').click();";

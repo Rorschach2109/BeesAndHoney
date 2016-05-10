@@ -19,7 +19,10 @@ public class BrowserConstantsManagerWBK extends AbstractBrowserConstantsManager 
     
     private void initializeJavascriptLoginCommands() {
         commandSetClientId = "document.getElementById('input_nik').value = '%s';";
-        commandSetPassword = "document.getElementById('ordinarypin').value = '%s';";
+        
+        commandIsOrdinaryPassword = "document.getElementsByClassName('passwordItem').length == 0;";
+        commandSetOrdinaryPassword = "document.getElementById('ordinarypin').value = '%s';";
+        commandSetMaskedPassword = "";
         
         commandClickLoginButton = "document.getElementById('okBtn2').click();";
         commandClickLogoutButton = "document.getElementsByClassName('logout')[0].childNodes[1].click();";

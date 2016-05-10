@@ -110,7 +110,7 @@ public final class WebBrowserStatePKO extends AbstractWebBrowserState {
     
     private void performLogin() {
         insertClientId(this.currentBankAccountLogin.getClientId());
-        insertPassword(this.currentBankAccountLogin.getLoginPassword());
+        insertOrdinaryPassword(this.currentBankAccountLogin.getLoginPassword());
         clickLoginButton();
     }
     
