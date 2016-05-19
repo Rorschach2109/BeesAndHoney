@@ -110,8 +110,12 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
     
     protected void insertOrdinaryPassword(String password) {
         String commandPattern = this.constantsManager.getCommandSetOrdinaryPassword();
-        String command = String.format(commandPattern, password);
-        executeJavaScriptCommand(command);
+        insertPassword(commandPattern, password);
+    }
+    
+    protected void insertMaskedPassword(String password) {
+        String commandPattern = this.constantsManager.getCommandSetMaskedPassword();
+        insertPassword(commandPattern, password);
     }
     
     protected void clickLoginButton() {
@@ -215,6 +219,11 @@ public abstract class AbstractWebBrowserState implements IWebBrowserState {
         }
         
         return currency;
+    }
+    
+    private void insertPassword(String pattern, String password) {
+        String command = String.format(pattern, password);
+        executeJavaScriptCommand(command);        
     }
     
     protected Object executeJavaScriptCommand(String filledCommand) {

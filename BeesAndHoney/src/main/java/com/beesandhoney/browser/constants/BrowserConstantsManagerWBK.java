@@ -22,7 +22,7 @@ public class BrowserConstantsManagerWBK extends AbstractBrowserConstantsManager 
         
         commandIsOrdinaryPassword = "document.getElementsByClassName('passwordItem').length == 0;";
         commandSetOrdinaryPassword = "document.getElementById('ordinarypin').value = '%s';";
-        commandSetMaskedPassword = "";
+        commandSetMaskedPassword = "pass = '%s'; for (i=0; i < pass.length; ++i) {box = document.getElementsByClassName('passwordItem')[i].childNodes[0]; if (box.type == 'password') {box.value = pass[i];}}";
         
         commandClickLoginButton = "document.getElementById('okBtn2').click();";
         commandClickLogoutButton = "document.getElementsByClassName('logout')[0].childNodes[1].click();";

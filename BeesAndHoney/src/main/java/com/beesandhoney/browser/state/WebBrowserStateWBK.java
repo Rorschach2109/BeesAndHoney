@@ -164,7 +164,8 @@ public class WebBrowserStateWBK extends AbstractWebBrowserState {
     }
     
     private void insertMaskedPassword() {
-        
+        insertMaskedPassword(this.currentBankAccountLogin.getLoginPassword());
+        clickLoginButton();
     }
     
     private void captureAccountNumber(String sectionName, int accountIndex) {
