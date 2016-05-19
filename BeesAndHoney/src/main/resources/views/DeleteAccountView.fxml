@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="121.0" prefWidth="278.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.DeleteAccountView">
    <children>
-      <Label layoutX="13.0" layoutY="20.0" prefHeight="59.0" prefWidth="253.0" text="Do you want to remove selected item?" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="deleteMessageLabel" layoutX="13.0" layoutY="20.0" prefHeight="59.0" prefWidth="253.0" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>

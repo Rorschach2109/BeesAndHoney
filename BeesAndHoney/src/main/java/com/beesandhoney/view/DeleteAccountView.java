@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import com.beesandhoney.utils.ObserverInterface;
 import java.util.ArrayList;
+import javafx.scene.control.Label;
 
 public class DeleteAccountView implements IObservableView {
     
@@ -21,18 +22,29 @@ public class DeleteAccountView implements IObservableView {
     private final DeleteAccountController controller;
     private final ArrayList<ObserverInterface> observers;
     
+    private final String deleteMessagePattern;
+    
+    @FXML
+    private Label deleteMessageLabel;
+    
     public DeleteAccountView() {
         this.observers = new ArrayList<>();
         this.controller = new DeleteAccountController(this);
         this.itemToDelete = null;
+        this.deleteMessagePattern = "Do you want to remove %s account?";
     }
     
     public void setItemToDelete(BankingBookModel itemToDelete) {
         this.itemToDelete = itemToDelete;
+        
+        String deleteMessage = String.format(
+                deleteMessagePattern, this.itemToDelete.getAlias());
+        this.deleteMessageLabel.setText(deleteMessage);
     }
     
     @Override
     public void cleanUp() {
+        this.deleteMessageLabel.setText("");
     }
 
     @Override
