@@ -9,7 +9,7 @@
 <?import javafx.collections.*?>
 <?import com.beesandhoney.model.*?>
 
-<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
+<BorderPane fx:id="mainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.beesandhoney.view.BeesAndHoneyMainView">
    <bottom>
       <AnchorPane prefHeight="25.0" prefWidth="600.0" style="-fx-border-width: 1; -fx-border-color: grey;" BorderPane.alignment="CENTER">
          <children>
@@ -61,7 +61,7 @@
           </Tab>
           <Tab fx:id="accountsTab" text="Accounts">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane maxWidth="856.0" minHeight="0.0" minWidth="856.0" prefHeight="180.0" prefWidth="856.0">
                      <children>
                         <TableView fx:id="accountsTable" maxHeight="198.0" maxWidth="856.0" minHeight="198.0" minWidth="856.0" prefHeight="198.0" prefWidth="856.0">
                           <columns>
@@ -94,7 +94,7 @@
                                     <PropertyValueFactory property="alias" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn maxWidth="263.0" minWidth="263.0" prefWidth="263.0" resizable="false" text="Credit Card Name">
+                            <TableColumn maxWidth="262.0" minWidth="262.0" prefWidth="262.0" resizable="false" text="Credit Card Name">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="creditCardName" />
                                 </cellValueFactory>
@@ -104,7 +104,7 @@
                                     <PropertyValueFactory property="creditCardLimit" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn maxWidth="176.0" minWidth="176.0" prefWidth="176.0" resizable="false" text="Available Funds">
+                            <TableColumn maxWidth="174.0" minWidth="174.0" prefWidth="174.0" resizable="false" text="Available Funds">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="availableFunds" />
                                 </cellValueFactory>

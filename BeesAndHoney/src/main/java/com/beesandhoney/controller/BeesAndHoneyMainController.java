@@ -12,6 +12,7 @@ import com.beesandhoney.model.BankAccount;
 import com.beesandhoney.model.BankAccountLogin;
 import com.beesandhoney.model.BankAccountOwner;
 import com.beesandhoney.model.BankingBookModel;
+import com.beesandhoney.model.CreditCardModel;
 import com.beesandhoney.model.dao.BankAccountLoginDao;
 import com.beesandhoney.model.dao.BankAccountOwnerDao;
 import com.beesandhoney.model.dao.DaoModelFactory;
@@ -25,6 +26,7 @@ import com.beesandhoney.view.BeesAndHoney;
 import com.beesandhoney.view.BeesAndHoneyMainView;
 import com.beesandhoney.view.DeleteAccountView;
 import com.beesandhoney.view.AccountDetailsView;
+import com.beesandhoney.view.CreditCardDetailsView;
 import com.beesandhoney.view.IObservableView;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,12 +63,14 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
     private static final String ADD_ACCOUNT_VIEW_RESOURCE_PATH;
     private static final String DELETE_ACCOUNT_VIEW_RESOURCE_PATH;
     private static final String ACCOUNT_DETAILS_VIEW_RESOURCE_PATH;
+    private static final String CREDIT_CARD_DETAILS_VIEW_RESOURCE_PATH;
     
     static
     {
         ADD_ACCOUNT_VIEW_RESOURCE_PATH = "views/AddAccountView.fxml";
         DELETE_ACCOUNT_VIEW_RESOURCE_PATH = "views/DeleteAccountView.fxml";
         ACCOUNT_DETAILS_VIEW_RESOURCE_PATH = "views/AccountDetailsView.fxml";
+        CREDIT_CARD_DETAILS_VIEW_RESOURCE_PATH = "views/CreditCardDetailsView.fxml";
     }
     
     public BeesAndHoneyMainController(BeesAndHoneyMainView mainView) {
@@ -125,7 +129,14 @@ public class BeesAndHoneyMainController implements IController, ObserverInterfac
         showSecondStage(ACCOUNT_DETAILS_VIEW_RESOURCE_PATH);
         
         AccountDetailsView detailsView = (AccountDetailsView) this.observableView;
-        detailsView.fillAccountDetails(selectedItem);        
+        detailsView.fillAccountDetails(selectedItem);
+    }
+    
+    public void handleShowCreditCardDetails(CreditCardModel selectedItem) {
+        showSecondStage(CREDIT_CARD_DETAILS_VIEW_RESOURCE_PATH);
+        
+        CreditCardDetailsView detailsView = (CreditCardDetailsView) this.observableView;
+        detailsView.fillAccountDetails(selectedItem);
     }
     
     public void handleShowSummaryDetails() {

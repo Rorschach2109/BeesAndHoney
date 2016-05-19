@@ -112,6 +112,10 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         return this.accountsTable.getSelectionModel().getSelectedItem();
     }
     
+    private CreditCardModel getSelectedCreditCardModel() {
+        return this.creditCardsTable.getSelectionModel().getSelectedItem();
+    }
+    
     private void updateAccountsTable() {
         BankAccountDao dao = DaoModelFactory.getBankAccountDaoInstance();
         Session session = dao.openSession();
@@ -231,10 +235,15 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
     @FXML
     private void handleDetailsButtonClicked() {
         AccountModel selectedAccountModel = getSelectedAccountModel();
+        CreditCardModel selectedCreditCardModel = getSelectedCreditCardModel();
         
         if (null != selectedAccountModel) {
             this.mainController.handleShowAccountDetails(
                     selectedAccountModel
+            );
+        } else if (null != selectedCreditCardModel) {
+            this.mainController.handleShowCreditCardDetails(
+                    selectedCreditCardModel
             );
         }
     }
