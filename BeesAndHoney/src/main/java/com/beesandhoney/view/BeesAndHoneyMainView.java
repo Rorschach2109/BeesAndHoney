@@ -185,6 +185,22 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         dao.closeSession(session);
     }
 
+    private void initListeners() {
+        this.accountsTable.getSelectionModel().selectedItemProperty()
+                .addListener((obs, oldSelection, newSelection) -> {
+                    if (null != newSelection) {
+                        this.creditCardsTable.getSelectionModel().clearSelection();
+                    }
+                });
+        
+        this.creditCardsTable.getSelectionModel().selectedItemProperty()
+                .addListener((obs, oldSelection, newSelection) -> {
+                    if (null != newSelection) {
+                        this.accountsTable.getSelectionModel().clearSelection();
+                    }
+                });
+    }
+    
     @FXML
     private void handleEditButtonClicked() {
         BankingBookModel selectedBankingBookModel = getSelectedBankingBookModel();
@@ -238,5 +254,6 @@ public class BeesAndHoneyMainView implements IView, ObserverInterface {
         DaoModelFactory.getBeesAndHoneyUserDaoInstance().registerObserver(this);
         DaoModelFactory.getBankAccountLoginDaoInstance().registerObserver(this);
         DaoModelFactory.getBankAccountOwnerDaoInstance().registerObserver(this);
+        initListeners();
     }
 }
